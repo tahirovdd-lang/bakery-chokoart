@@ -11,19 +11,18 @@
 :root{
   --bg:#F8F3E9;
 
-  /* ✅ бренд */
-  --gold:#D4A017;
-  --gold-dark:#6B4E00;     /* темно-желтый */
-  --gold-deep:#3B2A00;     /* ещё темнее */
-  --accent-red:#8B1E1E;    /* красный для активных кнопок */
+  /* ✅ пастельно-розовая тема */
+  --pink:#F6B7C8;
+  --pink-2:#F2A9BE;
+  --pink-deep:#E98AA6;
 
-  --green:#1F4D3A;
+  --accent-red:#8B1E1E; /* оставим для цен */
 
-  --stroke: rgba(199,107,47,.35);
-  --stroke-strong: rgba(199,107,47,.50);
-  --inner: rgba(255,255,255,.70);
-  --shadow: rgba(120,70,20,.10);
-  --shadow-strong: rgba(120,70,20,.18);
+  --stroke: rgba(0,0,0,.08);
+  --stroke-strong: rgba(0,0,0,.14);
+  --inner: rgba(255,255,255,.72);
+  --shadow: rgba(0,0,0,.10);
+  --shadow-strong: rgba(0,0,0,.18);
 
   --r-lg:24px;
   --r-md:22px;
@@ -51,12 +50,12 @@ body{
 }
 body[data-theme="dark"]{ color:#f1f1f1; }
 
-/* ✅✅✅ ШАПКА: темно-желтая */
+/* ✅✅✅ ШАПКА: пастельно-розовая */
 .header{
   padding:16px 12px 26px;
-  background:linear-gradient(135deg,var(--gold-deep),var(--gold-dark));
-  color:white;
-  box-shadow:0 10px 26px rgba(0,0,0,.18);
+  background:linear-gradient(135deg,var(--pink-deep),var(--pink));
+  color:#fff;
+  box-shadow:0 10px 26px rgba(0,0,0,.14);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -64,23 +63,21 @@ body[data-theme="dark"]{ color:#f1f1f1; }
   text-align:center;
 }
 
-/* ✅ ЛОГО (из папки images) */
+/* ✅ ЛОГО (увеличить в 1.5 раза) */
 .header img{
   position:absolute;
   left:12px;
-  width:84px;
-  height:84px;
+  width:126px;   /* было 84px */
+  height:126px;  /* было 84px */
   object-fit:contain;
-  border-radius:18px;
-  background:rgba(255,255,255,.08);
-  padding:8px;
-  border:1px solid rgba(255,255,255,.18);
-  box-shadow:0 10px 22px rgba(0,0,0,.12);
+  border-radius:22px;
+  background:rgba(255,255,255,.10);
+  padding:10px;
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:0 12px 26px rgba(0,0,0,.12);
 }
 
 .brand-wrap{display:flex;flex-direction:column;align-items:center;gap:2px;}
-
-/* Bakery / CHOKOART */
 .brand-title{
   font-family:'Lobster',cursive;
   font-size:34px;
@@ -94,8 +91,6 @@ body[data-theme="dark"]{ color:#f1f1f1; }
   letter-spacing:2px;
   line-height:1.1;
 }
-
-/* ✅ лозунг Lobster */
 .brand-slogan{
   font-family:'Lobster',cursive;
   font-size:18px;
@@ -105,7 +100,7 @@ body[data-theme="dark"]{ color:#f1f1f1; }
 
 .brand-phone{position:relative; z-index:50; pointer-events:auto; margin-top:4px;}
 .brand-phone a{
-  color:white;
+  color:#fff;
   text-decoration:none;
   font-size:14px;
   font-weight:800;
@@ -177,7 +172,7 @@ body[data-theme="dark"]{ color:#f1f1f1; }
   justify-content:center;
 }
 
-/* ✅✅✅ АКТИВНЫЕ КНОПКИ = КРАСНЫЕ */
+/* ✅ активные кнопки (язык/доставка/категории/оплата) */
 .btn{
   padding:12px 20px;
   border-radius:var(--r-pill);
@@ -197,10 +192,10 @@ body[data-theme="dark"] .btn{
 }
 .btn:active{transform:scale(.98);}
 .btn.active{
-  background:linear-gradient(135deg,var(--accent-red),#B32020);
+  background:linear-gradient(135deg,var(--pink-deep),var(--pink-2));
   color:white;
   border:1px solid rgba(255,255,255,.42);
-  box-shadow: inset 0 0 0 2px rgba(255,255,255,.16), 0 10px 22px rgba(139,30,30,.25);
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.16), 0 10px 22px rgba(0,0,0,.16);
 }
 
 /* inputs */
@@ -235,19 +230,21 @@ body[data-theme="dark"] .input{
   overflow-x:auto;
   scroll-behavior:smooth;
 }
+
 .products{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:16px;
   padding:12px;
 }
+
 .card{
   border-radius:var(--r-lg);
   padding:12px;
   text-align:center;
   background:#fffdf9;
   border:1px solid var(--stroke);
-  box-shadow: inset 0 0 0 2px var(--inner), 0 8px 18px rgba(120,70,20,.12);
+  box-shadow: inset 0 0 0 2px var(--inner), 0 8px 18px rgba(0,0,0,.08);
   transition:.15s;
 }
 body[data-theme="dark"] .card{
@@ -291,7 +288,7 @@ body[data-theme="dark"] .card{
 .price{font-weight:900;color:var(--accent-red);margin-top:6px;}
 .price small{font-weight:800;opacity:.75;margin-left:4px;}
 
-/* ✅✅✅ +/- КНОПКИ = ЖЁЛТЫЕ */
+/* ✅✅✅ +/- КНОПКИ = пастельно-розовые */
 .counter{display:flex;justify-content:center;gap:10px;margin-top:8px;align-items:center;}
 .counter button{
   width:32px;
@@ -299,12 +296,12 @@ body[data-theme="dark"] .card{
   border-radius:50%;
   cursor:pointer;
 
-  border:1px solid rgba(0,0,0,.08);
-  background:linear-gradient(135deg,var(--gold),#F2C94C);
+  border:1px solid rgba(0,0,0,.10);
+  background:linear-gradient(135deg,var(--pink-2),var(--pink));
   color:#2b2b2b;
   font-size:18px;
   font-weight:900;
-  box-shadow:0 8px 18px rgba(0,0,0,.12);
+  box-shadow:0 8px 18px rgba(0,0,0,.10);
   transition:.15s;
 }
 .counter button:active{transform:scale(.96);}
@@ -316,13 +313,13 @@ body[data-theme="dark"] .card{
   padding:16px;
   border-radius:var(--r-lg);
   border:1px solid var(--stroke);
-  box-shadow: inset 0 0 0 2px var(--inner), 0 8px 18px rgba(120,70,20,.12);
+  box-shadow: inset 0 0 0 2px var(--inner), 0 8px 18px rgba(0,0,0,.08);
 }
 body[data-theme="dark"] .cart{ background:rgba(255,255,255,.06); color:#f1f1f1; }
 
 textarea.input{height:90px;}
 
-/* ✅✅✅ ОФОРМИТЬ ЗАКАЗ = темно-желтый */
+/* ✅✅✅ ОФОРМИТЬ ЗАКАЗ = пастельно-розовый */
 .order-btn{
   width:100%;
   padding:18px;
@@ -333,9 +330,9 @@ textarea.input{height:90px;}
   font-size:17px;
   font-weight:900;
 
-  border:1px solid rgba(255,255,255,.22);
-  background:linear-gradient(135deg,var(--gold-deep),var(--gold-dark));
-  box-shadow: inset 0 0 0 2px rgba(255,255,255,.10), 0 12px 26px rgba(0,0,0,.14);
+  border:1px solid rgba(255,255,255,.18);
+  background:linear-gradient(135deg,var(--pink-deep),var(--pink));
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.10), 0 12px 26px rgba(0,0,0,.12);
   transition:.15s;
 }
 .order-btn:active{transform:scale(.99);}
@@ -379,7 +376,7 @@ body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f
 .search-clear:active{transform:translateY(-50%) scale(.96);}
 .search-title{width:85%;margin:10px auto 0;font-weight:900;opacity:.9;display:none;z-index:70;position:relative;}
 .search-title.show{display:block;}
-mark{background:rgba(212,160,23,.25);padding:0 .12em;border-radius:6px;}
+mark{background:rgba(246,183,200,.45);padding:0 .12em;border-radius:6px;}
 
 /* quick filters */
 .quick-filters{display:flex;gap:10px;padding:0 12px 10px;overflow-x:auto;}
@@ -407,7 +404,7 @@ body[data-theme="dark"] .qbtn{background:rgba(255,255,255,.06); color:#f1f1f1;}
   padding:10px;
   background:#fffdf9;
   border:1px solid var(--stroke);
-  box-shadow: inset 0 0 0 2px var(--inner), 0 8px 18px rgba(120,70,20,.12);
+  box-shadow: inset 0 0 0 2px var(--inner), 0 8px 18px rgba(0,0,0,.08);
   cursor:pointer;
   transition:.15s;
   position:relative;
@@ -421,23 +418,23 @@ body[data-theme="dark"] .pop-card{background:rgba(255,255,255,.06); color:#f1f1f
   display:flex;
   align-items:center;
   justify-content:center;
-  background:rgba(199,107,47,.08);
+  background:rgba(246,183,200,.25);
 }
 .pop-img img{width:100%;height:100%;object-fit:cover;}
 .pop-name{font-weight:900;margin-top:8px;}
 .pop-price{font-weight:900;color:var(--accent-red);margin-top:4px;}
 .pop-badge{position:absolute;left:10px;top:10px;font-size:18px;pointer-events:none;}
 
-/* ✅ +/- в популярном тоже желтые */
+/* ✅ +/- в популярном тоже пастельно-розовые */
 .pop-counter{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:8px;}
 .pop-counter button{
   width:30px;height:30px;border-radius:50%;cursor:pointer;
-  border:1px solid rgba(0,0,0,.08);
-  background:linear-gradient(135deg,var(--gold),#F2C94C);
+  border:1px solid rgba(0,0,0,.10);
+  background:linear-gradient(135deg,var(--pink-2),var(--pink));
   color:#2b2b2b;
   font-size:18px;
   font-weight:900;
-  box-shadow:0 8px 18px rgba(0,0,0,.12);
+  box-shadow:0 8px 18px rgba(0,0,0,.10);
   transition:.15s;
 }
 .pop-counter button:active{transform:scale(.96);}
@@ -463,7 +460,7 @@ body[data-theme="dark"] .sticky-checkout{
   padding:10px 12px;
   background:#fffdf9;
   border:1px solid var(--stroke);
-  box-shadow: inset 0 0 0 2px var(--inner), 0 10px 22px rgba(120,70,20,.12);
+  box-shadow: inset 0 0 0 2px var(--inner), 0 10px 22px rgba(0,0,0,.10);
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -473,22 +470,22 @@ body[data-theme="dark"] .sticky-inner{background:rgba(255,255,255,.06);}
 .sticky-sum{font-weight:900;line-height:1.1;}
 .sticky-sum small{display:block;font-weight:800;opacity:.75;margin-top:2px;}
 
-/* ✅✅✅ КНОПКА "Корзина" = темно-желтая */
+/* ✅✅✅ КНОПКА "Корзина" = пастельно-розовая */
 .sticky-btn{
   padding:12px 14px;
   border-radius:16px;
-  border:1px solid rgba(255,255,255,.22);
-  background:linear-gradient(135deg,var(--gold-deep),var(--gold-dark));
+  border:1px solid rgba(255,255,255,.18);
+  background:linear-gradient(135deg,var(--pink-deep),var(--pink));
   color:#fff;
   font-weight:900;
   cursor:pointer;
-  box-shadow: inset 0 0 0 2px rgba(255,255,255,.10), 0 12px 26px rgba(0,0,0,.14);
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.10), 0 12px 26px rgba(0,0,0,.12);
   transition:.15s;
   white-space:nowrap;
 }
 .sticky-btn:active{transform:scale(.99);}
 
-/* menu sheet / about оставил как было */
+/* menu sheet / about */
 .menu-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.38);opacity:0;pointer-events:none;transition:.18s;z-index:1000;}
 .menu-backdrop.show{opacity:1;pointer-events:auto;}
 .menu-sheet{
@@ -539,7 +536,6 @@ body[data-theme="dark"] .about-card{background:#1c1c1c;border-color:rgba(255,255
 <body>
 
 <div class="header">
-  <!-- ✅ логотип в images -->
   <img src="images/logo.png" onerror="this.src='logo.png'" alt="CHOKOART logo">
 
   <div class="brand-wrap">
@@ -548,14 +544,12 @@ body[data-theme="dark"] .about-card{background:#1c1c1c;border-color:rgba(255,255
     <div class="brand-slogan">BIZ BILAN MAZZALIROQ</div>
 
     <div class="brand-phone">
-      <a href="tel:+998905389999" onclick="callPhone(event)">+998 90 538 99 99</a>
+      <a href="tel:+998905050745" onclick="callPhone(event)">+998 90 505 07 45</a>
     </div>
   </div>
 
   <div class="menu-btn" onclick="openTopMenu()" title="Меню">
-    <div class="burger">
-      <span></span><span></span><span></span>
-    </div>
+    <div class="burger"><span></span><span></span><span></span></div>
   </div>
 
   <div class="search-btn" onclick="toggleSearch()">🔍</div>
@@ -602,12 +596,12 @@ body[data-theme="dark"] .about-card{background:#1c1c1c;border-color:rgba(255,255
       </div>
     </div>
 
-    <a class="menu-item" href="tel:+998905389999" onclick="closeTopMenu()">
+    <a class="menu-item" href="tel:+998905050745" onclick="closeTopMenu()">
       <div class="menu-left">
         <div class="menu-ic">📞</div>
         <div class="menu-txt">
           <div class="menu-name">Позвонить</div>
-          <div class="menu-sub">+998 90 538 99 99</div>
+          <div class="menu-sub">+998 90 505 07 45</div>
         </div>
       </div>
       <div class="menu-right">›</div>
@@ -621,7 +615,7 @@ body[data-theme="dark"] .about-card{background:#1c1c1c;border-color:rgba(255,255
           </svg>
         </div>
         <div class="menu-txt">
-          <div class="menu-name">@KADIMA.UZ</div>
+          <div class="menu-name">@choko_art_motrid</div>
           <div class="menu-sub">Открыть Instagram</div>
         </div>
       </div>
@@ -667,7 +661,7 @@ body[data-theme="dark"] .about-card{background:#1c1c1c;border-color:rgba(255,255
 
 <div class="search-title" id="searchTitle">Результаты поиска</div>
 <div class="search-wrap" id="searchWrap">
-  <input id="searchInput" class="input" placeholder="Поиск блюда..." oninput="searchProducts()" onkeydown="onSearchKey(event)">
+  <input id="searchInput" class="input" placeholder="Поиск..." oninput="searchProducts()" onkeydown="onSearchKey(event)">
   <div class="search-clear" onclick="clearSearch()" title="Очистить">✖</div>
 </div>
 
@@ -677,6 +671,7 @@ body[data-theme="dark"] .about-card{background:#1c1c1c;border-color:rgba(255,255
   <button class="btn" onclick="setLang('en',this)">EN</button>
 </div>
 
+<!-- Популярное оставим, но ids поменяли на новые -->
 <div class="popular-wrap" id="popularWrap">
   <div class="popular-title" id="popularTitle">🔥 Популярное</div>
   <div class="popular-row" id="popularRow"></div>
@@ -719,9 +714,10 @@ body[data-theme="dark"] .about-card{background:#1c1c1c;border-color:rgba(255,255
 <script>
 Telegram.WebApp.ready();
 
+/* ======= ШАПКА: звонок ======= */
 function callPhone(e){
   try{ e.preventDefault(); e.stopPropagation(); }catch(_){}
-  const tel = "tel:+998905389999";
+  const tel = "tel:+998905050745";
   try{
     if (window.Telegram && Telegram.WebApp && typeof Telegram.WebApp.openLink === "function"){
       Telegram.WebApp.openLink(tel);
@@ -731,6 +727,7 @@ function callPhone(e){
   try{ window.location.href = tel; }catch(_){}
 }
 
+/* ======= Верхнее меню ======= */
 function openTopMenu(){
   try{ closeSearch(); }catch(_){}
   document.getElementById('menuBackdrop').classList.add('show');
@@ -745,7 +742,6 @@ function toggleReviewWidget(){
   const w = document.getElementById('reviewWidgetWrap');
   w.style.display = (w.style.display === 'none' || !w.style.display) ? 'block' : 'none';
 }
-
 function openYandexReviews(e){
   try{ e.preventDefault(); e.stopPropagation(); }catch(_){}
   const url = "https://yandex.ru/sprav/widget/rating-badge/11046753996?type=rating";
@@ -760,7 +756,7 @@ function openYandexReviews(e){
 
 function openInstagram(e){
   try{ e.preventDefault(); e.stopPropagation(); }catch(_){}
-  const url = "https://www.instagram.com/KADIMA.UZ/";
+  const url = "https://www.instagram.com/choko_art_motrid/";
   closeTopMenu();
   try{
     if (window.Telegram && Telegram.WebApp && typeof Telegram.WebApp.openLink === "function"){
@@ -771,7 +767,7 @@ function openInstagram(e){
   window.open(url, "_blank");
 }
 
-/* тема */
+/* ======= Тема ======= */
 function applyTheme(theme){
   document.body.setAttribute('data-theme', theme);
   localStorage.setItem('chokoart_theme', theme);
@@ -781,7 +777,7 @@ function applyTheme(theme){
 
   try{
     if (window.Telegram && Telegram.WebApp){
-      Telegram.WebApp.setHeaderColor?.(theme === 'dark' ? '#121212' : '#F8F3E9');
+      Telegram.WebApp.setHeaderColor?.(theme === 'dark' ? '#121212' : '#F6B7C8');
       Telegram.WebApp.setBackgroundColor?.(theme === 'dark' ? '#121212' : '#F8F3E9');
     }
   }catch(_){}
@@ -813,12 +809,14 @@ function aboutBackdropClick(e){
   }
 })();
 
+/* ======= Telegram user ======= */
 const tgUser = Telegram.WebApp.initDataUnsafe?.user || {};
 const tg_username = tgUser.username || "";
 const tg_first_name = tgUser.first_name || "";
 const tg_id = tgUser.id || "";
 
-let lang='ru',category='salads',type='delivery',payment='cash',cart={};
+/* ======= State ======= */
+let lang='ru',category='cheesecakes',type='delivery',payment='cash',cart={};
 
 const TEXT={
   ru:{delivery:'🚚 Доставка',pickup:'🏃 Самовывоз',address:'📍 Адрес доставки',phone:'📞 Телефон',cart:'🛒 Корзина',order:'Оформить заказ',comment:'✍️ Комментарий к заказу',cash:'💵 Наличные',click:'💳 CLICK',results:'Результаты поиска',popular:'🔥 Популярное',empty:'Корзина пустая'},
@@ -826,72 +824,89 @@ const TEXT={
   en:{delivery:'🚚 Delivery',pickup:'🏃 Pickup',address:'📍 Address',phone:'📞 Phone',cart:'🛒 Cart',order:'Place order',comment:'✍️ Comment',cash:'💵 Cash',click:'💳 CLICK',results:'Search results',popular:'🔥 Popular',empty:'Cart is empty'}
 };
 
+/* ✅ Новые категории (как просил) */
 const CATS={
-  ru:{salads:'🥗 Салаты',sauce:'🥣 Соус',first:'🍜 Первые блюда',hot:'🍲 Горячие блюда',garnish:'🍟 Гарнир',drinks:'🥤 Напитки'},
-  uz:{salads:'🥗 Salatlar',sauce:'🥣 Souslar',first:'🍜 Birinchi taomlar',hot:'🍲 Issiq taomlar',garnish:'🍟 Garnir',drinks:'🥤 Ichimliklar'},
-  en:{salads:'🥗 Salads',sauce:'🥣 Sauces',first:'🍜 First dishes',hot:'🍲 Hot dishes',garnish:'🍟 Side dishes',drinks:'🥤 Drinks'}
+  ru:{
+    cheesecakes:'🍰 Чизкейки',
+    cakes:'🎂 Торты',
+    rolls:'🍥 Рулеты',
+    bakery:'🥐 Выпечка',
+    cookies:'🍪 Печенье',
+    desserts:'🧁 Десерты',
+    pies:'🥧 Пироги'
+  },
+  uz:{
+    cheesecakes:'🍰 Chizkeyklar',
+    cakes:'🎂 Tortlar',
+    rolls:'🍥 Ruletlar',
+    bakery:'🥐 Pishiriqlar',
+    cookies:'🍪 Pechenye',
+    desserts:'🧁 Desertlar',
+    pies:'🥧 Piroglar'
+  },
+  en:{
+    cheesecakes:'🍰 Cheesecakes',
+    cakes:'🎂 Cakes',
+    rolls:'🍥 Rolls',
+    bakery:'🥐 Bakery',
+    cookies:'🍪 Cookies',
+    desserts:'🧁 Desserts',
+    pies:'🥧 Pies'
+  }
 };
 
+/* ✅ В каждой категории — только 2 блюда */
 const MENU = {
-  salads:[
-    {id:'vesenniy', p:25000, img:'images/vesenniy.png', n:{ru:'Весенний', uz:'Bahorgi salat', en:'Spring salad'}},
-    {id:'osenniy', p:30000, img:'images/osenniy.png', n:{ru:'Осенний', uz:'Kuzgi salat', en:'Autumn salad'}},
-    {id:'grecheskiy', p:40000, img:'images/grecheskiy.png', n:{ru:'Греческий', uz:'Grecheskiy salat', en:'Greek salad'}},
-    {id:'vecho', p:45000, img:'images/vecho.png', n:{ru:'Вечо', uz:'Vecho salat', en:'Vecho salad'}},
-    {id:'krabovyy', p:40000, img:'images/krabovyy.png', n:{ru:'Крабовый', uz:'Krab salati', en:'Crab salad'}},
-    {id:'elitnyy', p:45000, img:'images/elitnyy.png', n:{ru:'Элитный', uz:'Elit salat', en:'Premium salad'}},
-    {id:'smak', p:40000, img:'images/smak.png', n:{ru:'Смак', uz:'Smak salat', en:'Smak salad'}},
-    {id:'rukolla', p:45000, img:'images/salat_s_rukolloy.png', n:{ru:'Салат с руколлой', uz:'Rukola salati', en:'Arugula salad'}},
-    {id:'vinegret', p:40000, img:'images/vinegret.png', n:{ru:'Винегрет', uz:'Vinegret', en:'Vinaigrette'}},
-    {id:'tsezar', p:45000, img:'images/tsezar_klassicheskiy.png', n:{ru:'Цезарь классический', uz:'Sezar klassik', en:'Caesar classic'}},
-    {id:'olivye', p:40000, img:'images/olive.png', n:{ru:'Оливье', uz:'Olivye', en:'Olivier'}},
-    {id:'svezhiy', p:25000, img:'images/svezhiy.png', n:{ru:'Свежий', uz:'Yangi salat', en:'Fresh salad'}}
+  cheesecakes:[
+    {id:'cheese_ny', p:45000, img:'images/cheesecake_ny.png', n:{ru:'Чизкейк Нью-Йорк', uz:'Nyu-York chizkeyk', en:'New York cheesecake'}},
+    {id:'cheese_berry', p:48000, img:'images/cheesecake_berry.png', n:{ru:'Чизкейк Ягодный', uz:'Mevali chizkeyk', en:'Berry cheesecake'}}
   ],
-  sauce:[
-    {id:'chalop', p:10000, img:'images/chalop.png', n:{ru:'Чалоп', uz:'Chalop', en:'Chalop'}},
-    {id:'tomato_sauce', p:5000, img:'images/tomato_sauce.png', n:{ru:'Соус из помидоров', uz:'Pomidor sousi', en:'Tomato sauce'}}
+  cakes:[
+    {id:'cake_choco', p:52000, img:'images/cake_choco.png', n:{ru:'Торт Шоколадный', uz:'Shokoladli tort', en:'Chocolate cake'}},
+    {id:'cake_redvel', p:55000, img:'images/cake_redvelvet.png', n:{ru:'Торт Red Velvet', uz:'Red Velvet tort', en:'Red Velvet cake'}}
   ],
-  first:[
-    {id:'shurpa', p:40000, img:'images/shurpa.png', n:{ru:'Шурпа', uz:"Sho'rva", en:'Shurpa'}},
-    {id:'pelmeni', p:40000, img:'images/pelmeni.png', n:{ru:'Пельмени', uz:'Chuchvara', en:'Dumplings'}},
-    {id:'lagman', p:40000, img:'images/lagman.png', n:{ru:'Лагман', uz:"Lag'mon", en:'Lagman'}},
-    {id:'bulon', p:20000, img:'images/bulon.png', n:{ru:'Суп бульон', uz:"Bulyon sho'rva", en:'Broth soup'}}
+  rolls:[
+    {id:'roll_choco', p:38000, img:'images/roll_choco.png', n:{ru:'Рулет шоколадный', uz:'Shokoladli rulet', en:'Chocolate roll'}},
+    {id:'roll_cream', p:39000, img:'images/roll_cream.png', n:{ru:'Рулет сливочный', uz:'Qaymoqli rulet', en:'Cream roll'}}
   ],
-  hot:[
-    {id:'manty1', p:10000, img:'images/manty1.png', n:{ru:'Манты 1шт', uz:'Manti 1 dona', en:'Manti (1 pc)'}},
-    {id:'plov05', p:50000, img:'images/plov05.png', n:{ru:'Плов 0.5', uz:'Osh 0.5', en:'Plov 0.5'}},
-    {id:'halisa', p:80000, img:'images/halisa.png', n:{ru:'Халиса', uz:'Halisa', en:'Halisa'}},
-    {id:'kurutob', p:80000, img:'images/kurutob.png', n:{ru:'Курутоб', uz:'Qurutob', en:'Qurutob'}},
-    {id:'fried_lagman', p:50000, img:'images/fried_lagman.png', n:{ru:'Жаренный Лагман', uz:"Qovurilgan lag'mon", en:'Fried lagman'}}
+  bakery:[
+    {id:'croissant', p:18000, img:'images/croissant.png', n:{ru:'Круассан', uz:'Kruassan', en:'Croissant'}},
+    {id:'danish', p:20000, img:'images/danish.png', n:{ru:'Даниш с ягодами', uz:'Mevali danish', en:'Berry danish'}}
   ],
-  garnish:[
-    {id:'fri', p:20000, img:'images/fri.png', n:{ru:'Фри', uz:'Fri', en:'French fries'}}
+  cookies:[
+    {id:'cookie_choco', p:12000, img:'images/cookie_choco.png', n:{ru:'Печенье шоколадное', uz:'Shokoladli pechenye', en:'Chocolate cookies'}},
+    {id:'cookie_nut', p:13000, img:'images/cookie_nut.png', n:{ru:'Печенье ореховое', uz:"Yong'oqli pechenye", en:'Nut cookies'}}
   ],
-  drinks:[
-    {id:'cola15', p:20000, img:'images/cola15.jpg', n:{ru:'Coca Cola 1.5L', uz:'Coca Cola 1.5L', en:'Coca Cola 1.5L'}},
-    {id:'fanta15', p:20000, img:'images/fanta15.jpg', n:{ru:'Fanta 1.5L', uz:'Fanta 1.5L', en:'Fanta 1.5L'}},
-    {id:'pepsi15', p:20000, img:'images/pepsi15.jpg', n:{ru:'Pepsi 1.5L', uz:'Pepsi 1.5L', en:'Pepsi 1.5L'}},
-    {id:'juice1', p:20000, img:'images/juice1.png', n:{ru:'Сок в ассортименте 1L', uz:'Sharbat (assort) 1L', en:'Juice assorted 1L'}},
-    {id:'chertoq15', p:8000, img:'images/chertoq15.png', n:{ru:'Вода газ / без газа Chertoq 1.5L', uz:'Chertoq suv 1.5L (gazli / gazsiz)', en:'Chertoq water 1.5L (sparkling / still)'}},
-    {id:'tea', p:5000, img:'images/tea.png', n:{ru:'Чай зелёный / чёрный', uz:'Choy (yashil / qora)', en:'Tea (green / black)'}},
-    {id:'tea_lemon', p:15000, img:'images/tea_lemon.png', n:{ru:'Чай с лимоном', uz:'Limonli choy', en:'Tea with lemon'}},
-    {id:'coffee', p:10000, img:'images/coffee.png', n:{ru:'Кофе растворимый чёрный', uz:'Qora kofe (eritma)', en:'Instant black coffee'}}
+  desserts:[
+    {id:'dessert_tiramisu', p:42000, img:'images/tiramisu.png', n:{ru:'Тирамису', uz:'Tiramisu', en:'Tiramisu'}},
+    {id:'dessert_macaron', p:30000, img:'images/macaron.png', n:{ru:'Макаронс (набор)', uz:'Makaron (to‘plam)', en:'Macarons (set)'}}
+  ],
+  pies:[
+    {id:'pie_apple', p:35000, img:'images/pie_apple.png', n:{ru:'Пирог яблочный', uz:'Olmali pirog', en:'Apple pie'}},
+    {id:'pie_cherry', p:36000, img:'images/pie_cherry.png', n:{ru:'Пирог вишневый', uz:'Gilosli pirog', en:'Cherry pie'}}
   ]
 };
 
-const POPULAR = ['plov05','manty1','shurpa','tsezar'];
+/* Популярное — из новых id */
+const POPULAR = ['cheese_ny','cake_redvel','tiramisu','croissant'].filter(Boolean);
+
+/* index */
 const ITEM_INDEX = {};
-for (const c in MENU){ MENU[c].forEach(it => { ITEM_INDEX[it.id] = it; }); }
+for (const c in MENU){
+  MENU[c].forEach(it => { ITEM_INDEX[it.id] = it; });
+}
 
 function nameOf(id){
   const it = ITEM_INDEX[id];
   if(!it) return id;
   return (it.n && (it.n[lang] || it.n.ru)) || id;
 }
+
 function formatSum(x){
   const n = Number(x) || 0;
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ');
 }
+
 function escapeHtml(s){
   return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 }
@@ -960,6 +975,7 @@ function openCart(){
   catch(_){ window.location.hash = '#cartBox'; }
 }
 
+/* popular with counter */
 function renderPopular(){
   popularRow.innerHTML = '';
   POPULAR.forEach((id)=>{
@@ -970,7 +986,7 @@ function renderPopular(){
     popularRow.innerHTML += `
       <div class="pop-card" onclick="onPopularCardClick(event,'${id}')">
         <div class="pop-badge">🔥</div>
-        <div class="pop-img"><img src="${it.img}" onerror="this.src='logo.png'"></div>
+        <div class="pop-img"><img src="${it.img}" onerror="this.src='images/logo.png'"></div>
         <div class="pop-name">${escapeHtml(nameOf(id))}</div>
         <div class="pop-price">${formatSum(it.p)} <small>сум</small></div>
 
@@ -983,6 +999,7 @@ function renderPopular(){
     `;
   });
 }
+
 function onPopularCardClick(e,id){
   if(e && e.target && (e.target.closest && e.target.closest('button'))) return;
   chg(id, 1);
@@ -999,7 +1016,8 @@ function popChg(e,id,delta){
 }
 
 function renderQuickFilters(){
-  const keys = ['salads','hot','first','drinks'];
+  /* быстрые кнопки только на 4 категории */
+  const keys = ['cheesecakes','cakes','desserts','bakery'];
   quickFilters.innerHTML = '';
   keys.forEach(k=>{
     if(!MENU[k]) return;
@@ -1033,13 +1051,13 @@ function cardHTML(it, q=''){
   const qty = cart[id] || 0;
 
   return `<div class="card">
-    <div class="img"><img src="${it.img}" onerror="this.src='logo.png'"></div>
+    <div class="img"><img src="${it.img}" onerror="this.src='images/logo.png'"></div>
     <div class="item-name">${nameHtml}</div>
     <div class="price">${formatSum(it.p)} <small>сум</small></div>
     <div class="counter">
-      <button onclick="chg('${id}',-1)">−</button>
+      <button type="button" onclick="chg('${id}',-1)">−</button>
       <span id="c_${id}">${qty}</span>
-      <button onclick="chg('${id}',1)">+</button>
+      <button type="button" onclick="chg('${id}',1)">+</button>
     </div>
   </div>`;
 }
@@ -1058,6 +1076,7 @@ function syncPopularCounters(){
     if(el) el.innerText = cart[id] || 0;
   });
 }
+
 function chg(id,v){
   cart[id]=Math.max(0,(cart[id]||0)+v);
   const el = document.getElementById('c_'+id);
@@ -1065,9 +1084,11 @@ function chg(id,v){
   updateTotal();
   syncPopularCounters();
 }
+
 function price(id){
   return (ITEM_INDEX[id] && ITEM_INDEX[id].p) ? ITEM_INDEX[id].p : 0;
 }
+
 function updateTotal(){
   let s=0;
   for(let id in cart) s += (cart[id]||0) * price(id);
@@ -1082,14 +1103,17 @@ function setType(t,b){
   b.classList.add('active');
   updateTypeFields();
 }
+
 function setPayment(p){
   payment=p;
   payCash.classList.toggle('active',p==='cash');
   payClick.classList.toggle('active',p==='click');
 }
 
+/* search */
 function isSearchOpen(){ return searchWrap.classList.contains('show'); }
 function toggleSearch(){ if(isSearchOpen()) closeSearch(); else openSearch(); }
+
 function openSearch(){
   searchWrap.classList.add('show');
   searchTitle.classList.add('show');
@@ -1100,6 +1124,7 @@ function openSearch(){
   searchInput.focus();
   searchProducts();
 }
+
 function closeSearch(){
   searchWrap.classList.remove('show');
   searchTitle.classList.remove('show');
@@ -1109,12 +1134,14 @@ function closeSearch(){
   searchInput.value = '';
   renderProducts();
 }
+
 function clearSearch(){ closeSearch(); }
 function onSearchKey(e){ if(e.key === 'Enter') closeSearch(); }
 
 function searchProducts(){
   const q = (searchInput.value || '').trim().toLowerCase();
   products.innerHTML='';
+
   if(!q){
     (MENU[category] || []).forEach((it)=>{
       cart[it.id]=cart[it.id]||0;
@@ -1122,6 +1149,7 @@ function searchProducts(){
     });
     return;
   }
+
   for(let c in MENU){
     MENU[c].forEach((it)=>{
       const nmRu = (it.n && it.n.ru) ? String(it.n.ru).toLowerCase() : '';
@@ -1135,6 +1163,7 @@ function searchProducts(){
     });
   }
 }
+
 document.addEventListener('click', (e)=>{
   if(!isSearchOpen()) return;
   const t = e.target;
@@ -1143,13 +1172,16 @@ document.addEventListener('click', (e)=>{
   if(!insideSearch && !onBtn) closeSearch();
 }, true);
 
+/* order helpers */
 function genOrderId(){
   const d = new Date();
   const dd = String(d.getDate()).padStart(2,'0');
   const mm = String(d.getMonth()+1).padStart(2,'0');
   const key = `chokoart_seq_${d.getFullYear()}${mm}${dd}`;
+
   let n = Number(localStorage.getItem(key) || 0) + 1;
   localStorage.setItem(key, String(n));
+
   const num = String(n).padStart(3,'0');
   return `CHK-${dd}${mm}-${num}`;
 }
@@ -1203,8 +1235,14 @@ function sendOrder(){
   }, 700);
 }
 
+/* init */
+function ensurePhonePrefill(){
+  if(!phone.value) phone.value = "+998 90 505 07 45";
+}
+
 loadSaved();
 bindSave();
+ensurePhonePrefill();
 applyLang();
 </script>
 </body>
