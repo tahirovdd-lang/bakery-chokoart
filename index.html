@@ -5,7 +5,7 @@
 <title>Bakery CHOKOART</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@500;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -17,6 +17,7 @@
   --pink-deep:#C56C86;
 
   --accent-red:#8B1E1E;   /* бордовый (как цена) */
+
   --stroke: rgba(0,0,0,.08);
   --stroke-strong: rgba(0,0,0,.14);
   --inner: rgba(255,255,255,.70);
@@ -76,11 +77,14 @@ body[data-theme="dark"]{ color:#f1f1f1; }
   box-shadow:0 12px 26px rgba(0,0,0,.14);
 }
 
-.brand-wrap{display:flex;flex-direction:column;align-items:center;gap:2px;}
-
-/* ✅✅✅ СДВИГ НАДПИСЕЙ ВПРАВО (Bakery / CHOKOART / BIZ...) */
 .brand-wrap{
-  transform: translateX(20px); /* примерно “на 4 буквы” вправо */
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:2px;
+
+  /* ✅ общий сдвиг блока вправо (как раньше “на 4 буквы”) */
+  transform: translateX(20px);
 }
 
 /* Bakery / CHOKOART */
@@ -98,12 +102,14 @@ body[data-theme="dark"]{ color:#f1f1f1; }
   line-height:1.1;
 }
 
-/* лозунг */
+/* ✅✅✅ лозунг: ровный шрифт, меньше на 2 размера, + сдвиг на 3 буквы вправо */
 .brand-slogan{
-  font-family:'Lobster',cursive;
-  font-size:18px;
+  font-family:'Montserrat',sans-serif; /* ровный */
+  font-weight:800;
+  font-size:16px;                     /* было 18px → уменьшили на 2 */
   opacity:.95;
   margin-top:2px;
+  transform: translateX(15px);         /* “на 3 буквы” вправо */
 }
 
 .brand-phone{position:relative; z-index:50; pointer-events:auto; margin-top:4px;}
@@ -152,8 +158,8 @@ body[data-theme="dark"]{ color:#f1f1f1; }
 /* ✅✅✅ гео-кнопка: только значок под бургером */
 .geo-btn{
   position:absolute;
-  right:18px;         /* по центру под бургером */
-  top:58px;           /* под бургером */
+  right:18px;
+  top:58px;
   width:36px;
   height:36px;
   border-radius:50%;
@@ -566,6 +572,7 @@ body[data-theme="dark"] .menu-ic{background:rgba(255,255,255,.06);}
   border-radius:22px;
   box-shadow:0 18px 40px rgba(0,0,0,.18);
   padding:14px 14px 12px;
+
   max-height: calc(100vh - 40px);
   overflow: hidden;
 }
@@ -605,7 +612,6 @@ body[data-theme="dark"] .about-card{background:#1c1c1c;border-color:rgba(255,255
     </div>
   </div>
 
-  <!-- ✅ только значок геопозиции под бургером -->
   <div class="geo-btn" onclick="openRoute()" title="Маршрут">📍</div>
 
   <div class="search-btn" onclick="toggleSearch()">🔍</div>
@@ -805,7 +811,7 @@ function toggleReviewWidget(){
   w.style.display = (w.style.display === 'none' || !w.style.display) ? 'block' : 'none';
 }
 
-/* ✅ отзывы: ссылка как ты дал */
+/* ✅ отзывы */
 const YANDEX_REVIEWS_URL = "https://yandex.uz/maps/org/239856130727/?ll=66.960593%2C39.684041&mode=search&sctx=ZAAAAAgBEAAaKAoSCaetEcE4MVFAEfxVgO82QURAEhIJDJQUWABT1j8RPUfku5S6xD8iBgABAgMEBSgKOABA1LoGSAFiJHNuaXBwZXRfZXhwX25hbWU9ZnVsbG9iamVjdHMvMS54OnJlZmIjc25pcHBldF9leHBfbmFtZT10b3BvYmplY3RzLzEueDpyZWZiHnNuaXBwZXRfZXhwX25hbWU9Z29vZHMvMS54OnJlZmInc25pcHBldF9leHBfbmFtZT1nb29kc19yZWdpc3Rlci8xLng6cmVmYgtmcmVzaG5lc3M9MGIXc291cmNlPWJ1c2luZXNzOmV4cF9yZWZiFXNvdXJjZT1wcmljZXM6ZXhwX3JlZmoCdXqdAc3MzD2gAQCoAQC9AXc%2FZizCAQantajE%2FQaCAg9iYWtlcnkgY2hva29hcnSKAgCSAgCaAgxkZXNrdG9wLW1hcHM%3D&sll=66.960593%2C39.684041&sspn=0.013893%2C0.006530&text=bakery%20chokoart&z=16.65";
 function openYandexReviews(e){
   try{ e.preventDefault(); e.stopPropagation(); }catch(_){}
@@ -843,7 +849,7 @@ function applyTheme(theme){
   try{
     if (window.Telegram && Telegram.WebApp){
       Telegram.WebApp.setHeaderColor?.(theme === 'dark' ? '#121212' : '#F8F3E9');
-     Telegram.WebApp.setBackgroundColor?.(theme === 'dark' ? '#121212' : '#F8F3E9');
+      Telegram.WebApp.setBackgroundColor?.(theme === 'dark' ? '#121212' : '#F8F3E9');
     }
   }catch(_){}
 }
@@ -853,7 +859,20 @@ function toggleThemeFromMenu(){
   applyTheme(next);
 }
 
-/* О нас — текст + скролл */
+(function initTheme(){
+  const saved = localStorage.getItem('chokoart_theme');
+  if(saved === 'dark' || saved === 'light'){
+    applyTheme(saved);
+  }else{
+    const tgTheme = (window.Telegram && Telegram.WebApp && Telegram.WebApp.colorScheme) ? Telegram.WebApp.colorScheme : 'light';
+    applyTheme(tgTheme === 'dark' ? 'dark' : 'light');
+  }
+})();
+
+/* О нас */
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
 const ABOUT_TEXT = `🇷🇺 Русский
 
 Bakery CHOKOART — это место, где десерты становятся искусством 🍫✨
@@ -893,9 +912,6 @@ Every dessert at CHOKOART is a perfect balance of aesthetics, freshness, and tru
 
 CHOKOART — sweet art created for you.`;
 
-function escapeHtml(s){
-  return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-}
 function openAbout(){
   closeTopMenu();
   const el = document.getElementById('aboutBody');
@@ -912,21 +928,13 @@ function aboutBackdropClick(e){
   if(e.target && e.target.id === 'aboutModal') closeAbout();
 }
 
-(function initTheme(){
-  const saved = localStorage.getItem('chokoart_theme');
-  if(saved === 'dark' || saved === 'light'){
-    applyTheme(saved);
-  }else{
-    const tgTheme = (window.Telegram && Telegram.WebApp && Telegram.WebApp.colorScheme) ? Telegram.WebApp.colorScheme : 'light';
-    applyTheme(tgTheme === 'dark' ? 'dark' : 'light');
-  }
-})();
-
+/* TG user */
 const tgUser = Telegram.WebApp.initDataUnsafe?.user || {};
 const tg_username = tgUser.username || "";
 const tg_first_name = tgUser.first_name || "";
 const tg_id = tgUser.id || "";
 
+/* состояние */
 let lang='ru',category='cheesecakes',type='delivery',payment='cash',cart={};
 
 const TEXT={
@@ -975,7 +983,6 @@ const MENU = {
 
 const POPULAR = ['cheesecake_classic','cake_choco','dessert_tiramisu','croissant'];
 
-/* индекс */
 const ITEM_INDEX = {};
 for (const c in MENU){ MENU[c].forEach(it => { ITEM_INDEX[it.id] = it; }); }
 
@@ -1054,7 +1061,6 @@ function openCart(){
   catch(_){ window.location.hash = '#cartBox'; }
 }
 
-/* популярное */
 function renderPopular(){
   popularRow.innerHTML = '';
   POPULAR.forEach((id)=>{
@@ -1068,7 +1074,6 @@ function renderPopular(){
         <div class="pop-img"><img src="${it.img}" onerror="this.src='images/logo.png'"></div>
         <div class="pop-name">${escapeHtml(nameOf(id))}</div>
         <div class="pop-price">${formatSum(it.p)} <small>сум</small></div>
-
         <div class="pop-counter">
           <button type="button" onclick="popChg(event,'${id}',-1)">−</button>
           <span id="pc_${id}">${cart[id]||0}</span>
@@ -1093,7 +1098,6 @@ function popChg(e,id,delta){
   if(isSearchOpen()) closeSearch();
 }
 
-/* быстрые фильтры */
 function renderQuickFilters(){
   const keys = ['cheesecakes','cakes','desserts','bakery'];
   quickFilters.innerHTML = '';
@@ -1299,9 +1303,11 @@ function sendOrder(){
   }, 700);
 }
 
+/* init */
 loadSaved();
 bindSave();
 applyLang();
 </script>
+
 </body>
 </html>
