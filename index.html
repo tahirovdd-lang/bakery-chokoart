@@ -25,7 +25,6 @@
   --r-md:22px;
   --r-pill:28px;
 
-  /* ✅ фикс “полэкрана” + четкий скролл */
   --vh: 1vh;
 }
 
@@ -49,7 +48,6 @@ body{
   -webkit-text-size-adjust:100%;
 }
 
-/* ✅ тёмная тема */
 body[data-theme="dark"]{
   --bg:#121212;
   --stroke: rgba(255,255,255,.14);
@@ -60,13 +58,9 @@ body[data-theme="dark"]{
   color:#f1f1f1;
 }
 
-/* ✅ центрируем контент */
-.page{
-  max-width:560px;
-  margin:0 auto;
-}
+.page{max-width:560px;margin:0 auto;}
 
-/* ✅✅✅ ШАПКА */
+/* header */
 .header{
   padding:16px 12px 26px;
   background:linear-gradient(135deg,var(--pink-deep),var(--pink));
@@ -78,8 +72,6 @@ body[data-theme="dark"]{
   position:relative;
   text-align:center;
 }
-
-/* ✅ ЛОГО (84px как было) */
 .header img{
   position:absolute;
   left:12px;
@@ -92,13 +84,9 @@ body[data-theme="dark"]{
   border:1px solid rgba(255,255,255,.22);
   box-shadow:0 12px 26px rgba(0,0,0,.14);
 }
-
-.brand-wrap{display:flex;flex-direction:column;align-items:center;gap:2px;}
-.brand-wrap{ transform: translateX(16px); }
-
+.brand-wrap{display:flex;flex-direction:column;align-items:center;gap:2px;transform: translateX(16px);}
 .brand-title{font-family:'Lobster',cursive;font-size:34px;line-height:1;letter-spacing:.2px;}
 .brand-title2{font-family:'Montserrat',sans-serif;font-weight:900;font-size:20px;letter-spacing:2px;line-height:1.1;}
-
 .brand-slogan{
   font-family:'Montserrat',sans-serif;
   font-size:12px;
@@ -108,63 +96,43 @@ body[data-theme="dark"]{
   margin-top:2px;
   text-transform:uppercase;
 }
-
 .brand-phone{position:relative; z-index:50; pointer-events:auto; margin-top:4px;}
 .brand-phone a{
   color:white;text-decoration:none;font-size:14px;font-weight:800;
   position:relative;z-index:51;pointer-events:auto;cursor:pointer;opacity:.95;
 }
 
-/* ✅✅✅ ПРАВЫЙ СТОЛБИК КНОПОК (бургер сверху, локация ниже, поиск внизу) */
+/* right actions */
 .header-actions{
   position:absolute;
-  right:8px;          /* ✅ в самый правый угол */
+  right:8px;
   top:10px;
-  bottom:10px;        /* ✅ чтобы поиск ушел вниз */
+  bottom:10px;
   display:flex;
   flex-direction:column;
   justify-content:space-between;
   align-items:flex-end;
   z-index:90;
 }
-
-/* ✅ уменьшили чутка */
 .act-btn{
-  width:36px;
-  height:36px;
-  border-radius:14px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  user-select:none;
-
+  width:36px;height:36px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;user-select:none;
   background:rgba(255,255,255,.92);
   border:1px solid rgba(255,255,255,.55);
   box-shadow: inset 0 0 0 2px rgba(255,255,255,.55), 0 8px 18px rgba(0,0,0,.10);
   transition:.15s;
 }
 .act-btn:active{transform:scale(.97);}
-
 .burger{width:20px;height:14px;position:relative;}
-.burger span{
-  position:absolute;left:0;right:0;
-  height:3px;border-radius:10px;
-  background:#222;opacity:.9;
-}
+.burger span{position:absolute;left:0;right:0;height:3px;border-radius:10px;background:#222;opacity:.9;}
 .burger span:nth-child(1){top:0;}
 .burger span:nth-child(2){top:5.5px;}
 .burger span:nth-child(3){bottom:0;}
+.act-ico{font-size:16px;line-height:1;color:#222;}
 
-.act-ico{
-  font-size:16px;
-  line-height:1;
-  color:#222;
-}
-
-/* остальной UI */
+/* buttons */
 .langs,.types,.payments{display:flex;gap:12px;padding:12px;justify-content:center;}
-
 .btn{
   padding:12px 20px;border-radius:28px;font-weight:900;min-width:120px;text-align:center;
   cursor:pointer;transition:.15s;border:1px solid var(--stroke);background:#fffdf9;
@@ -178,14 +146,7 @@ body[data-theme="dark"] .btn{background:rgba(255,255,255,.06);color:var(--accent
   color:white;border:1px solid rgba(255,255,255,.35);
   box-shadow: inset 0 0 0 2px rgba(255,255,255,.14), 0 10px 22px rgba(197,108,134,.28);
 }
-
-/* ✅ категории чуть меньше */
-.cat-btn{
-  padding:12px 18px;
-  min-width:132px;
-  font-size:14px;
-  border-radius:999px;
-}
+.cat-btn{padding:12px 18px;min-width:132px;font-size:14px;border-radius:999px;}
 
 .input{
   margin:8px auto;display:block;padding:14px;width:85%;
@@ -197,7 +158,6 @@ body[data-theme="dark"] .input{background:rgba(255,255,255,.06);color:#f1f1f1;}
 
 .categories{display:flex;gap:12px;padding:14px;overflow-x:auto;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;}
 .products{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;padding:12px;}
-
 .card{
   border-radius:24px;padding:12px;text-align:center;background:#fffdf9;border:1px solid var(--stroke);
   box-shadow: inset 0 0 0 2px var(--inner), 0 8px 18px rgba(0,0,0,.08);
@@ -218,6 +178,7 @@ body[data-theme="dark"] .card{background:rgba(255,255,255,.06);color:#f1f1f1;}
 }
 .counter button:active{transform:scale(.96);}
 
+/* carousels */
 .popular-wrap{width:100%;padding:4px 12px 6px;}
 .popular-title{width:100%;font-weight:900;padding:8px 2px 10px;display:flex;align-items:center;gap:8px;}
 .popular-row,.mini-row{display:flex;gap:12px;overflow-x:auto;padding:2px 2px 10px;-webkit-overflow-scrolling:touch;}
@@ -241,6 +202,7 @@ body[data-theme="dark"] .pop-card, body[data-theme="dark"] .mini-card{background
 .mini-card{min-width:132px;border-radius:22px;}
 .mini-counter button{width:28px;height:28px;}
 .mini-name{font-weight:900;margin-top:8px;font-size:12px;line-height:1.15;min-height:28px;}
+.pop-counter span,.mini-counter span{font-weight:900; min-width:18px; text-align:center;}
 
 .cart{
   background:#fffdf9;margin:12px;padding:16px;border-radius:24px;border:1px solid var(--stroke);
@@ -319,7 +281,7 @@ body[data-theme="dark"] .menu-ic{background:rgba(255,255,255,.06);}
 .menu-sub{font-size:12px;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;}
 .menu-right{opacity:.65;font-weight:900;}
 
-/* ✅ подкатегории: всплывающее окно снизу */
+/* subcats */
 .sub-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.38);opacity:0;pointer-events:none;transition:.18s;z-index:1200;}
 .sub-backdrop.show{opacity:1;pointer-events:auto;}
 .sub-sheet{
@@ -341,16 +303,8 @@ body[data-theme="dark"] .sub-handle{background:rgba(255,255,255,.18);}
 .sub-head b{font-size:16px;}
 .sub-close{width:38px;height:38px;border:none;border-radius:12px;background:transparent;cursor:pointer;font-size:22px;line-height:1;color:#777;}
 body[data-theme="dark"] .sub-close{color:#bbb;}
-
-.sub-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
-  padding:6px 2px 10px;
-}
-@media (max-width:420px){
-  .sub-grid{grid-template-columns:repeat(3,1fr);}
-}
+.sub-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:6px 2px 10px;}
+@media (max-width:420px){.sub-grid{grid-template-columns:repeat(3,1fr);}}
 .sub-tile{
   border:1px solid var(--stroke);
   background:rgba(0,0,0,.03);
@@ -366,32 +320,11 @@ body[data-theme="dark"] .sub-close{color:#bbb;}
 }
 body[data-theme="dark"] .sub-tile{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);}
 .sub-tile:active{transform:scale(.98);}
-.sub-ico{
-  font-size:30px; /* ✅ иконки выше/больше */
-  line-height:1;
-}
-.sub-name{
-  font-size:11px;
-  font-weight:900;
-  text-align:center;
-  line-height:1.15;
-  word-break:break-word;
-}
-
-/* ✅ “все торты/все ...” внизу */
-.sub-all{
-  margin-top:8px;
-  padding-top:10px;
-  border-top:1px solid rgba(0,0,0,.06);
-}
+.sub-ico{font-size:30px;line-height:1;}
+.sub-name{font-size:11px;font-weight:900;text-align:center;line-height:1.15;word-break:break-word;}
+.sub-all{margin-top:8px;padding-top:10px;border-top:1px solid rgba(0,0,0,.06);}
 body[data-theme="dark"] .sub-all{border-top:1px solid rgba(255,255,255,.12);}
-.sub-all .sub-tile{
-  width:100%;
-  flex-direction:row;
-  justify-content:flex-start;
-  padding:12px 12px;
-  gap:10px;
-}
+.sub-all .sub-tile{width:100%;flex-direction:row;justify-content:flex-start;padding:12px 12px;gap:10px;}
 .sub-all .sub-name{font-size:14px;}
 .sub-all .sub-ico{font-size:26px;}
 
@@ -409,7 +342,6 @@ body[data-theme="dark"] .sub-all{border-top:1px solid rgba(255,255,255,.12);}
 }
 body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f1f1f1;}
 
-/* адаптация */
 @media (max-width:420px){
   .brand-title{font-size:30px;}
   .brand-title2{font-size:18px;}
@@ -443,7 +375,6 @@ body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f
     </div>
   </div>
 
-  <!-- ✅✅✅ как ты просил: бургер сверху справа, ниже локация, поиск внизу справа -->
   <div class="header-actions">
     <div class="act-btn" onclick="openTopMenu()" title="Меню">
       <div class="burger"><span></span><span></span><span></span></div>
@@ -459,12 +390,11 @@ body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f
 
 <div class="page">
 
-<!-- ✅ меню -->
 <div class="menu-backdrop" id="menuBackdrop" onclick="closeTopMenu()"></div>
 <div class="menu-sheet" id="menuSheet">
   <div class="menu-handle"></div>
   <div class="menu-head">
-    <b>Меню</b>
+    <b id="menuTitle">Меню</b>
     <button class="menu-close" onclick="closeTopMenu()">×</button>
   </div>
 
@@ -473,8 +403,8 @@ body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f
       <div class="menu-left">
         <div class="menu-ic">⭐</div>
         <div class="menu-txt">
-          <div class="menu-name">Оставить отзыв</div>
-          <div class="menu-sub">Яндекс рейтинг / отзывы</div>
+          <div class="menu-name" id="mReviewTitle">Оставить отзыв</div>
+          <div class="menu-sub" id="mReviewSub">Яндекс рейтинг / отзывы</div>
         </div>
       </div>
       <div class="menu-right">›</div>
@@ -490,23 +420,22 @@ body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f
           style="border:0; display:block;"
         ></iframe>
       </div>
-      <div style="text-align:center; font-size:12px; opacity:.75; margin-top:6px;">
+      <div style="text-align:center; font-size:12px; opacity:.75; margin-top:6px;" id="mReviewHint">
         Если виджет не открылся в Telegram — откройте отзывы через кнопку ниже.
       </div>
       <div style="display:flex; justify-content:center; margin-top:8px;">
-        <button class="btn" style="min-width:auto; padding:10px 14px;" onclick="openYandexReviews(event)">
+        <button class="btn" style="min-width:auto; padding:10px 14px;" onclick="openYandexReviews(event)" id="mReviewOpenBtn">
           Открыть отзывы
         </button>
       </div>
     </div>
 
-    <!-- ✅ вернул “Юридическим лицам” -->
     <div class="menu-item" onclick="toggleLegal()" role="button">
       <div class="menu-left">
         <div class="menu-ic">🏢</div>
         <div class="menu-txt">
-          <div class="menu-name">Юридическим лицам</div>
-          <div class="menu-sub">Контакты для договоров / счетов</div>
+          <div class="menu-name" id="mLegalTitle">Юридическим лицам</div>
+          <div class="menu-sub" id="mLegalSub">Контакты для договоров / счетов</div>
         </div>
       </div>
       <div class="menu-right">›</div>
@@ -514,19 +443,19 @@ body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f
 
     <div id="legalWrap" style="display:none; padding:6px 4px 10px;">
       <div style="border:1px solid var(--stroke); border-radius:16px; overflow:hidden; background:rgba(0,0,0,.03); padding:12px;">
-        <div style="font-weight:900; margin-bottom:8px;">✉️ Почта</div>
-        <div style="font-size:13px; opacity:.85;">(позже допишем почту)</div>
+        <div style="font-weight:900; margin-bottom:8px;" id="mLegalMail">✉️ Почта</div>
+        <div style="font-size:13px; opacity:.85;" id="mLegalMailHint">(позже допишем почту)</div>
 
         <div style="height:10px;"></div>
 
-        <div style="font-weight:900; margin-bottom:6px;">📞 Телефон</div>
-        <a href="tel:+998955006262" onclick="callPhone2(event)" style="text-decoration:none; font-weight:900; color:var(--accent-red);">
+        <div style="font-weight:900; margin-bottom:6px;" id="mLegalPhone">📞 Телефон</div>
+        <a href="tel:+998955006262" onclick="callPhone2(event)" style="text-decoration:none; font-weight:900; color:var(--accent-red);" id="mLegalPhoneNum">
           +998 95 500 62 62
         </a>
 
         <div style="height:12px;"></div>
 
-        <button class="btn" style="width:100%; min-width:auto;" onclick="openManagerChat(event)">
+        <button class="btn" style="width:100%; min-width:auto;" onclick="openManagerChat(event)" id="mLegalChatBtn">
           💬 Чат с менеджером
         </button>
       </div>
@@ -536,8 +465,8 @@ body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f
       <div class="menu-left">
         <div class="menu-ic">📞</div>
         <div class="menu-txt">
-          <div class="menu-name">Позвонить</div>
-          <div class="menu-sub">+998 90 505 07 45</div>
+          <div class="menu-name" id="mCallTitle">Позвонить</div>
+          <div class="menu-sub" id="mCallSub">+998 90 505 07 45</div>
         </div>
       </div>
       <div class="menu-right">›</div>
@@ -551,8 +480,8 @@ body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f
           </svg>
         </div>
         <div class="menu-txt">
-          <div class="menu-name">@choko_art_motrid</div>
-          <div class="menu-sub">Открыть Instagram</div>
+          <div class="menu-name" id="mInstaTitle">@choko_art_motrid</div>
+          <div class="menu-sub" id="mInstaSub">Открыть Instagram</div>
         </div>
       </div>
       <div class="menu-right">›</div>
@@ -562,16 +491,15 @@ body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f
       <div class="menu-left">
         <div class="menu-ic">🌓</div>
         <div class="menu-txt">
-          <div class="menu-name">Тема</div>
+          <div class="menu-name" id="mThemeTitle">Тема</div>
           <div class="menu-sub" id="themeMenuSub">Светлая</div>
         </div>
       </div>
-      <div class="menu-right">›</div>
+      <div class="menu-right" id="mThemeRight">›</div>
     </div>
   </div>
 </div>
 
-<!-- ✅ подкатегории -->
 <div class="sub-backdrop" id="subBackdrop" onclick="closeSubcats()"></div>
 <div class="sub-sheet" id="subSheet">
   <div class="sub-handle"></div>
@@ -581,26 +509,21 @@ body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f
   </div>
 
   <div class="sub-grid" id="subGrid"></div>
-
-  <!-- ✅ в самом низу “Все ...” -->
   <div class="sub-all" id="subAllWrap"></div>
 </div>
 
-<!-- ✅ поиск -->
 <div class="search-title" id="searchTitle">Результаты поиска</div>
 <div class="search-wrap" id="searchWrap">
   <input id="searchInput" class="input" placeholder="Поиск..." oninput="searchProducts()" onkeydown="onSearchKey(event)">
   <div class="search-clear" onclick="clearSearch()" title="Очистить">✖</div>
 </div>
 
-<!-- ✅ язык -->
 <div class="langs">
   <button class="btn active" onclick="setLang('ru',this)">RU</button>
   <button class="btn" onclick="setLang('uz',this)">UZ</button>
   <button class="btn" onclick="setLang('en',this)">EN</button>
 </div>
 
-<!-- ✅ популярное / новинки / подарок -->
 <div class="popular-wrap" id="popularWrap">
   <div class="popular-title" id="popularTitle">🔥 Популярное</div>
   <div class="popular-row" id="popularRow"></div>
@@ -616,7 +539,6 @@ body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f
   <div class="mini-row" id="giftRow"></div>
 </div>
 
-<!-- ✅ тип -->
 <div class="types">
   <button class="btn active" id="btnDelivery" onclick="setType('delivery',this)"></button>
   <button class="btn" id="btnPickup" onclick="setType('pickup',this)"></button>
@@ -625,34 +547,23 @@ body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f
 <input id="address" class="input">
 <input id="phone" class="input">
 
-<!-- ✅ категории -->
 <div class="categories" id="cats"></div>
-
-<!-- ✅ товары -->
 <div class="products" id="products"></div>
 
-<!-- ✅ корзина -->
 <div class="cart" id="cartBox">
   <b id="cartTitle"></b>: <span id="total">0</span> сум
-
-  <!-- ✅ вернул стоимость доставки -->
-  <div style="margin-top:8px; font-weight:900; opacity:.9;">
-    🚚 Доставка по Самарканду: <span id="deliveryFee">10 000</span> сум
-    <div style="font-size:12px; font-weight:800; opacity:.75; margin-top:2px;">
-      (добавляется только при выборе “Доставка”)
-    </div>
-  </div>
-
   <div style="margin-top:10px; font-weight:900;">
-    Итого: <span id="grandTotal">0</span> сум
+    <span id="totalLabel">Итого</span>: <span id="grandTotal">0</span> сум
   </div>
 
   <textarea id="comment" class="input"></textarea>
+
   <div class="payments">
-    <button class="btn active" id="payCash" onclick="setPayment('cash')">💵 Наличные</button>
-    <button class="btn" id="payClick" onclick="setPayment('click')">💳 CLICK</button>
+    <button class="btn active" id="payCash" onclick="setPayment('cash')"></button>
+    <button class="btn" id="payClick" onclick="setPayment('click')"></button>
   </div>
-  <button class="order-btn" id="orderBtn" onclick="sendOrder()">Оформить заказ</button>
+
+  <button class="order-btn" id="orderBtn" onclick="sendOrder()"></button>
 </div>
 
 <div class="popup" id="popup"><div class="popup-box">✅ Заказ принят!</div></div>
@@ -660,8 +571,7 @@ body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f
 <div class="sticky-checkout">
   <div class="sticky-inner">
     <div class="sticky-sum">
-      <span id="stickyTotal">0</span> <small>сум</small>
-      <small id="stickyDelivery" style="margin-top:4px;">+ доставка 10 000</small>
+      <span id="stickyTotal">0</span> <small id="sumCurrency">сум</small>
     </div>
     <button class="sticky-btn" onclick="openCart()" id="stickyCartBtn">Корзина</button>
   </div>
@@ -678,7 +588,7 @@ try{
   Telegram.WebApp.disableVerticalSwipes?.();
 }catch(_){}
 
-/* ✅ фикс высоты viewport (iOS/Android) */
+/* ✅ фикс высоты viewport */
 function setVH(){
   const vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -687,17 +597,129 @@ setVH();
 window.addEventListener('resize', setVH, {passive:true});
 window.addEventListener('orientationchange', ()=>setTimeout(setVH, 250), {passive:true});
 
-/* ====== данные ====== */
-const ADMIN_ID = 6013591658;  // ✅ айди админа для чата с менеджером
-const DELIVERY_FEE_SAMARKAND = 10000; // ✅ доставка по Самарканду
+/* ====== constants ====== */
+const ADMIN_ID = 6013591658;
+const DELIVERY_FEE_SAMARKAND = 10000;
 
 const tgUser = Telegram.WebApp.initDataUnsafe?.user || {};
 const tg_username = tgUser.username || "";
 const tg_first_name = tgUser.first_name || "";
 const tg_id = tgUser.id || "";
 
+/* ✅ тексты для 3 языков (кнопки и заголовки) */
+const UI = {
+  ru:{
+    menu:'Меню',
+    reviewTitle:'Оставить отзыв',
+    reviewSub:'Яндекс рейтинг / отзывы',
+    reviewHint:'Если виджет не открылся в Telegram — откройте отзывы через кнопку ниже.',
+    reviewOpen:'Открыть отзывы',
+    legalTitle:'Юридическим лицам',
+    legalSub:'Контакты для договоров / счетов',
+    legalMail:'✉️ Почта',
+    legalMailHint:'(позже допишем почту)',
+    legalPhone:'📞 Телефон',
+    legalChat:'💬 Чат с менеджером',
+    callTitle:'Позвонить',
+    instaSub:'Открыть Instagram',
+    theme:'Тема',
+    searchResults:'Результаты поиска',
+
+    popular:'🔥 Популярное',
+    new:'🆕 Новинки',
+    gift:'🎁 Для подарка',
+
+    delivery:'🚚 Доставка',
+    pickup:'🏃 Самовывоз',
+    address:'📍 Адрес доставки',
+    phone:'📞 Телефон',
+
+    cart:'🛒 Корзина',
+    total:'Итого',
+    order:'Оформить заказ',
+    comment:'✍️ Комментарий к заказу',
+
+    cash:'💵 Наличные',
+    click:'💳 CLICK',
+
+    sum:'сум'
+  },
+  uz:{
+    menu:'Menyu',
+    reviewTitle:'Fikr qoldirish',
+    reviewSub:'Yandex reyting / fikrlar',
+    reviewHint:"Agar vidjet Telegramda ochilmasa — pastdagi tugma orqali fikrlarni oching.",
+    reviewOpen:"Fikrlarni ochish",
+    legalTitle:'Yuridik shaxslar',
+    legalSub:"Shartnoma / hisob uchun kontaktlar",
+    legalMail:'✉️ Pochta',
+    legalMailHint:"(keyinroq pochta yozamiz)",
+    legalPhone:'📞 Telefon',
+    legalChat:'💬 Menejer bilan chat',
+    callTitle:"Qo'ng'iroq qilish",
+    instaSub:"Instagramni ochish",
+    theme:'Mavzu',
+    searchResults:'Qidiruv natijalari',
+
+    popular:'🔥 Ommabop',
+    new:'🆕 Yangi',
+    gift:'🎁 Sovg‘a uchun',
+
+    delivery:'🚚 Yetkazish',
+    pickup:'🏃 Olib ketish',
+    address:'📍 Manzil',
+    phone:'📞 Telefon',
+
+    cart:'🛒 Savat',
+    total:'Jami',
+    order:'Buyurtma berish',
+    comment:'✍️ Izoh',
+
+    cash:'💵 Naqd',
+    click:'💳 CLICK',
+
+    sum:'so‘m'
+  },
+  en:{
+    menu:'Menu',
+    reviewTitle:'Leave a review',
+    reviewSub:'Yandex rating / reviews',
+    reviewHint:"If the widget doesn't open in Telegram — open reviews using the button below.",
+    reviewOpen:'Open reviews',
+    legalTitle:'For legal entities',
+    legalSub:'Contacts for contracts / invoices',
+    legalMail:'✉️ Email',
+    legalMailHint:'(we will add email later)',
+    legalPhone:'📞 Phone',
+    legalChat:'💬 Chat with manager',
+    callTitle:'Call',
+    instaSub:'Open Instagram',
+    theme:'Theme',
+    searchResults:'Search results',
+
+    popular:'🔥 Popular',
+    new:'🆕 New',
+    gift:'🎁 For a gift',
+
+    delivery:'🚚 Delivery',
+    pickup:'🏃 Pickup',
+    address:'📍 Address',
+    phone:'📞 Phone',
+
+    cart:'🛒 Cart',
+    total:'Total',
+    order:'Place order',
+    comment:'✍️ Comment',
+
+    cash:'💵 Cash',
+    click:'💳 CLICK',
+
+    sum:'sum'
+  }
+};
+
 let lang='ru',category='cheesecakes',type='delivery',payment='cash',cart={};
-let currentSubcat = ''; // ✅ выбранная подкатегория
+let currentSubcat = '';
 
 const MENU = {
   cheesecakes:[
@@ -736,10 +758,9 @@ const CATS = {
   en:{cheesecakes:'🍰 Cheesecakes',cakes:'🎂 Cakes',rolls:'🍥 Rolls',bakery:'🥐 Pastry',cookies:'🍪 Cookies',desserts:'🍨 Desserts',pies:'🥧 Pies'}
 };
 
-/* ✅ подкатегории (вернул) */
 const SUBCATS = {
   cakes: [
-    {key:'wedding', ico:'💍', n:{ru:'Свадебные', uz:'To‘y', en:'Wedding'}},
+    {key:'wedding', ico:'💍', n:{ru:'Свадебные', uz:"To‘y", en:'Wedding'}},
     {key:'bento',   ico:'🧁', n:{ru:'Бенто',    uz:'Bento', en:'Bento'}},
     {key:'roll',    ico:'🍥', n:{ru:'Торты-рулеты', uz:'Rulet', en:'Roll cakes'}},
     {key:'event',   ico:'🎉', n:{ru:'На мероприятия', uz:'Tadbir', en:'Events'}}
@@ -782,6 +803,56 @@ function formatSum(x){
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ');
 }
 
+/* ✅ тексты на странице */
+function applyUI(){
+  // menu
+  menuTitle.innerText = UI[lang].menu;
+  mReviewTitle.innerText = UI[lang].reviewTitle;
+  mReviewSub.innerText = UI[lang].reviewSub;
+  mReviewHint.innerText = UI[lang].reviewHint;
+  mReviewOpenBtn.innerText = UI[lang].reviewOpen;
+
+  mLegalTitle.innerText = UI[lang].legalTitle;
+  mLegalSub.innerText = UI[lang].legalSub;
+  mLegalMail.innerText = UI[lang].legalMail;
+  mLegalMailHint.innerText = UI[lang].legalMailHint;
+  mLegalPhone.innerText = UI[lang].legalPhone;
+  mLegalChatBtn.innerText = UI[lang].legalChat;
+
+  mCallTitle.innerText = UI[lang].callTitle;
+  mInstaSub.innerText = UI[lang].instaSub;
+  mThemeTitle.innerText = UI[lang].theme;
+
+  searchTitle.innerText = UI[lang].searchResults;
+
+  // carousels titles
+  popularTitle.innerText = UI[lang].popular;
+  newTitle.innerText = UI[lang].new;
+  giftTitle.innerText = UI[lang].gift;
+
+  // type buttons
+  btnDelivery.innerText = UI[lang].delivery;
+  btnPickup.innerText = UI[lang].pickup;
+
+  // placeholders
+  address.placeholder = UI[lang].address;
+  phone.placeholder = UI[lang].phone;
+
+  // cart / payments
+  cartTitle.innerText = UI[lang].cart;
+  totalLabel.innerText = UI[lang].total;
+  orderBtn.innerText = UI[lang].order;
+  comment.placeholder = UI[lang].comment;
+  payCash.innerText = UI[lang].cash;
+  payClick.innerText = UI[lang].click;
+  stickyCartBtn.innerText = UI[lang].cart;
+  sumCurrency.innerText = UI[lang].sum;
+
+  // redraw (names depend on lang)
+  renderCats(); renderProducts(); renderPopular(); renderNew(); renderGift();
+  updateTotal();
+}
+
 /* header actions */
 function openTopMenu(){
   closeSearch();
@@ -807,7 +878,7 @@ function callPhone2(e){
   try{ Telegram.WebApp.openLink(tel); }catch(_){ window.location.href = tel; }
 }
 
-/* ✅ Юр лица */
+/* legal */
 function toggleLegal(){
   const w = document.getElementById('legalWrap');
   w.style.display = (w.style.display==='none' || !w.style.display) ? 'block' : 'none';
@@ -815,11 +886,22 @@ function toggleLegal(){
 function openManagerChat(e){
   try{ e.preventDefault(); e.stopPropagation(); }catch(_){}
   const url = `https://t.me/user?id=${ADMIN_ID}`;
-  try{
-    Telegram.WebApp.openLink(url);
-  }catch(_){
-    window.open(url,'_blank');
-  }
+  try{ Telegram.WebApp.openLink(url); }catch(_){ window.open(url,'_blank'); }
+}
+
+/* reviews */
+function toggleReviewWidget(){
+  const w = document.getElementById('reviewWidgetWrap');
+  w.style.display = (w.style.display==='none' || !w.style.display) ? 'block' : 'none';
+}
+const YANDEX_REVIEWS_URL="https://yandex.uz/maps/org/239856130727/?ll=66.960593%2C39.684041&mode=search&z=16.65";
+function openYandexReviews(e){ try{e.preventDefault();e.stopPropagation();}catch(_){}
+  try{Telegram.WebApp.openLink(YANDEX_REVIEWS_URL);}catch(_){window.open(YANDEX_REVIEWS_URL,'_blank');}
+}
+function openInstagram(e){ try{e.preventDefault();e.stopPropagation();}catch(_){}
+  const url="https://www.instagram.com/choko_art_motrid/";
+  closeTopMenu();
+  try{Telegram.WebApp.openLink(url);}catch(_){window.open(url,'_blank');}
 }
 
 /* search */
@@ -856,20 +938,21 @@ function searchProducts(){
   }
 }
 
-/* ✅ подкатегории (окно снизу) */
+/* subcats */
 function openSubcats(catKey){
   const list = SUBCATS[catKey] || [];
   const title = CATS[lang][catKey] || catKey;
-  document.getElementById('subTitle').innerText = `Подкатегории: ${title}`;
-  const grid = document.getElementById('subGrid');
-  const allWrap = document.getElementById('subAllWrap');
 
-  grid.innerHTML = '';
-  allWrap.innerHTML = '';
+  subTitle.innerText = (lang==='ru') ? `Подкатегории: ${title}`
+    : (lang==='uz') ? `Bo‘limlar: ${title}`
+    : `Subcategories: ${title}`;
+
+  subGrid.innerHTML = '';
+  subAllWrap.innerHTML = '';
 
   list.forEach(sc=>{
     const nm = (sc.n && (sc.n[lang] || sc.n.ru)) ? (sc.n[lang] || sc.n.ru) : sc.key;
-    grid.innerHTML += `
+    subGrid.innerHTML += `
       <div class="sub-tile" onclick="pickSubcat('${catKey}','${sc.key}')">
         <div class="sub-ico">${sc.ico}</div>
         <div class="sub-name">${escapeHtml(nm)}</div>
@@ -877,20 +960,23 @@ function openSubcats(catKey){
     `;
   });
 
-  const allLabel = (catKey === 'cakes') ? 'Все торты' : 'Показать всё';
-  allWrap.innerHTML = `
+  const allLabel = (catKey==='cakes')
+    ? (lang==='ru' ? 'Все торты' : lang==='uz' ? 'Barcha tortlar' : 'All cakes')
+    : (lang==='ru' ? 'Показать всё' : lang==='uz' ? "Hammasi" : 'Show all');
+
+  subAllWrap.innerHTML = `
     <div class="sub-tile" onclick="pickSubcat('${catKey}','')">
       <div class="sub-ico">📦</div>
       <div class="sub-name">${escapeHtml(allLabel)}</div>
     </div>
   `;
 
-  document.getElementById('subBackdrop').classList.add('show');
-  document.getElementById('subSheet').classList.add('show');
+  subBackdrop.classList.add('show');
+  subSheet.classList.add('show');
 }
 function closeSubcats(){
-  document.getElementById('subBackdrop').classList.remove('show');
-  document.getElementById('subSheet').classList.remove('show');
+  subBackdrop.classList.remove('show');
+  subSheet.classList.remove('show');
 }
 function pickSubcat(catKey, subKey){
   category = catKey;
@@ -933,7 +1019,7 @@ function popCardHTML(it,badge){
     <div class="pop-badge">${badge}</div>
     <div class="pop-img"><img src="${it.img}" onerror="this.src='images/logo.png'"></div>
     <div class="pop-name">${escapeHtml(nameOf(id))}</div>
-    <div class="pop-price">${formatSum(it.p)} <small>сум</small></div>
+    <div class="pop-price">${formatSum(it.p)} <small>${UI[lang].sum}</small></div>
     <div class="pop-counter">
       <button type="button" onclick="chgFrom(event,'${id}',-1)">−</button>
       <span id="pc_${id}">${cart[id]||0}</span>
@@ -948,7 +1034,7 @@ function miniCardHTML(it,badge){
     <div class="mini-badge">${badge}</div>
     <div class="mini-img"><img src="${it.img}" onerror="this.src='images/logo.png'"></div>
     <div class="mini-name">${escapeHtml(nameOf(id))}</div>
-    <div class="mini-price">${formatSum(it.p)} <small>сум</small></div>
+    <div class="mini-price">${formatSum(it.p)} <small>${UI[lang].sum}</small></div>
     <div class="mini-counter">
       <button type="button" onclick="chgFrom(event,'${id}',-1)">−</button>
       <span id="mc_${id}">${cart[id]||0}</span>
@@ -973,27 +1059,29 @@ function syncCounters(id){
   const c = document.getElementById('c_'+id);
   if(c) c.innerText = cart[id]||0;
 }
+
 function calcItemsSum(){
   let s=0;
   for(const id in cart) s += (cart[id]||0) * (ITEM_INDEX[id]?.p||0);
   return s;
 }
+
+/* ✅ доставка считается сразу: delivery=10 000, pickup=0 */
 function calcDeliveryFee(){
   return (type === 'delivery') ? DELIVERY_FEE_SAMARKAND : 0;
 }
+
 function updateTotal(){
   const itemsSum = calcItemsSum();
   const dfee = calcDeliveryFee();
   const grand = itemsSum + dfee;
 
   total.innerText = formatSum(itemsSum);
-  deliveryFee.innerText = formatSum(DELIVERY_FEE_SAMARKAND);
   grandTotal.innerText = formatSum(grand);
-
   stickyTotal.innerText = formatSum(grand);
-  stickyDelivery.style.display = (type === 'delivery') ? 'block' : 'none';
 }
 
+/* chg */
 function chg(id,delta){
   cart[id]=Math.max(0,(cart[id]||0)+delta);
   syncCounters(id);
@@ -1003,10 +1091,9 @@ function chg(id,delta){
 /* categories */
 function onCategoryClick(k){
   category = k;
-  currentSubcat = ''; // сброс фильтра при смене категории
+  currentSubcat = '';
   renderCats();
 
-  // ✅ как просил: при нажатии на категорию сразу открываем подкатегории (если есть)
   if(SUBCATS[k] && SUBCATS[k].length){
     openSubcats(k);
   }else{
@@ -1026,7 +1113,7 @@ function cardHTML(it){
   <div class="card">
     <div class="img"><img src="${it.img}" onerror="this.src='images/logo.png'"></div>
     <div class="item-name">${escapeHtml(nameOf(id))}</div>
-    <div class="price">${formatSum(it.p)} <small>сум</small></div>
+    <div class="price">${formatSum(it.p)} <small>${UI[lang].sum}</small></div>
     <div class="counter">
       <button onclick="chg('${id}',-1)">−</button>
       <span id="c_${id}">${qty}</span>
@@ -1036,31 +1123,31 @@ function cardHTML(it){
 }
 function renderProducts(){
   products.innerHTML='';
-
   const list = (MENU[category]||[]);
   const filtered = currentSubcat ? list.filter(it => (it.sub||'') === currentSubcat) : list;
-
   (filtered.length ? filtered : list).forEach(it=>{
     cart[it.id]=cart[it.id]||0;
     products.innerHTML += cardHTML(it);
   });
 }
 
-/* language / type */
-function setLang(l,btn){
-  lang=l;
-  document.querySelectorAll('.langs .btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  renderCats(); renderProducts(); renderPopular(); renderNew(); renderGift();
-}
+/* types / payments */
 function setType(t,btn){
   type=t;
   document.querySelectorAll('.types .btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
+
   address.style.display = (type==='pickup') ? 'none' : 'block';
+
+  // ✅ сразу пересчитать сумму с доставкой/без
   updateTotal();
 }
-function setPayment(p){ payment=p; }
+
+function setPayment(p){
+  payment=p;
+  payCash.classList.toggle('active', p==='cash');
+  payClick.classList.toggle('active', p==='click');
+}
 
 function openCart(){
   try{ cartBox.scrollIntoView({behavior:'smooth', block:'start'}); }catch(_){}
@@ -1089,7 +1176,7 @@ function sendOrder(){
   }
   if(items.length===0){
     popup.classList.remove('show');
-    alert('Корзина пустая');
+    alert(lang==='ru'?'Корзина пустая':lang==='uz'?"Savat bo‘sh":"Cart is empty");
     return;
   }
 
@@ -1121,46 +1208,12 @@ function sendOrder(){
   },700);
 }
 
-function toggleReviewWidget(){
-  const w = document.getElementById('reviewWidgetWrap');
-  w.style.display = (w.style.display==='none' || !w.style.display) ? 'block' : 'none';
-}
-const YANDEX_REVIEWS_URL="https://yandex.uz/maps/org/239856130727/?ll=66.960593%2C39.684041&mode=search&z=16.65";
-function openYandexReviews(e){ try{e.preventDefault();e.stopPropagation();}catch(_){}
-  try{Telegram.WebApp.openLink(YANDEX_REVIEWS_URL);}catch(_){window.open(YANDEX_REVIEWS_URL,'_blank');}
-}
-function openInstagram(e){ try{e.preventDefault();e.stopPropagation();}catch(_){}
-  const url="https://www.instagram.com/choko_art_motrid/";
-  closeTopMenu();
-  try{Telegram.WebApp.openLink(url);}catch(_){window.open(url,'_blank');}
-}
-
-/* init */
-btnDelivery.innerText='🚚 Доставка';
-btnPickup.innerText='🏃 Самовывоз';
-address.placeholder='📍 Адрес доставки';
-phone.placeholder='📞 Телефон';
-cartTitle.innerText='🛒 Корзина';
-orderBtn.innerText='Оформить заказ';
-stickyCartBtn.innerText='Корзина';
-
-renderPopular();
-renderNew();
-renderGift();
-renderCats();
-renderProducts();
-
-address.value = localStorage.getItem('chokoart_address') || '';
-phone.value = localStorage.getItem('chokoart_phone') || '+998 90 505 07 45';
-address.addEventListener('input',()=>localStorage.setItem('chokoart_address',address.value));
-phone.addEventListener('input',()=>localStorage.setItem('chokoart_phone',phone.value));
-
-/* тема */
+/* theme */
 function applyTheme(theme){
   document.body.setAttribute('data-theme', theme);
   localStorage.setItem('chokoart_theme', theme);
   const sub = document.getElementById('themeMenuSub');
-  if(sub) sub.innerText = (theme === 'dark') ? 'Тёмная' : 'Светлая';
+  if(sub) sub.innerText = (theme === 'dark') ? (lang==='ru'?'Тёмная':lang==='uz'?'Qorong‘i':'Dark') : (lang==='ru'?'Светлая':lang==='uz'?'Yorug‘':'Light');
   try{
     Telegram.WebApp.setHeaderColor?.(theme === 'dark' ? '#121212' : '#F8F3E9');
     Telegram.WebApp.setBackgroundColor?.(theme === 'dark' ? '#121212' : '#F8F3E9');
@@ -1179,6 +1232,41 @@ function toggleThemeFromMenu(){
   }
 })();
 
+/* init */
+try{
+  Telegram.WebApp.expand();
+  Telegram.WebApp.disableVerticalSwipes?.();
+}catch(_){}
+
+renderPopular();
+renderNew();
+renderGift();
+renderCats();
+renderProducts();
+
+address.value = localStorage.getItem('chokoart_address') || '';
+phone.value = localStorage.getItem('chokoart_phone') || '+998 90 505 07 45';
+address.addEventListener('input',()=>localStorage.setItem('chokoart_address',address.value));
+phone.addEventListener('input',()=>localStorage.setItem('chokoart_phone',phone.value));
+
+/* language switch */
+function setLang(l,btn){
+  lang=l;
+  document.querySelectorAll('.langs .btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  applyUI();
+}
+
+/* apply UI now */
+applyUI();
+
+/* default buttons states */
+setPayment('cash');
+
+/* default type text is already set by applyUI, but we ensure active */
+btnDelivery.classList.add('active');
+btnPickup.classList.remove('active');
+type='delivery';
 updateTotal();
 </script>
 </body>
