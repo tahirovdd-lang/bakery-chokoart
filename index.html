@@ -10,13 +10,11 @@
 <style>
 :root{
   --bg:#F8F3E9;
-
-  /* ✅ пастельно-розовая палитра */
   --pink:#F6B7C7;
   --pink-2:#F2A7BC;
   --pink-deep:#C56C86;
 
-  --accent-red:#8B1E1E;   /* бордовый (как цена) */
+  --accent-red:#8B1E1E;
   --stroke: rgba(0,0,0,.08);
   --stroke-strong: rgba(0,0,0,.14);
   --inner: rgba(255,255,255,.70);
@@ -26,6 +24,31 @@
   --r-lg:24px;
   --r-md:22px;
   --r-pill:28px;
+
+  /* ✅ фикс “полэкрана” + четкий скролл */
+  --vh: 1vh;
+}
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;}
+
+body{
+  margin:0;
+  font-family:'Montserrat',sans-serif;
+  background:var(--bg);
+  color:#2b2b2b;
+
+  /* ✅ стабильная высота экрана на мобилке */
+  min-height: calc(var(--vh) * 100);
+
+  /* ✅ четкий скролл */
+  overflow-y:auto;
+  overflow-x:hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: none;
+
+  padding-bottom:88px;
+  -webkit-text-size-adjust:100%;
 }
 
 /* ✅ тёмная тема */
@@ -39,26 +62,13 @@ body[data-theme="dark"]{
   color:#f1f1f1;
 }
 
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body{height:100%;}
-body{
-  margin:0;
-  font-family:'Montserrat',sans-serif;
-  background:var(--bg);
-  color:#2b2b2b;
-  padding-bottom:88px;
-  overflow-x:hidden;                 /* ✅ фикс дерганья/гориз.скролла */
-  -webkit-text-size-adjust:100%;     /* ✅ стабильнее на телефонах */
-}
-body[data-theme="dark"]{ color:#f1f1f1; }
-
-/* ✅ центрируем контент и стабилизируем ширину на телефонах */
+/* ✅ центрируем контент */
 .page{
   max-width:560px;
   margin:0 auto;
 }
 
-/* ✅✅✅ ШАПКА: пастельно-розовая */
+/* ✅✅✅ ШАПКА */
 .header{
   padding:16px 12px 26px;
   background:linear-gradient(135deg,var(--pink-deep),var(--pink));
@@ -71,7 +81,7 @@ body[data-theme="dark"]{ color:#f1f1f1; }
   text-align:center;
 }
 
-/* ✅ ЛОГО (уменьшили в 1.5 раза: 126 -> 84) */
+/* ✅ ЛОГО (84px как было) */
 .header img{
   position:absolute;
   left:12px;
@@ -86,26 +96,13 @@ body[data-theme="dark"]{ color:#f1f1f1; }
 }
 
 .brand-wrap{display:flex;flex-direction:column;align-items:center;gap:2px;}
-.brand-wrap{ transform: translateX(16px); } /* немного меньше, чтобы на телефоне не уплывало */
+.brand-wrap{ transform: translateX(16px); }
 
-/* Bakery / CHOKOART */
-.brand-title{
-  font-family:'Lobster',cursive;
-  font-size:34px;
-  line-height:1;
-  letter-spacing:.2px;
-}
-.brand-title2{
-  font-family:'Montserrat',sans-serif;
-  font-weight:900;
-  font-size:20px;
-  letter-spacing:2px;
-  line-height:1.1;
-}
+.brand-title{font-family:'Lobster',cursive;font-size:34px;line-height:1;letter-spacing:.2px;}
+.brand-title2{font-family:'Montserrat',sans-serif;font-weight:900;font-size:20px;letter-spacing:2px;line-height:1.1;}
 
-/* ✅ лозунг — уменьшили + классический */
 .brand-slogan{
-  font-family: 'Montserrat', sans-serif;
+  font-family:'Montserrat',sans-serif;
   font-size:12px;
   font-weight:800;
   letter-spacing:1.2px;
@@ -116,397 +113,159 @@ body[data-theme="dark"]{ color:#f1f1f1; }
 
 .brand-phone{position:relative; z-index:50; pointer-events:auto; margin-top:4px;}
 .brand-phone a{
-  color:white;
-  text-decoration:none;
-  font-size:14px;
-  font-weight:800;
-  position:relative;
-  z-index:51;
-  pointer-events:auto;
-  cursor:pointer;
-  opacity:.95;
+  color:white;text-decoration:none;font-size:14px;font-weight:800;
+  position:relative;z-index:51;pointer-events:auto;cursor:pointer;opacity:.95;
 }
 
-/* ✅ кнопка меню (бургер) */
-.menu-btn{
+/* ✅✅✅ ПРАВЫЙ РЯД КНОПОК (бургер/локация/поиск) */
+.header-actions{
   position:absolute;
-  right:14px;
+  right:12px;
   top:12px;
-  width:42px;
-  height:42px;
+  display:flex;
+  gap:8px;
+  align-items:center;
+  z-index:90;
+}
+
+/* ✅ уменьшили “чутка” и выровняли */
+.act-btn{
+  width:38px;
+  height:38px;
   border-radius:14px;
   display:flex;
   align-items:center;
   justify-content:center;
   cursor:pointer;
-  z-index:80;
+  user-select:none;
 
   background:rgba(255,255,255,.92);
   border:1px solid rgba(255,255,255,.55);
   box-shadow: inset 0 0 0 2px rgba(255,255,255,.55), 0 8px 18px rgba(0,0,0,.10);
   transition:.15s;
 }
-.menu-btn:active{transform:scale(.97);}
-.burger{width:22px;height:16px;position:relative;}
+.act-btn:active{transform:scale(.97);}
+
+.burger{width:20px;height:14px;position:relative;}
 .burger span{
   position:absolute;left:0;right:0;
   height:3px;border-radius:10px;
   background:#222;opacity:.9;
 }
 .burger span:nth-child(1){top:0;}
-.burger span:nth-child(2){top:6.5px;}
+.burger span:nth-child(2){top:5.5px;}
 .burger span:nth-child(3){bottom:0;}
 
-/* ✅ гео-кнопка */
-.geo-btn{
-  position:absolute;
-  right:18px;
-  top:58px;
-  width:36px;
-  height:36px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  z-index:85;
-
-  background:rgba(255,255,255,.18);
-  border:1px solid rgba(255,255,255,.24);
-  box-shadow:0 10px 22px rgba(0,0,0,.12);
-  color:#fff;
-  font-size:18px;
-  line-height:1;
-}
-.geo-btn:active{transform:scale(.98);}
-
-/* 🔍 поиск */
-.search-btn{
-  position:absolute;
-  right:14px;
-  bottom:10px;
-  width:36px;
-  height:36px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+.act-ico{
   font-size:16px;
-  font-weight:700;
-  cursor:pointer;
-  z-index:60;
-
-  color:#333;
-  background:#fffdf9;
-  border:1px solid var(--stroke);
-  box-shadow: inset 0 0 0 2px var(--inner), 0 6px 14px var(--shadow);
-  transition:.15s;
-}
-.search-btn:active{transform:scale(.97);}
-
-.langs,.types,.payments{
-  display:flex;
-  gap:12px;
-  padding:12px;
-  justify-content:center;
+  line-height:1;
+  color:#222;
 }
 
-/* ✅ базовая кнопка */
+/* остальной UI */
+.langs,.types,.payments{display:flex;gap:12px;padding:12px;justify-content:center;}
+
 .btn{
-  padding:12px 20px;
-  border-radius:var(--r-pill);
-  font-weight:900;
-  min-width:120px;
-  text-align:center;
-  cursor:pointer;
-  transition:.15s;
-
-  border:1px solid var(--stroke);
-  background:#fffdf9;
+  padding:12px 20px;border-radius:28px;font-weight:900;min-width:120px;text-align:center;
+  cursor:pointer;transition:.15s;border:1px solid var(--stroke);background:#fffdf9;
   box-shadow: inset 0 0 0 2px var(--inner), 0 6px 14px var(--shadow);
   color: var(--accent-red);
 }
-body[data-theme="dark"] .btn{
-  background:rgba(255,255,255,.06);
-  color: var(--accent-red);
-}
+body[data-theme="dark"] .btn{background:rgba(255,255,255,.06);color:var(--accent-red);}
 .btn:active{transform:scale(.98);}
-
-/* ✅ активные кнопки: розовые */
 .btn.active{
   background:linear-gradient(135deg,var(--pink-deep),var(--pink-2));
-  color:white;
-  border:1px solid rgba(255,255,255,.35);
+  color:white;border:1px solid rgba(255,255,255,.35);
   box-shadow: inset 0 0 0 2px rgba(255,255,255,.14), 0 10px 22px rgba(197,108,134,.28);
 }
 
-/* ✅✅✅ Кнопки категорий — больше */
-.cat-btn{
-  padding:14px 22px;
-  min-width:140px;
-  font-size:15px;
-  border-radius:999px;
-}
+.cat-btn{padding:14px 22px;min-width:140px;font-size:15px;border-radius:999px;}
 
-/* inputs */
 .input{
-  margin:8px auto;
-  display:block;
-  padding:14px;
-  width:85%;
-  border-radius:var(--r-md);
-  font-size:15px;
-
-  border:1px solid var(--stroke);
-  background:#fffdf9;
+  margin:8px auto;display:block;padding:14px;width:85%;
+  border-radius:22px;font-size:15px;border:1px solid var(--stroke);background:#fffdf9;
   box-shadow: inset 0 0 0 2px var(--inner), 0 6px 14px var(--shadow);
-  outline:none;
-  transition:.15s;
+  outline:none;transition:.15s;
 }
-body[data-theme="dark"] .input{
-  background:rgba(255,255,255,.06);
-  color:#f1f1f1;
-}
-.input:focus{
-  border-color: var(--stroke-strong);
-  box-shadow: inset 0 0 0 2px var(--inner), 0 10px 22px var(--shadow-strong);
-}
+body[data-theme="dark"] .input{background:rgba(255,255,255,.06);color:#f1f1f1;}
 
-/* categories/products */
-.categories{
-  display:flex;
-  gap:12px;
-  padding:14px;
-  overflow-x:auto;
-  scroll-behavior:smooth;
-  -webkit-overflow-scrolling: touch; /* ✅ стабильный свайп */
-  overscroll-behavior-x: contain;
-}
-.products{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:16px;
-  padding:12px;
-}
+.categories{display:flex;gap:12px;padding:14px;overflow-x:auto;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;}
+.products{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;padding:12px;}
+
 .card{
-  border-radius:var(--r-lg);
-  padding:12px;
-  text-align:center;
-  background:#fffdf9;
-  border:1px solid var(--stroke);
+  border-radius:24px;padding:12px;text-align:center;background:#fffdf9;border:1px solid var(--stroke);
   box-shadow: inset 0 0 0 2px var(--inner), 0 8px 18px rgba(0,0,0,.08);
   transition:.15s;
 }
-body[data-theme="dark"] .card{
-  background:rgba(255,255,255,.06);
-  color:#f1f1f1;
-}
-.card:active{transform:scale(.99);}
-
-.img{
-  height:140px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin-bottom:6px;
-}
-.img img{
-  max-width:125px;
-  max-height:125px;
-  width:auto;
-  height:auto;
-  object-fit:contain;
-  opacity:1;
-  transform:scale(1.05);
-  transition:.15s;
-}
-.card:active .img img{transform:scale(1.12);}
-
-.item-name{
-  margin-top:2px;
-  padding:0 6px;
-  font-weight:900;
-  line-height:1.15;
-  min-height:34px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  word-break:break-word;
-}
-
-/* price */
+body[data-theme="dark"] .card{background:rgba(255,255,255,.06);color:#f1f1f1;}
+.img{height:140px;display:flex;align-items:center;justify-content:center;margin-bottom:6px;}
+.img img{max-width:125px;max-height:125px;object-fit:contain;transform:scale(1.05);transition:.15s;}
+.item-name{margin-top:2px;padding:0 6px;font-weight:900;line-height:1.15;min-height:34px;display:flex;align-items:center;justify-content:center;word-break:break-word;}
 .price{font-weight:900;color:var(--accent-red);margin-top:6px;}
 .price small{font-weight:800;opacity:.75;margin-left:4px;}
-
-/* +/- */
 .counter{display:flex;justify-content:center;gap:10px;margin-top:8px;align-items:center;}
 .counter button{
-  width:32px;height:32px;border-radius:50%;cursor:pointer;
-  border:1px solid rgba(255,255,255,.35);
+  width:32px;height:32px;border-radius:50%;cursor:pointer;border:1px solid rgba(255,255,255,.35);
   background:linear-gradient(135deg,var(--pink-deep),var(--pink-2));
-  color:#fff;
-  font-size:18px;font-weight:900;
-  box-shadow:0 10px 22px rgba(0,0,0,.12);
+  color:#fff;font-size:18px;font-weight:900;box-shadow:0 10px 22px rgba(0,0,0,.12);
   transition:.15s;
 }
 .counter button:active{transform:scale(.96);}
 
-/* cart */
+.popular-wrap{width:100%;padding:4px 12px 6px;}
+.popular-title{width:100%;font-weight:900;padding:8px 2px 10px;display:flex;align-items:center;gap:8px;}
+.popular-row,.mini-row{display:flex;gap:12px;overflow-x:auto;padding:2px 2px 10px;-webkit-overflow-scrolling:touch;}
+.pop-card,.mini-card{
+  min-width:150px;border-radius:24px;padding:10px;background:#fffdf9;border:1px solid var(--stroke);
+  box-shadow: inset 0 0 0 2px var(--inner), 0 8px 18px rgba(0,0,0,.08);
+  cursor:pointer;transition:.15s;position:relative;
+}
+body[data-theme="dark"] .pop-card, body[data-theme="dark"] .mini-card{background:rgba(255,255,255,.06); color:#f1f1f1;}
+.pop-img,.mini-img{height:74px;border-radius:18px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(197,108,134,.10);}
+.pop-img img,.mini-img img{width:100%;height:100%;object-fit:cover;}
+.pop-name{font-weight:900;margin-top:8px;}
+.pop-price,.mini-price{font-weight:900;color:var(--accent-red);margin-top:4px;}
+.pop-badge,.mini-badge{position:absolute;left:10px;top:10px;font-size:18px;pointer-events:none;}
+.pop-counter,.mini-counter{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:8px;}
+.pop-counter button,.mini-counter button{
+  width:30px;height:30px;border-radius:50%;cursor:pointer;border:1px solid rgba(255,255,255,.35);
+  background:linear-gradient(135deg,var(--pink-deep),var(--pink-2));
+  color:#fff;font-size:18px;font-weight:900;box-shadow:0 10px 22px rgba(0,0,0,.12);
+}
+.mini-card{min-width:132px;border-radius:22px;}
+.mini-counter button{width:28px;height:28px;}
+.mini-name{font-weight:900;margin-top:8px;font-size:12px;line-height:1.15;min-height:28px;}
+
 .cart{
-  background:#fffdf9;
-  margin:12px;
-  padding:16px;
-  border-radius:var(--r-lg);
-  border:1px solid var(--stroke);
+  background:#fffdf9;margin:12px;padding:16px;border-radius:24px;border:1px solid var(--stroke);
   box-shadow: inset 0 0 0 2px var(--inner), 0 8px 18px rgba(0,0,0,.08);
 }
 body[data-theme="dark"] .cart{ background:rgba(255,255,255,.06); color:#f1f1f1; }
 textarea.input{height:90px;}
-
-.cart-lines{margin-top:8px; font-weight:800; opacity:.9;}
-.cart-line{display:flex; justify-content:space-between; gap:10px; padding:4px 0;}
-.cart-divider{height:1px; background:rgba(0,0,0,.08); margin:8px 0;}
-body[data-theme="dark"] .cart-divider{background:rgba(255,255,255,.12);}
-
-/* order btn */
 .order-btn{
-  width:100%;
-  padding:18px;
-  margin-top:14px;
-  border-radius:var(--r-lg);
-  cursor:pointer;
-  color:white;
-  font-size:17px;
-  font-weight:900;
-  border:1px solid rgba(255,255,255,.22);
+  width:100%;padding:18px;margin-top:14px;border-radius:24px;cursor:pointer;color:white;
+  font-size:17px;font-weight:900;border:1px solid rgba(255,255,255,.22);
   background:linear-gradient(135deg,var(--pink-deep),var(--pink));
   box-shadow: inset 0 0 0 2px rgba(255,255,255,.10), 0 12px 26px rgba(0,0,0,.14);
-  transition:.15s;
 }
-.order-btn:active{transform:scale(.99);}
 
 .popup{position:fixed;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:.3s;}
 .popup.show{opacity:1;pointer-events:auto;}
 .popup-box{
-  background:white;
-  padding:26px;
-  border-radius:var(--r-lg);
-  text-align:center;
-  font-weight:800;
-  border:1px solid var(--stroke);
+  background:white;padding:26px;border-radius:24px;text-align:center;font-weight:800;border:1px solid var(--stroke);
   box-shadow: inset 0 0 0 2px var(--inner), 0 10px 22px rgba(0,0,0,.10);
 }
 body[data-theme="dark"] .popup-box{ background:#1c1c1c; color:#f1f1f1; }
 
-/* search */
-.search-wrap{width:85%;margin:8px auto;position:relative;display:none;z-index:70;}
-.search-wrap.show{display:block;}
-.search-wrap input{width:100%;margin:0;padding-right:44px;}
-.search-clear{
-  position:absolute;
-  right:10px;
-  top:50%;
-  transform:translateY(-50%);
-  width:30px;height:30px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;
-  border:1px solid var(--stroke);
-  background:#fffdf9;
-  box-shadow: inset 0 0 0 2px var(--inner), 0 6px 14px var(--shadow);
-  transition:.15s;
-}
-body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f1f1f1;}
-.search-clear:active{transform:translateY(-50%) scale(.96);}
-.search-title{width:85%;margin:10px auto 0;font-weight:900;opacity:.9;display:none;z-index:70;position:relative;}
-.search-title.show{display:block;}
-mark{background:rgba(246,183,199,.35);padding:0 .12em;border-radius:6px;}
-
-/* quick filters */
-.quick-filters{display:flex;gap:10px;padding:0 12px 10px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
-
-/* popular & carousels */
-.popular-wrap{width:100%;padding:4px 12px 6px;}
-.popular-title{width:100%;font-weight:900;padding:8px 2px 10px;display:flex;align-items:center;gap:8px;}
-.popular-row{display:flex;gap:12px;overflow-x:auto;padding:2px 2px 10px;-webkit-overflow-scrolling:touch;}
-.pop-card{
-  min-width:150px;
-  border-radius:var(--r-lg);
-  padding:10px;
-  background:#fffdf9;
-  border:1px solid var(--stroke);
-  box-shadow: inset 0 0 0 2px var(--inner), 0 8px 18px rgba(0,0,0,.08);
-  cursor:pointer;
-  transition:.15s;
-  position:relative;
-}
-body[data-theme="dark"] .pop-card{background:rgba(255,255,255,.06); color:#f1f1f1;}
-.pop-card:active{transform:scale(.99);}
-.pop-img{height:74px;border-radius:18px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(197,108,134,.10);}
-.pop-img img{width:100%;height:100%;object-fit:cover;}
-.pop-name{font-weight:900;margin-top:8px;}
-.pop-price{font-weight:900;color:var(--accent-red);margin-top:4px;}
-.pop-badge{position:absolute;left:10px;top:10px;font-size:18px;pointer-events:none;}
-.pop-counter{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:8px;}
-.pop-counter button{
-  width:30px;height:30px;border-radius:50%;cursor:pointer;
-  border:1px solid rgba(255,255,255,.35);
-  background:linear-gradient(135deg,var(--pink-deep),var(--pink-2));
-  color:#fff;font-size:18px;font-weight:900;
-  box-shadow:0 10px 22px rgba(0,0,0,.12);
-  transition:.15s;
-}
-.pop-counter button:active{transform:scale(.96);}
-.pop-counter span{font-weight:900; min-width:18px; text-align:center;}
-
-/* мини-карусели */
-.mini-row{display:flex;gap:12px;overflow-x:auto;padding:2px 2px 10px;-webkit-overflow-scrolling:touch;}
-.mini-card{
-  min-width:132px;
-  border-radius:22px;
-  padding:10px;
-  background:#fffdf9;
-  border:1px solid var(--stroke);
-  box-shadow: inset 0 0 0 2px var(--inner), 0 8px 18px rgba(0,0,0,.08);
-  cursor:pointer;
-  transition:.15s;
-  position:relative;
-}
-body[data-theme="dark"] .mini-card{background:rgba(255,255,255,.06); color:#f1f1f1;}
-.mini-card:active{transform:scale(.99);}
-.mini-badge{position:absolute;left:10px;top:10px;font-size:18px;pointer-events:none;}
-.mini-img{height:70px;border-radius:18px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(197,108,134,.10);}
-.mini-img img{width:100%;height:100%;object-fit:cover;}
-.mini-name{font-weight:900;margin-top:8px;font-size:12px;line-height:1.15;min-height:28px;}
-.mini-price{font-weight:900;color:var(--accent-red);margin-top:4px;}
-.mini-counter{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:8px;}
-.mini-counter button{
-  width:28px;height:28px;border-radius:50%;cursor:pointer;
-  border:1px solid rgba(255,255,255,.35);
-  background:linear-gradient(135deg,var(--pink-deep),var(--pink-2));
-  color:#fff;font-size:18px;font-weight:900;
-  box-shadow:0 10px 22px rgba(0,0,0,.12);
-  transition:.15s;
-}
-.mini-counter button:active{transform:scale(.96);}
-.mini-counter span{font-weight:900; min-width:18px; text-align:center;}
-
-/* sticky checkout */
 .sticky-checkout{
-  position:fixed;left:0;right:0;bottom:0;
-  padding:10px 12px;
+  position:fixed;left:0;right:0;bottom:0;padding:10px 12px;
   background:rgba(248,243,233,.88);
   backdrop-filter: blur(10px);
-  z-index:999;
-  border-top:1px solid rgba(0,0,0,.06);
+  z-index:999;border-top:1px solid rgba(0,0,0,.06);
 }
 body[data-theme="dark"] .sticky-checkout{background:rgba(18,18,18,.88);border-top:1px solid rgba(255,255,255,.12);}
 .sticky-inner{
-  max-width:520px;
-  margin:0 auto;
-  border-radius:18px;
-  padding:10px 12px;
-  background:#fffdf9;
-  border:1px solid var(--stroke);
+  max-width:520px;margin:0 auto;border-radius:18px;padding:10px 12px;background:#fffdf9;border:1px solid var(--stroke);
   box-shadow: inset 0 0 0 2px var(--inner), 0 10px 22px rgba(0,0,0,.10);
   display:flex;align-items:center;justify-content:space-between;gap:12px;
 }
@@ -514,31 +273,21 @@ body[data-theme="dark"] .sticky-inner{background:rgba(255,255,255,.06);}
 .sticky-sum{font-weight:900;line-height:1.1;}
 .sticky-sum small{display:block;font-weight:800;opacity:.75;margin-top:2px;}
 .sticky-btn{
-  padding:12px 14px;
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.22);
+  padding:12px 14px;border-radius:16px;border:1px solid rgba(255,255,255,.22);
   background:linear-gradient(135deg,var(--pink-deep),var(--pink));
   color:#fff;font-weight:900;cursor:pointer;
   box-shadow: inset 0 0 0 2px rgba(255,255,255,.10), 0 12px 26px rgba(0,0,0,.14);
-  transition:.15s;
-  white-space:nowrap;
 }
-.sticky-btn:active{transform:scale(.99);}
 
 /* menu sheet */
 .menu-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.38);opacity:0;pointer-events:none;transition:.18s;z-index:1000;}
 .menu-backdrop.show{opacity:1;pointer-events:auto;}
 .menu-sheet{
   position:fixed;left:0; right:0;bottom:-100%;
-  background:#fffdf9;
-  border-top-left-radius:22px;border-top-right-radius:22px;
-  border:1px solid var(--stroke);
+  background:#fffdf9;border-top-left-radius:22px;border-top-right-radius:22px;border:1px solid var(--stroke);
   box-shadow:0 18px 40px rgba(0,0,0,.18);
-  transition:.22s;z-index:1010;
-  padding:10px 12px 14px;
-  max-height: 86vh;
-  overflow:auto;
-  -webkit-overflow-scrolling: touch;
+  transition:.22s;z-index:1010;padding:10px 12px 14px;
+  max-height: 86vh;overflow:auto;-webkit-overflow-scrolling:touch;
 }
 body[data-theme="dark"] .menu-sheet{background:#1c1c1c;border-color:rgba(255,255,255,.14);}
 .menu-sheet.show{bottom:0;}
@@ -551,8 +300,7 @@ body[data-theme="dark"] .menu-close{color:#bbb;}
 .menu-list{display:flex;flex-direction:column;gap:8px;}
 .menu-item{
   display:flex;align-items:center;justify-content:space-between;gap:10px;
-  padding:12px 12px;border-radius:16px;
-  border:1px solid var(--stroke);
+  padding:12px 12px;border-radius:16px;border:1px solid var(--stroke);
   background:rgba(0,0,0,.03);
   cursor:pointer;text-decoration:none;color:#2b2b2b;
 }
@@ -565,101 +313,21 @@ body[data-theme="dark"] .menu-ic{background:rgba(255,255,255,.06);}
 .menu-sub{font-size:12px;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;}
 .menu-right{opacity:.65;font-weight:900;}
 
-/* ✅ блок "Юридическим лицам" внутри бургера */
-.legal-wrap{
-  display:none;
-  padding:8px 4px 10px;
-}
-.legal-card{
-  border:1px solid var(--stroke);
-  border-radius:16px;
-  background:rgba(0,0,0,.03);
-  padding:12px;
-}
-body[data-theme="dark"] .legal-card{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);}
-.legal-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0;}
-.legal-row b{font-weight:900;}
-.legal-actions{display:flex;gap:10px;justify-content:center;margin-top:10px;flex-wrap:wrap;}
-.legal-actions .btn{min-width:auto;padding:10px 14px;}
-
-/* Подкатегории снизу */
-.subcat-btn-wrap{padding:0 12px 8px;}
-.subcat-open{
-  width:100%;
-  border-radius:18px;
-  padding:12px 14px;
-  border:1px solid var(--stroke);
-  background:#fffdf9;
+/* search */
+.search-wrap{width:85%;margin:8px auto;position:relative;display:none;z-index:70;}
+.search-wrap.show{display:block;}
+.search-title{width:85%;margin:10px auto 0;font-weight:900;opacity:.9;display:none;z-index:70;position:relative;}
+.search-title.show{display:block;}
+.search-clear{
+  position:absolute;right:10px;top:50%;transform:translateY(-50%);
+  width:30px;height:30px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  border:1px solid var(--stroke);background:#fffdf9;
   box-shadow: inset 0 0 0 2px var(--inner), 0 6px 14px var(--shadow);
-  font-weight:900;
-  color:var(--accent-red);
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
 }
-body[data-theme="dark"] .subcat-open{background:rgba(255,255,255,.06); color:var(--accent-red);}
-.subcat-open:active{transform:scale(.99);}
-.subcat-open small{opacity:.75; font-weight:900;}
+body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f1f1f1;}
 
-.subcat-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.38);opacity:0;pointer-events:none;transition:.18s;z-index:1200;}
-.subcat-backdrop.show{opacity:1;pointer-events:auto;}
-.subcat-sheet{
-  position:fixed;left:0;right:0;bottom:-110%;
-  background:#fffdf9;
-  border-top-left-radius:22px;border-top-right-radius:22px;
-  border:1px solid var(--stroke);
-  box-shadow:0 18px 40px rgba(0,0,0,.18);
-  transition:.22s;
-  z-index:1210;
-  padding:10px 12px 14px;
-  max-height: 78vh;
-  overflow:hidden;
-}
-body[data-theme="dark"] .subcat-sheet{background:#1c1c1c;border-color:rgba(255,255,255,.14);color:#f1f1f1;}
-.subcat-sheet.show{bottom:0;}
-.subcat-head{display:flex;align-items:center;justify-content:space-between;padding:2px 4px 10px;}
-.subcat-head b{font-size:16px;}
-.subcat-grid{
-  overflow:auto;
-  max-height: calc(78vh - 78px);
-  padding:2px 2px 10px;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-  -webkit-overflow-scrolling: touch;
-}
-.subcat-tile{
-  border-radius:18px;
-  padding:10px 8px 12px;
-  background:#fffdf9;
-  border:1px solid var(--stroke);
-  box-shadow: inset 0 0 0 2px var(--inner), 0 8px 18px rgba(0,0,0,.08);
-  cursor:pointer;
-  transition:.15s;
-  text-align:center;
-}
-body[data-theme="dark"] .subcat-tile{background:rgba(255,255,255,.06); color:#f1f1f1;}
-.subcat-tile:active{transform:scale(.99);}
-.subcat-tile.active{
-  background:linear-gradient(135deg,var(--pink-deep),var(--pink-2));
-  color:#fff;
-  border:1px solid rgba(255,255,255,.35);
-}
-.subcat-ic{height:52px;display:flex;align-items:center;justify-content:center;font-size:38px;line-height:1;margin-bottom:6px;}
-.subcat-nm{font-weight:900;font-size:12px;line-height:1.15;min-height:30px;display:flex;align-items:center;justify-content:center;}
-.subcat-footer{padding-top:10px;}
-.subcat-footer .subcat-open{border-radius:18px;}
-
-/* в поиске скрываем карусели/подкатегории */
-body.searching .subcat-btn-wrap,
-body.searching .popular-wrap,
-body.searching #newWrap,
-body.searching #giftWrap,
-body.searching .quick-filters{display:none;}
-
-/* ✅ адаптация */
+/* адаптация */
 @media (max-width:420px){
   .brand-title{font-size:30px;}
   .brand-title2{font-size:18px;}
@@ -675,7 +343,6 @@ body.searching .quick-filters{display:none;}
   .brand-phone a{font-size:13px;}
   .btn{min-width:110px;padding:12px 16px;}
   .cat-btn{min-width:132px;padding:14px 18px;font-size:14px;}
-  .subcat-grid{grid-template-columns:repeat(2,1fr);} /* ✅ чтобы не ломалось на узких */
 }
 </style>
 </head>
@@ -689,33 +356,35 @@ body.searching .quick-filters{display:none;}
     <div class="brand-title">Bakery</div>
     <div class="brand-title2">CHOKOART</div>
     <div class="brand-slogan">BIZ BILAN MAZZALIROQ</div>
-
     <div class="brand-phone">
       <a href="tel:+998905050745" onclick="callPhone(event)">+998 90 505 07 45</a>
     </div>
   </div>
 
-  <div class="menu-btn" onclick="openTopMenu()" title="Меню">
-    <div class="burger">
-      <span></span><span></span><span></span>
+  <!-- ✅✅✅ ровный ряд справа -->
+  <div class="header-actions">
+    <div class="act-btn" onclick="openTopMenu()" title="Меню">
+      <div class="burger"><span></span><span></span><span></span></div>
+    </div>
+    <div class="act-btn" onclick="openRoute()" title="Маршрут">
+      <span class="act-ico">📍</span>
+    </div>
+    <div class="act-btn" onclick="toggleSearch()" title="Поиск">
+      <span class="act-ico">🔍</span>
     </div>
   </div>
-
-  <div class="geo-btn" onclick="openRoute()" title="Маршрут">📍</div>
-  <div class="search-btn" onclick="toggleSearch()">🔍</div>
 </div>
 
 <div class="page">
 
+<!-- ✅ меню -->
 <div class="menu-backdrop" id="menuBackdrop" onclick="closeTopMenu()"></div>
-
 <div class="menu-sheet" id="menuSheet">
   <div class="menu-handle"></div>
   <div class="menu-head">
     <b>Меню</b>
     <button class="menu-close" onclick="closeTopMenu()">×</button>
   </div>
-
   <div class="menu-list">
     <div class="menu-item" onclick="toggleReviewWidget()" role="button">
       <div class="menu-left">
@@ -774,40 +443,6 @@ body.searching .quick-filters{display:none;}
       <div class="menu-right">›</div>
     </a>
 
-    <!-- ✅✅✅ Юридическим лицам -->
-    <div class="menu-item" onclick="toggleLegal()" role="button">
-      <div class="menu-left">
-        <div class="menu-ic">🏢</div>
-        <div class="menu-txt">
-          <div class="menu-name">Юридическим лицам</div>
-          <div class="menu-sub">Контакты для счетов и договоров</div>
-        </div>
-      </div>
-      <div class="menu-right">›</div>
-    </div>
-
-    <div class="legal-wrap" id="legalWrap">
-      <div class="legal-card">
-        <div class="legal-row">
-          <span>✉️ Почта</span>
-          <b>—</b>
-        </div>
-        <div class="legal-row">
-          <span>📞 Телефон</span>
-          <b><a href="tel:+998955006262" onclick="callPhone2(event)" style="color:inherit;text-decoration:none;">+998 95 500 62 62</a></b>
-        </div>
-        <div class="legal-row">
-          <span>💬 Чат с менеджером</span>
-          <b>@manager</b>
-        </div>
-
-        <div class="legal-actions">
-          <button class="btn" onclick="openManagerChat(event)">Написать менеджеру</button>
-          <button class="btn" onclick="callPhone2(event)">Позвонить</button>
-        </div>
-      </div>
-    </div>
-
     <div class="menu-item" onclick="toggleThemeFromMenu()" role="button">
       <div class="menu-left">
         <div class="menu-ic">🌓</div>
@@ -816,44 +451,26 @@ body.searching .quick-filters{display:none;}
           <div class="menu-sub" id="themeMenuSub">Светлая</div>
         </div>
       </div>
-      <div class="menu-right" id="themeMenuRight">Сменить</div>
-    </div>
-
-    <div class="menu-item" onclick="openAbout()" role="button">
-      <div class="menu-left">
-        <div class="menu-ic">ℹ️</div>
-        <div class="menu-txt">
-          <div class="menu-name">О нас</div>
-          <div class="menu-sub">Информация о Bakery CHOKOART</div>
-        </div>
-      </div>
       <div class="menu-right">›</div>
     </div>
   </div>
 </div>
 
-<div class="about-modal" id="aboutModal" onclick="aboutBackdropClick(event)" style="position:fixed;inset:0;background:rgba(0,0,0,.40);display:none;z-index:1100;padding:18px 14px;">
-  <div class="about-card" style="max-width:680px;margin:0 auto;background:#fffdf9;border:1px solid var(--stroke);border-radius:22px;box-shadow:0 18px 40px rgba(0,0,0,.18);padding:14px 14px 12px;max-height: calc(100vh - 40px);overflow:hidden;">
-    <div class="about-head" style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px;">
-      <b>О нас</b>
-      <button class="menu-close" onclick="closeAbout()">×</button>
-    </div>
-    <div class="about-body" id="aboutBody" style="font-size:14px;line-height:1.45;max-height: calc(100vh - 140px);overflow:auto;padding-right:6px;-webkit-overflow-scrolling:touch;"></div>
-  </div>
-</div>
-
+<!-- ✅ поиск -->
 <div class="search-title" id="searchTitle">Результаты поиска</div>
 <div class="search-wrap" id="searchWrap">
   <input id="searchInput" class="input" placeholder="Поиск..." oninput="searchProducts()" onkeydown="onSearchKey(event)">
   <div class="search-clear" onclick="clearSearch()" title="Очистить">✖</div>
 </div>
 
+<!-- ✅ язык -->
 <div class="langs">
   <button class="btn active" onclick="setLang('ru',this)">RU</button>
   <button class="btn" onclick="setLang('uz',this)">UZ</button>
   <button class="btn" onclick="setLang('en',this)">EN</button>
 </div>
 
+<!-- ✅ популярное / новинки / подарок -->
 <div class="popular-wrap" id="popularWrap">
   <div class="popular-title" id="popularTitle">🔥 Популярное</div>
   <div class="popular-row" id="popularRow"></div>
@@ -869,8 +486,7 @@ body.searching .quick-filters{display:none;}
   <div class="mini-row" id="giftRow"></div>
 </div>
 
-<div class="quick-filters" id="quickFilters"></div>
-
+<!-- ✅ тип -->
 <div class="types">
   <button class="btn active" id="btnDelivery" onclick="setType('delivery',this)"></button>
   <button class="btn" id="btnPickup" onclick="setType('pickup',this)"></button>
@@ -879,51 +495,21 @@ body.searching .quick-filters{display:none;}
 <input id="address" class="input">
 <input id="phone" class="input">
 
+<!-- ✅ категории -->
 <div class="categories" id="cats"></div>
 
-<!-- кнопка открытия подкатегорий (остается, но категории теперь открывают подкатегории сразу) -->
-<div class="subcat-btn-wrap" id="subcatBtnWrap">
-  <button class="subcat-open" onclick="openSubcats()">
-    <span id="subcatBtnText">Подкатегории</span>
-    <small id="subcatBtnRight">›</small>
-  </button>
-</div>
-
-<div class="subcat-backdrop" id="subcatBackdrop" onclick="closeSubcats()"></div>
-<div class="subcat-sheet" id="subcatSheet">
-  <div class="menu-handle"></div>
-  <div class="subcat-head">
-    <b id="subcatSheetTitle">Подкатегории</b>
-    <button class="menu-close" onclick="closeSubcats()">×</button>
-  </div>
-  <div class="subcat-grid" id="subcatGrid"></div>
-
-  <div class="subcat-footer" id="subcatFooter" style="display:none;">
-    <button class="subcat-open" onclick="pickAllCakesFromFooter()">
-      <span>🎂 <span id="allCakesText">Все торты</span></span>
-      <small>✓</small>
-    </button>
-  </div>
-</div>
-
+<!-- ✅ товары -->
 <div class="products" id="products"></div>
 
+<!-- ✅ корзина -->
 <div class="cart" id="cartBox">
   <b id="cartTitle"></b>: <span id="total">0</span> сум
-
-  <div class="cart-lines">
-    <div class="cart-line"><span id="lineItemsLabel">Товары</span><span id="itemsTotal">0</span></div>
-    <div class="cart-line"><span id="lineDeliveryLabel">Доставка (Самарканд)</span><span id="deliveryFee">0</span></div>
-    <div class="cart-divider"></div>
-    <div class="cart-line"><span id="lineGrandLabel">Итого</span><span id="grandTotal">0</span></div>
-  </div>
-
   <textarea id="comment" class="input"></textarea>
   <div class="payments">
-    <button class="btn active" id="payCash" onclick="setPayment('cash')"></button>
-    <button class="btn" id="payClick" onclick="setPayment('click')"></button>
+    <button class="btn active" id="payCash" onclick="setPayment('cash')">💵 Наличные</button>
+    <button class="btn" id="payClick" onclick="setPayment('click')">💳 CLICK</button>
   </div>
-  <button class="order-btn" id="orderBtn" onclick="sendOrder()"></button>
+  <button class="order-btn" id="orderBtn" onclick="sendOrder()">Оформить заказ</button>
 </div>
 
 <div class="popup" id="popup"><div class="popup-box">✅ Заказ принят!</div></div>
@@ -942,245 +528,28 @@ body.searching .quick-filters{display:none;}
 <script>
 Telegram.WebApp.ready();
 
-/* ✅ админ для чата с менеджером (впиши свой) */
-const ADMIN_TG_ID = 6013591658;
+/* ✅✅✅ ПОЛНЫЙ ЭКРАН в Telegram */
+try{
+  Telegram.WebApp.expand();            // раскрыть до полного экрана
+  Telegram.WebApp.disableVerticalSwipes?.(); // чтобы свайпы не сворачивали (если поддерживается)
+}catch(_){}
 
-/* ✅ доставка по Самарканду */
-const DELIVERY_FEE_SAMARKAND = 10000;
-
-/* ✅ маршрут */
-function openRoute(){
-  const url = "https://yandex.uz/maps/?rtext=~39.684041,66.960593&rtt=auto&z=16.65";
-  try{
-    if (window.Telegram && Telegram.WebApp && typeof Telegram.WebApp.openLink === "function"){
-      Telegram.WebApp.openLink(url);
-      return;
-    }
-  }catch(_){}
-  window.open(url, "_blank");
+/* ✅ фикс высоты viewport (iOS/Android) */
+function setVH(){
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
 }
+setVH();
+window.addEventListener('resize', setVH, {passive:true});
+window.addEventListener('orientationchange', ()=>setTimeout(setVH, 250), {passive:true});
 
-function callPhone(e){
-  try{ e.preventDefault(); e.stopPropagation(); }catch(_){}
-  const tel = "tel:+998905050745";
-  try{
-    if (window.Telegram && Telegram.WebApp && typeof Telegram.WebApp.openLink === "function"){
-      Telegram.WebApp.openLink(tel);
-      return;
-    }
-  }catch(_){}
-  try{ window.location.href = tel; }catch(_){}
-}
-function callPhone2(e){
-  try{ if(e){ e.preventDefault(); e.stopPropagation(); } }catch(_){}
-  const tel = "tel:+998955006262";
-  try{
-    if (window.Telegram && Telegram.WebApp && typeof Telegram.WebApp.openLink === "function"){
-      Telegram.WebApp.openLink(tel);
-      return;
-    }
-  }catch(_){}
-  try{ window.location.href = tel; }catch(_){}
-}
-
-/* ✅ чат с менеджером */
-function openManagerChat(e){
-  try{ if(e){ e.preventDefault(); e.stopPropagation(); } }catch(_){}
-  const url = `tg://user?id=${ADMIN_TG_ID}`;
-  try{
-    if (window.Telegram && Telegram.WebApp && typeof Telegram.WebApp.openLink === "function"){
-      Telegram.WebApp.openLink(url);
-      return;
-    }
-  }catch(_){}
-  // fallback
-  window.open(url, "_blank");
-}
-
-/* верхнее меню */
-function openTopMenu(){
-  try{ closeSearch(); }catch(_){}
-  document.getElementById('menuBackdrop').classList.add('show');
-  document.getElementById('menuSheet').classList.add('show');
-}
-function closeTopMenu(){
-  document.getElementById('menuBackdrop').classList.remove('show');
-  document.getElementById('menuSheet').classList.remove('show');
-}
-
-/* Юридическим лицам */
-function toggleLegal(){
-  const w = document.getElementById('legalWrap');
-  w.style.display = (w.style.display === 'none' || !w.style.display) ? 'block' : 'none';
-}
-
-function toggleReviewWidget(){
-  const w = document.getElementById('reviewWidgetWrap');
-  w.style.display = (w.style.display === 'none' || !w.style.display) ? 'block' : 'none';
-}
-
-/* ✅ отзывы */
-const YANDEX_REVIEWS_URL = "https://yandex.uz/maps/org/239856130727/?ll=66.960593%2C39.684041&mode=search&sctx=ZAAAAAgBEAAaKAoSCaetEcE4MVFAEfxVgO82QURAEhIJDJQUWABT1j8RPUfku5S6xD8iBgABAgMEBSgKOABA1LoGSAFiJHNuaXBwZXRfZXhwX25hbWU9ZnVsbG9iamVjdHMvMS54OnJlZmIjc25pcHBldF9leHBfbmFtZT10b3BvYmplY3RzLzEueDpyZWZiHnNuaXBwZXRfZXhwX25hbWU9Z29vZHMvMS54OnJlZmInc25pcHBldF9leHBfbmFtZT1nb29kc19yZWdpc3Rlci8xLng6cmVmYgtmcmVzaG5lc3M9MGIXc291cmNlPWJ1c2luZXNzOmV4cF9yZWZiFXNvdXJjZT1wcmljZXM6ZXhwX3JlZmoCdXqdAc3MzD2gAQCoAQC9AXc%2FZizCAQantajE%2FQaCAg9iYWtlcnkgY2hva29hcnSKAgCSAgCaAgxkZXNrdG9wLW1hcHM%3D&sll=66.960593%2C39.684041&sspn=0.013893%2C0.006530&text=bakery%20chokoart&z=16.65";
-function openYandexReviews(e){
-  try{ e.preventDefault(); e.stopPropagation(); }catch(_){}
-  const url = YANDEX_REVIEWS_URL;
-  try{
-    if (window.Telegram && Telegram.WebApp && typeof Telegram.WebApp.openLink === "function"){
-      Telegram.WebApp.openLink(url);
-      return;
-    }
-  }catch(_){}
-  window.open(url, "_blank");
-}
-
-function openInstagram(e){
-  try{ e.preventDefault(); e.stopPropagation(); }catch(_){}
-  const url = "https://www.instagram.com/choko_art_motrid/";
-  closeTopMenu();
-  try{
-    if (window.Telegram && Telegram.WebApp && typeof Telegram.WebApp.openLink === "function"){
-      Telegram.WebApp.openLink(url);
-      return;
-    }
-  }catch(_){}
-  window.open(url, "_blank");
-}
-
-/* тема */
-function applyTheme(theme){
-  document.body.setAttribute('data-theme', theme);
-  localStorage.setItem('chokoart_theme', theme);
-
-  const sub = document.getElementById('themeMenuSub');
-  if(sub) sub.innerText = (theme === 'dark') ? 'Тёмная' : 'Светлая';
-
-  try{
-    if (window.Telegram && Telegram.WebApp){
-      Telegram.WebApp.setHeaderColor?.(theme === 'dark' ? '#121212' : '#F8F3E9');
-      Telegram.WebApp.setBackgroundColor?.(theme === 'dark' ? '#121212' : '#F8F3E9');
-    }
-  }catch(_){}
-}
-function toggleThemeFromMenu(){
-  const cur = document.body.getAttribute('data-theme') || 'light';
-  const next = (cur === 'dark') ? 'light' : 'dark';
-  applyTheme(next);
-}
-
-/* О нас */
-const ABOUT_TEXT = `🇷🇺 Русский
-
-Bakery CHOKOART — это место, где десерты становятся искусством 🍫✨
-Мы создаём авторские торты, изысканную выпечку и шоколадные шедевры из натуральных ингредиентов, с любовью к деталям и без компромиссов по вкусу.
-
-Каждый десерт в CHOKOART — это баланс эстетики, свежести и настоящего удовольствия. Мы работаем как для особенных событий, так и для тех моментов, когда хочется порадовать себя просто так.
-
-📍 Самарканд, ул. Мотрид, 103V
-📞 +998 90 505 07 45
-📞 +998 95 500 62 62
-
-CHOKOART — сладкое искусство, созданное для вас.
-
-🇺🇿 O‘zbekcha (lotin)
-
-Bakery CHOKOART — shirinliklar san’atga aylanadigan maskan 🍫✨
-Biz tabiiy ingredientlardan, mayda tafsilotlarga mehr bilan yondashib, ta’mdan hech qanday murosasiz mualliflik tortlar, nafis pishiriqlar va shokolad asarlarini tayyorlaymiz.
-
-CHOKOARTdagi har bir desert — bu estetika, yangilik va haqiqiy rohatning mukammal muvozanati. Biz ham muhim tadbirlar, ham o‘zingizni shunchaki xursand qilishni istagan onlar uchun xizmat qilamiz.
-
-📍 Samarqand, Motrid ko‘chasi, 103V
-📞 +998 90 505 07 45
-📞 +998 95 500 62 62
-
-CHOKOART — siz uchun yaratilgan shirin san’at.
-
-🇬🇧 English
-
-Bakery CHOKOART is a place where desserts become art 🍫✨
-We create signature cakes, refined pastries, and chocolate masterpieces using natural ingredients, with love for every detail and no compromise on taste.
-
-Every dessert at CHOKOART is a perfect balance of aesthetics, freshness, and true enjoyment. We craft sweets for special occasions as well as for moments when you simply want to treat yourself.
-
-📍 Samarkand, Motrid Street, 103V
-📞 +998 90 505 07 45
-📞 +998 95 500 62 62
-
-CHOKOART — sweet art created for you.`;
-
-function escapeHtml(s){
-  return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-}
-function openAbout(){
-  closeTopMenu();
-  const el = document.getElementById('aboutBody');
-  if(el){
-    el.innerHTML = `<div class="t" style="white-space:pre-wrap;">${escapeHtml(ABOUT_TEXT)}</div>`;
-    el.scrollTop = 0;
-  }
-  document.getElementById('aboutModal').style.display = 'block';
-}
-function closeAbout(){
-  document.getElementById('aboutModal').style.display = 'none';
-}
-function aboutBackdropClick(e){
-  if(e.target && e.target.id === 'aboutModal') closeAbout();
-}
-
-(function initTheme(){
-  const saved = localStorage.getItem('chokoart_theme');
-  if(saved === 'dark' || saved === 'light'){
-    applyTheme(saved);
-  }else{
-    const tgTheme = (window.Telegram && Telegram.WebApp && Telegram.WebApp.colorScheme) ? Telegram.WebApp.colorScheme : 'light';
-    applyTheme(tgTheme === 'dark' ? 'dark' : 'light');
-  }
-})();
-
+/* ====== логика (минимально необходимая, чтобы страница работала) ====== */
 const tgUser = Telegram.WebApp.initDataUnsafe?.user || {};
 const tg_username = tgUser.username || "";
 const tg_first_name = tgUser.first_name || "";
 const tg_id = tgUser.id || "";
 
 let lang='ru',category='cheesecakes',type='delivery',payment='cash',cart={};
-let subcat = 'all';
-
-const TEXT={
-  ru:{delivery:'🚚 Доставка',pickup:'🏃 Самовывоз',address:'📍 Адрес доставки',phone:'📞 Телефон',cart:'🛒 Корзина',order:'Оформить заказ',comment:'✍️ Комментарий к заказу',cash:'💵 Наличные',click:'💳 CLICK',results:'Результаты поиска',popular:'🔥 Популярное',empty:'Корзина пустая',subcats:'Подкатегории',new:'🆕 Новинки',gift:'🎁 Для подарка',items:'Товары',deliveryFee:'Доставка (Самарканд)',total:'Итого',all:'Все',allCakes:'Все торты'},
-  uz:{delivery:'🚚 Yetkazish',pickup:'🏃 Olib ketish',address:'📍 Manzil',phone:'📞 Telefon',cart:'🛒 Savat',order:'Buyurtma berish',comment:'✍️ Izoh',cash:'💵 Naqd',click:'💳 CLICK',results:'Qidiruv natijalari',popular:'🔥 Ommabop',empty:"Savat bo‘sh",subcats:'Subkategoriyalar',new:'🆕 Yangi',gift:'🎁 Sovg‘a uchun',items:'Mahsulotlar',deliveryFee:'Yetkazish (Samarqand)',total:'Jami',all:'Barchasi',allCakes:'Barcha tortlar'},
-  en:{delivery:'🚚 Delivery',pickup:'🏃 Pickup',address:'📍 Address',phone:'📞 Phone',cart:'🛒 Cart',order:'Place order',comment:'✍️ Comment',cash:'💵 Cash',click:'💳 CLICK',results:'Search results',popular:'🔥 Popular',empty:'Cart is empty',subcats:'Subcategories',new:'🆕 New',gift:'🎁 For gift',items:'Items',deliveryFee:'Delivery (Samarkand)',total:'Total',all:'All',allCakes:'All cakes'}
-};
-
-const CATS={
-  ru:{cheesecakes:'🍰 Чизкейки',cakes:'🎂 Торты',rolls:'🍥 Рулеты',bakery:'🥐 Выпечка',cookies:'🍪 Печенье',desserts:'🍨 Десерты',pies:'🥧 Пироги'},
-  uz:{cheesecakes:'🍰 Chizkeyklar',cakes:'🎂 Tortlar',rolls:'🍥 Rulolar',bakery:'🥐 Pishiriqlar',cookies:'🍪 Pechenye',desserts:'🍨 Desertlar',pies:'🥧 Piroglar'},
-  en:{cheesecakes:'🍰 Cheesecakes',cakes:'🎂 Cakes',rolls:'🍥 Rolls',bakery:'🥐 Pastry',cookies:'🍪 Cookies',desserts:'🍨 Desserts',pies:'🥧 Pies'}
-};
-
-const SUBCATS = {
-  cakes: [
-    {id:'wedding', ic:'💍', n:{ru:'Свадебные торты', uz:'To‘y tortlari', en:'Wedding cakes'}},
-    {id:'bento', ic:'🍱', n:{ru:'Бенто торты', uz:'Bento tortlar', en:'Bento cakes'}},
-    {id:'rollcakes', ic:'🍥', n:{ru:'Торты рулеты', uz:'Rulet tortlar', en:'Roll cakes'}},
-    {id:'events', ic:'🎉', n:{ru:'Торты на мероприятия', uz:'Tadbir tortlari', en:'Event cakes'}}
-  ],
-  bakery: [
-    {id:'savory', ic:'🥨', n:{ru:'Несладкая выпечка', uz:'Shirin bo‘lmagan pishiriq', en:'Savory pastry'}},
-    {id:'sweet', ic:'🥐', n:{ru:'Сдобная выпечка', uz:'Sdobali pishiriq', en:'Sweet pastry'}},
-    {id:'puff', ic:'🥯', n:{ru:'Слоёная выпечка', uz:'Qavatli pishiriq', en:'Puff pastry'}}
-  ],
-  cookies: [
-    {id:'shortbread', ic:'🧈', n:{ru:'Песочное печенье', uz:'Qumli pechenye', en:'Shortbread'}},
-    {id:'filled', ic:'🍫', n:{ru:'Печенье с начинкой', uz:'Nachinkali pechenye', en:'Filled cookies'}}
-  ],
-  desserts: [
-    {id:'mousse', ic:'🍮', n:{ru:'Муссовые десерты', uz:'Musli desertlar', en:'Mousse desserts'}},
-    {id:'mini', ic:'🧁', n:{ru:'Мини десерты', uz:'Mini desertlar', en:'Mini desserts'}}
-  ],
-  pies: [
-    {id:'sliced', ic:'🍰', n:{ru:'Нарезные пироги', uz:'Bo‘laklangan piroglar', en:'Sliced pies'}},
-    {id:'whole', ic:'🥧', n:{ru:'Целые пироги', uz:'Butun piroglar', en:'Whole pies'}}
-  ]
-};
 
 const MENU = {
   cheesecakes:[
@@ -1188,29 +557,35 @@ const MENU = {
     {id:'cheesecake_oreo', p:48000, img:'images/cheesecake_oreo.png', n:{ru:'Чизкейк Oreo', uz:'Oreo chizkeyk', en:'Oreo cheesecake'}}
   ],
   cakes:[
-    {id:'cake_redvelvet', p:52000, img:'images/cake_redvelvet.png', sub:'events', n:{ru:'Торт Red Velvet', uz:'Red Velvet tort', en:'Red Velvet cake'}},
-    {id:'cake_choco', p:54000, img:'images/cake_choco.png', sub:'bento', n:{ru:'Шоколадный торт', uz:'Shokolad tort', en:'Chocolate cake'}}
+    {id:'cake_redvelvet', p:52000, img:'images/cake_redvelvet.png', n:{ru:'Торт Red Velvet', uz:'Red Velvet tort', en:'Red Velvet cake'}},
+    {id:'cake_choco', p:54000, img:'images/cake_choco.png', n:{ru:'Шоколадный торт', uz:'Shokolad tort', en:'Chocolate cake'}}
   ],
   rolls:[
     {id:'roll_choco', p:35000, img:'images/roll_choco.png', n:{ru:'Рулет шоколадный', uz:'Shokolad rulet', en:'Chocolate roll'}},
     {id:'roll_berry', p:36000, img:'images/roll_berry.png', n:{ru:'Рулет ягодный', uz:'Mevali rulet', en:'Berry roll'}}
   ],
   bakery:[
-    {id:'croissant', p:18000, img:'images/croissant.png', sub:'sweet', n:{ru:'Круассан', uz:'Kruassan', en:'Croissant'}},
-    {id:'danish', p:20000, img:'images/danish.png', sub:'puff', n:{ru:'Датская выпечка', uz:'Daniya pishirig‘i', en:'Danish pastry'}}
+    {id:'croissant', p:18000, img:'images/croissant.png', n:{ru:'Круассан', uz:'Kruassan', en:'Croissant'}},
+    {id:'danish', p:20000, img:'images/danish.png', n:{ru:'Датская выпечка', uz:'Daniya pishirig‘i', en:'Danish pastry'}}
   ],
   cookies:[
-    {id:'cookie_choco', p:12000, img:'images/cookie_choco.png', sub:'filled', n:{ru:'Печенье шоколадное', uz:'Shokolad pechenye', en:'Chocolate cookie'}},
-    {id:'cookie_nuts', p:13000, img:'images/cookie_nuts.png', sub:'shortbread', n:{ru:'Печенье с орехом', uz:'Yong‘oqli pechenye', en:'Nut cookie'}}
+    {id:'cookie_choco', p:12000, img:'images/cookie_choco.png', n:{ru:'Печенье шоколадное', uz:'Shokolad pechenye', en:'Chocolate cookie'}},
+    {id:'cookie_nuts', p:13000, img:'images/cookie_nuts.png', n:{ru:'Печенье с орехом', uz:'Yong‘oqli pechenye', en:'Nut cookie'}}
   ],
   desserts:[
-    {id:'dessert_tiramisu', p:38000, img:'images/dessert_tiramisu.png', sub:'mousse', n:{ru:'Тирамису', uz:'Tiramisu', en:'Tiramisu'}},
-    {id:'dessert_trifle', p:36000, img:'images/dessert_trifle.png', sub:'mini', n:{ru:'Трайфл', uz:'Trifle', en:'Trifle'}}
+    {id:'dessert_tiramisu', p:38000, img:'images/dessert_tiramisu.png', n:{ru:'Тирамису', uz:'Tiramisu', en:'Tiramisu'}},
+    {id:'dessert_trifle', p:36000, img:'images/dessert_trifle.png', n:{ru:'Трайфл', uz:'Trifle', en:'Trifle'}}
   ],
   pies:[
-    {id:'pie_apple', p:32000, img:'images/pie_apple.png', sub:'whole', n:{ru:'Пирог яблочный', uz:'Olmali pirog', en:'Apple pie'}},
-    {id:'pie_cherry', p:34000, img:'images/pie_cherry.png', sub:'sliced', n:{ru:'Пирог вишнёвый', uz:'Gilosli pirog', en:'Cherry pie'}}
+    {id:'pie_apple', p:32000, img:'images/pie_apple.png', n:{ru:'Пирог яблочный', uz:'Olmali pirog', en:'Apple pie'}},
+    {id:'pie_cherry', p:34000, img:'images/pie_cherry.png', n:{ru:'Пирог вишнёвый', uz:'Gilosli pirog', en:'Cherry pie'}}
   ]
+};
+
+const CATS = {
+  ru:{cheesecakes:'🍰 Чизкейки',cakes:'🎂 Торты',rolls:'🍥 Рулеты',bakery:'🥐 Выпечка',cookies:'🍪 Печенье',desserts:'🍨 Десерты',pies:'🥧 Пироги'},
+  uz:{cheesecakes:'🍰 Chizkeyklar',cakes:'🎂 Tortlar',rolls:'🍥 Rulolar',bakery:'🥐 Pishiriqlar',cookies:'🍪 Pechenye',desserts:'🍨 Desertlar',pies:'🥧 Piroglar'},
+  en:{cheesecakes:'🍰 Cheesecakes',cakes:'🎂 Cakes',rolls:'🍥 Rolls',bakery:'🥐 Pastry',cookies:'🍪 Cookies',desserts:'🍨 Desserts',pies:'🥧 Pies'}
 };
 
 const POPULAR = ['cheesecake_classic','cake_choco','dessert_tiramisu','croissant'];
@@ -1218,293 +593,176 @@ const NEW_ITEMS = ['cheesecake_oreo','roll_berry','danish','dessert_trifle'];
 const GIFT_ITEMS = ['cake_redvelvet','cookie_choco','dessert_tiramisu','pie_cherry'];
 
 const ITEM_INDEX = {};
-for (const c in MENU){ MENU[c].forEach(it => { ITEM_INDEX[it.id] = it; }); }
+for (const c in MENU){ MENU[c].forEach(it => ITEM_INDEX[it.id]=it); }
 
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
 function nameOf(id){
   const it = ITEM_INDEX[id];
-  if(!it) return id;
-  return (it.n && (it.n[lang] || it.n.ru)) || id;
+  return (it && it.n && (it.n[lang] || it.n.ru)) ? (it.n[lang] || it.n.ru) : id;
 }
 function formatSum(x){
   const n = Number(x) || 0;
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ');
 }
 
-function loadSaved(){
-  const a = localStorage.getItem('chokoart_address') || '';
-  const p = localStorage.getItem('chokoart_phone') || '';
-  if(a && !address.value) address.value = a;
-  if(p && !phone.value) phone.value = p;
-  if(!phone.value) phone.value = "+998 90 505 07 45";
+/* header actions */
+function openTopMenu(){
+  closeSearch();
+  document.getElementById('menuBackdrop').classList.add('show');
+  document.getElementById('menuSheet').classList.add('show');
 }
-function bindSave(){
-  address.addEventListener('input', ()=>localStorage.setItem('chokoart_address', address.value));
-  phone.addEventListener('input', ()=>localStorage.setItem('chokoart_phone', phone.value));
+function closeTopMenu(){
+  document.getElementById('menuBackdrop').classList.remove('show');
+  document.getElementById('menuSheet').classList.remove('show');
 }
-function updateTypeFields(){
-  if(type === 'pickup'){
-    address.style.display = 'none';
-    address.value = '';
-  }else{
-    address.style.display = 'block';
+function openRoute(){
+  const url = "https://yandex.uz/maps/?rtext=~39.684041,66.960593&rtt=auto&z=16.65";
+  try{ Telegram.WebApp.openLink(url); }catch(_){ window.open(url,'_blank'); }
+}
+function callPhone(e){
+  try{ e.preventDefault(); e.stopPropagation(); }catch(_){}
+  const tel = "tel:+998905050745";
+  try{ Telegram.WebApp.openLink(tel); }catch(_){ window.location.href = tel; }
+}
+
+/* search */
+function isSearchOpen(){ return document.getElementById('searchWrap').classList.contains('show'); }
+function toggleSearch(){ isSearchOpen()?closeSearch():openSearch(); }
+function openSearch(){
+  document.getElementById('searchWrap').classList.add('show');
+  document.getElementById('searchTitle').classList.add('show');
+  document.getElementById('searchInput').value='';
+  document.getElementById('searchInput').focus();
+  searchProducts();
+}
+function closeSearch(){
+  document.getElementById('searchWrap').classList.remove('show');
+  document.getElementById('searchTitle').classList.remove('show');
+  document.getElementById('searchInput').value='';
+  renderProducts();
+}
+function clearSearch(){ closeSearch(); }
+function onSearchKey(e){ if(e.key === 'Enter') closeSearch(); }
+
+function searchProducts(){
+  const q = (searchInput.value || '').trim().toLowerCase();
+  products.innerHTML='';
+  if(!q){ renderProducts(); return; }
+  for(let c in MENU){
+    MENU[c].forEach(it=>{
+      const nm = (it.n && (it.n[lang]||it.n.ru)) ? String(it.n[lang]||it.n.ru).toLowerCase() : '';
+      if(nm.includes(q)){
+        cart[it.id]=cart[it.id]||0;
+        products.innerHTML += cardHTML(it);
+      }
+    });
   }
 }
 
-function setLang(l,b){
-  lang=l;
-  document.querySelectorAll('.langs .btn').forEach(x=>x.classList.remove('active'));
-  b.classList.add('active');
-  applyLang();
-}
-
-function applyLang(){
-  btnDelivery.innerText=TEXT[lang].delivery;
-  btnPickup.innerText=TEXT[lang].pickup;
-  address.placeholder=TEXT[lang].address;
-  phone.placeholder=TEXT[lang].phone;
-  cartTitle.innerText=TEXT[lang].cart;
-  orderBtn.innerText=TEXT[lang].order;
-  comment.placeholder=TEXT[lang].comment;
-  payCash.innerText=TEXT[lang].cash;
-  payClick.innerText=TEXT[lang].click;
-  searchTitle.innerText = TEXT[lang].results;
-  popularTitle.innerText = TEXT[lang].popular;
-  stickyCartBtn.innerText = TEXT[lang].cart;
-
-  newTitle.innerText = TEXT[lang].new;
-  giftTitle.innerText = TEXT[lang].gift;
-
-  subcatBtnText.innerText = TEXT[lang].subcats;
-  subcatSheetTitle.innerText = TEXT[lang].subcats;
-
-  lineItemsLabel.innerText = TEXT[lang].items;
-  lineDeliveryLabel.innerText = TEXT[lang].deliveryFee;
-  lineGrandLabel.innerText = TEXT[lang].total;
-  allCakesText.innerText = TEXT[lang].allCakes;
-
-  renderPopular();
-  renderNew();
-  renderGift();
-
-  renderQuickFilters();
-  renderCats();
-
-  refreshSubcatButton();
-  updateSubcatUI();
-
-  renderProducts();
-  updateTotal();
-  updateTypeFields();
-}
-
-function openCart(){
-  try{ cartBox.scrollIntoView({behavior:'smooth', block:'start'}); }
-  catch(_){ window.location.hash = '#cartBox'; }
-}
-
-/* popular */
+/* carousels */
 function renderPopular(){
-  popularRow.innerHTML = '';
-  POPULAR.forEach((id)=>{
-    const it = ITEM_INDEX[id];
-    if(!it) return;
+  popularRow.innerHTML='';
+  POPULAR.forEach(id=>{
+    const it = ITEM_INDEX[id]; if(!it) return;
     cart[id]=cart[id]||0;
-
-    popularRow.innerHTML += `
-      <div class="pop-card" onclick="onPopularCardClick(event,'${id}')">
-        <div class="pop-badge">🔥</div>
-        <div class="pop-img"><img src="${it.img}" onerror="this.src='images/logo.png'"></div>
-        <div class="pop-name">${escapeHtml(nameOf(id))}</div>
-        <div class="pop-price">${formatSum(it.p)} <small>сум</small></div>
-        <div class="pop-counter">
-          <button type="button" onclick="popChg(event,'${id}',-1)">−</button>
-          <span id="pc_${id}">${cart[id]||0}</span>
-          <button type="button" onclick="popChg(event,'${id}',1)">+</button>
-        </div>
-      </div>
-    `;
+    popularRow.innerHTML += popCardHTML(it,'🔥');
   });
 }
-function onPopularCardClick(e,id){
-  if(e && e.target && (e.target.closest && e.target.closest('button'))) return;
-  chg(id, 1);
-  const pc = document.getElementById('pc_'+id);
-  if(pc) pc.innerText = cart[id] || 0;
-  if(isSearchOpen()) closeSearch();
+function renderNew(){
+  newRow.innerHTML='';
+  NEW_ITEMS.forEach(id=>{
+    const it = ITEM_INDEX[id]; if(!it) return;
+    cart[id]=cart[id]||0;
+    newRow.innerHTML += miniCardHTML(it,'🆕');
+  });
 }
-function popChg(e,id,delta){
-  if(e){ e.preventDefault(); e.stopPropagation(); }
-  chg(id, delta);
-  const pc = document.getElementById('pc_'+id);
-  if(pc) pc.innerText = cart[id] || 0;
-  if(isSearchOpen()) closeSearch();
+function renderGift(){
+  giftRow.innerHTML='';
+  GIFT_ITEMS.forEach(id=>{
+    const it = ITEM_INDEX[id]; if(!it) return;
+    cart[id]=cart[id]||0;
+    giftRow.innerHTML += miniCardHTML(it,'🎁');
+  });
 }
 
-/* mini carousels */
-function miniCardHTML(id, badge){
-  const it = ITEM_INDEX[id];
-  if(!it) return '';
-  cart[id]=cart[id]||0;
+function popCardHTML(it,badge){
+  const id = it.id;
   return `
-    <div class="mini-card" onclick="onMiniCardClick(event,'${id}')">
-      <div class="mini-badge">${badge}</div>
-      <div class="mini-img"><img src="${it.img}" onerror="this.src='images/logo.png'"></div>
-      <div class="mini-name">${escapeHtml(nameOf(id))}</div>
-      <div class="mini-price">${formatSum(it.p)} <small>сум</small></div>
-      <div class="mini-counter">
-        <button type="button" onclick="miniChg(event,'${id}',-1)">−</button>
-        <span id="mc_${id}">${cart[id]||0}</span>
-        <button type="button" onclick="miniChg(event,'${id}',1)">+</button>
-      </div>
+  <div class="pop-card" onclick="onCardClick(event,'${id}')">
+    <div class="pop-badge">${badge}</div>
+    <div class="pop-img"><img src="${it.img}" onerror="this.src='images/logo.png'"></div>
+    <div class="pop-name">${escapeHtml(nameOf(id))}</div>
+    <div class="pop-price">${formatSum(it.p)} <small>сум</small></div>
+    <div class="pop-counter">
+      <button type="button" onclick="chgFrom(event,'${id}',-1)">−</button>
+      <span id="pc_${id}">${cart[id]||0}</span>
+      <button type="button" onclick="chgFrom(event,'${id}',1)">+</button>
     </div>
-  `;
+  </div>`;
 }
-function renderNew(){ newRow.innerHTML = ''; NEW_ITEMS.forEach(id => newRow.innerHTML += miniCardHTML(id,'🆕')); }
-function renderGift(){ giftRow.innerHTML = ''; GIFT_ITEMS.forEach(id => giftRow.innerHTML += miniCardHTML(id,'🎁')); }
-function onMiniCardClick(e,id){
-  if(e && e.target && (e.target.closest && e.target.closest('button'))) return;
-  chg(id, 1);
-  const el = document.getElementById('mc_'+id);
-  if(el) el.innerText = cart[id] || 0;
-  if(isSearchOpen()) closeSearch();
+function miniCardHTML(it,badge){
+  const id = it.id;
+  return `
+  <div class="mini-card" onclick="onCardClick(event,'${id}')">
+    <div class="mini-badge">${badge}</div>
+    <div class="mini-img"><img src="${it.img}" onerror="this.src='images/logo.png'"></div>
+    <div class="mini-name">${escapeHtml(nameOf(id))}</div>
+    <div class="mini-price">${formatSum(it.p)} <small>сум</small></div>
+    <div class="mini-counter">
+      <button type="button" onclick="chgFrom(event,'${id}',-1)">−</button>
+      <span id="mc_${id}">${cart[id]||0}</span>
+      <button type="button" onclick="chgFrom(event,'${id}',1)">+</button>
+    </div>
+  </div>`;
 }
-function miniChg(e,id,delta){
+function onCardClick(e,id){
+  if(e && e.target && e.target.closest && e.target.closest('button')) return;
+  chg(id,1);
+}
+function chgFrom(e,id,delta){
   if(e){ e.preventDefault(); e.stopPropagation(); }
-  chg(id, delta);
-  const el = document.getElementById('mc_'+id);
-  if(el) el.innerText = cart[id] || 0;
-  if(isSearchOpen()) closeSearch();
+  chg(id,delta);
 }
 
-/* quick filters */
-function renderQuickFilters(){
-  const keys = ['cheesecakes','cakes','desserts','bakery'];
-  quickFilters.innerHTML = '';
-  keys.forEach(k=>{
-    if(!MENU[k]) return;
-    quickFilters.innerHTML += `<button class="btn" style="min-width:auto; padding:10px 14px;" onclick="pickCategory('${k}')">${CATS[lang][k]}</button>`;
-  });
+function syncCounters(id){
+  const a = document.getElementById('pc_'+id);
+  if(a) a.innerText = cart[id]||0;
+  const b = document.getElementById('mc_'+id);
+  if(b) b.innerText = cart[id]||0;
+  const c = document.getElementById('c_'+id);
+  if(c) c.innerText = cart[id]||0;
 }
-function pickCategory(k){
-  if(isSearchOpen()) closeSearch();
-  category = k;
-  subcat = 'all';
-  renderCats();
-  refreshSubcatButton();
-  updateSubcatUI();
-  renderProducts();
-
-  // ✅ при выборе через быстрые фильтры тоже сразу открываем подкатегории (если есть)
-  if(SUBCATS[category] && SUBCATS[category].length){
-    openSubcats();
-  }
+function updateTotal(){
+  let s=0;
+  for(const id in cart) s += (cart[id]||0) * (ITEM_INDEX[id]?.p||0);
+  total.innerText = formatSum(s);
+  stickyTotal.innerText = formatSum(s);
+}
+function chg(id,delta){
+  cart[id]=Math.max(0,(cart[id]||0)+delta);
+  syncCounters(id);
+  updateTotal();
 }
 
-/* Subcats */
-function openSubcats(){
-  if(!SUBCATS[category] || !SUBCATS[category].length) return;
-  document.getElementById('subcatBackdrop').classList.add('show');
-  document.getElementById('subcatSheet').classList.add('show');
-  renderSubcatGrid();
-}
-function closeSubcats(){
-  document.getElementById('subcatBackdrop').classList.remove('show');
-  document.getElementById('subcatSheet').classList.remove('show');
-}
-function subcatName(sc){
-  return (sc.n && (sc.n[lang] || sc.n.ru)) || '';
-}
-function renderSubcatGrid(){
-  const grid = document.getElementById('subcatGrid');
-  grid.innerHTML = '';
-
-  grid.innerHTML += `
-    <div class="subcat-tile ${subcat==='all'?'active':''}" onclick="setSubcat('all')">
-      <div class="subcat-ic">✨</div>
-      <div class="subcat-nm">${escapeHtml(TEXT[lang].all)}</div>
-    </div>
-  `;
-
-  const list = SUBCATS[category] || [];
-  list.forEach(sc=>{
-    grid.innerHTML += `
-      <div class="subcat-tile ${subcat===sc.id?'active':''}" onclick="setSubcat('${sc.id}')">
-        <div class="subcat-ic">${sc.ic}</div>
-        <div class="subcat-nm">${escapeHtml(subcatName(sc))}</div>
-      </div>
-    `;
-  });
-
-  const footer = document.getElementById('subcatFooter');
-  footer.style.display = (category === 'cakes') ? 'block' : 'none';
-}
-function setSubcat(id){
-  subcat = id;
-  renderProducts();
-  refreshSubcatButton();
-  renderSubcatGrid();
-}
-function pickAllCakesFromFooter(){
-  subcat = 'all';
-  renderProducts();
-  refreshSubcatButton();
-  closeSubcats();
-}
-function updateSubcatUI(){
-  const btnWrap = document.getElementById('subcatBtnWrap');
-  if(SUBCATS[category] && SUBCATS[category].length){
-    btnWrap.style.display = '';
-  }else{
-    btnWrap.style.display = 'none';
-    subcat = 'all';
-  }
-}
-function refreshSubcatButton(){
-  const right = document.getElementById('subcatBtnRight');
-  if(!right) return;
-
-  if(subcat === 'all'){
-    right.innerText = (category === 'cakes') ? TEXT[lang].allCakes : TEXT[lang].all;
-    return;
-  }
-  const list = SUBCATS[category] || [];
-  const sc = list.find(x => x.id === subcat);
-  right.innerText = sc ? subcatName(sc) : '›';
-}
-
-/* ✅✅✅ категории: при нажатии сразу открываем подкатегории */
+/* categories */
 function onCategoryClick(k){
-  if(isSearchOpen()) closeSearch();
-  category = k;
-  subcat = 'all';
+  category=k;
   renderCats();
-  refreshSubcatButton();
-  updateSubcatUI();
   renderProducts();
-
-  if(SUBCATS[category] && SUBCATS[category].length){
-    openSubcats();
-  }
 }
-
 function renderCats(){
   cats.innerHTML='';
-  for(let k in MENU){
-    cats.innerHTML+=`<button class="btn cat-btn ${k===category?'active':''}" onclick="onCategoryClick('${k}')">${CATS[lang][k] || k}</button>`;
+  for(const k in MENU){
+    cats.innerHTML += `<button class="btn cat-btn ${k===category?'active':''}" onclick="onCategoryClick('${k}')">${CATS[lang][k]||k}</button>`;
   }
-  setTimeout(()=>{
-    const active = cats.querySelector('.btn.active');
-    if(active && active.scrollIntoView){
-      active.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
-    }
-  }, 50);
 }
-
-function cardHTML(it, q=''){
+function cardHTML(it){
   const id = it.id;
-  const qty = cart[id] || 0;
-
-  return `<div class="card">
+  const qty = cart[id]||0;
+  return `
+  <div class="card">
     <div class="img"><img src="${it.img}" onerror="this.src='images/logo.png'"></div>
     <div class="item-name">${escapeHtml(nameOf(id))}</div>
     <div class="price">${formatSum(it.p)} <small>сум</small></div>
@@ -1515,210 +773,138 @@ function cardHTML(it, q=''){
     </div>
   </div>`;
 }
-
 function renderProducts(){
   products.innerHTML='';
-  const list = (MENU[category] || []).filter(it=>{
-    if(subcat === 'all') return true;
-    return String(it.sub || '') === String(subcat);
-  });
-
-  list.forEach((it)=>{
+  (MENU[category]||[]).forEach(it=>{
     cart[it.id]=cart[it.id]||0;
-    products.innerHTML+=cardHTML(it,'');
+    products.innerHTML += cardHTML(it);
   });
 }
 
-function syncPopularCounters(){
-  POPULAR.forEach((id)=>{
-    const el = document.getElementById('pc_'+id);
-    if(el) el.innerText = cart[id] || 0;
-  });
+/* language / type */
+function setLang(l,btn){
+  lang=l;
+  document.querySelectorAll('.langs .btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCats(); renderProducts(); renderPopular(); renderNew(); renderGift();
 }
-function syncMiniCounters(){
-  [...NEW_ITEMS, ...GIFT_ITEMS].forEach((id)=>{
-    const el = document.getElementById('mc_'+id);
-    if(el) el.innerText = cart[id] || 0;
-  });
-}
-function chg(id,v){
-  cart[id]=Math.max(0,(cart[id]||0)+v);
-  const el = document.getElementById('c_'+id);
-  if(el) el.innerText=cart[id];
-  updateTotal();
-  syncPopularCounters();
-  syncMiniCounters();
-}
-function price(id){
-  return (ITEM_INDEX[id] && ITEM_INDEX[id].p) ? ITEM_INDEX[id].p : 0;
-}
-function calcItemsSum(){
-  let s=0;
-  for(let id in cart) s += (cart[id]||0) * price(id);
-  return s;
-}
-function calcDeliveryFee(){
-  if(type !== 'delivery') return 0;
-  return DELIVERY_FEE_SAMARKAND;
-}
-function updateTotal(){
-  const itemsSum = calcItemsSum();
-  const deliveryFee = calcDeliveryFee();
-  const grand = itemsSum + deliveryFee;
-
-  total.innerText = formatSum(grand);
-  stickyTotal.innerText = formatSum(grand);
-
-  itemsTotal.innerText = formatSum(itemsSum);
-  deliveryFeeEl = document.getElementById('deliveryFee');
-  deliveryFeeEl.innerText = formatSum(deliveryFee);
-  grandTotal.innerText = formatSum(grand);
-}
-
-function setType(t,b){
-  if(isSearchOpen()) closeSearch();
+function setType(t,btn){
   type=t;
-  document.querySelectorAll('.types .btn').forEach(x=>x.classList.remove('active'));
-  b.classList.add('active');
-  updateTypeFields();
-  updateTotal();
+  document.querySelectorAll('.types .btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  address.style.display = (type==='pickup') ? 'none' : 'block';
 }
-function setPayment(p){
-  payment=p;
-  payCash.classList.toggle('active',p==='cash');
-  payClick.classList.toggle('active',p==='click');
+function setPayment(p){ payment=p; }
+
+function openCart(){
+  try{ cartBox.scrollIntoView({behavior:'smooth', block:'start'}); }catch(_){}
 }
 
-function isSearchOpen(){ return searchWrap.classList.contains('show'); }
-function toggleSearch(){ if(isSearchOpen()) closeSearch(); else openSearch(); }
-function openSearch(){
-  document.body.classList.add('searching');
-  searchWrap.classList.add('show');
-  searchTitle.classList.add('show');
-  cats.style.display = 'none';
-  quickFilters.style.display = 'none';
-  popularWrap.style.display = 'none';
-  searchInput.value = '';
-  searchInput.focus();
-  searchProducts();
-}
-function closeSearch(){
-  document.body.classList.remove('searching');
-  searchWrap.classList.remove('show');
-  searchTitle.classList.remove('show');
-  cats.style.display = '';
-  quickFilters.style.display = '';
-  popularWrap.style.display = '';
-  searchInput.value = '';
-  renderProducts();
-}
-function clearSearch(){ closeSearch(); }
-function onSearchKey(e){ if(e.key === 'Enter') closeSearch(); }
-
-/* поиск */
-function searchProducts(){
-  const q = (searchInput.value || '').trim().toLowerCase();
-  products.innerHTML='';
-  if(!q){
-    renderProducts();
-    return;
-  }
-  for(let c in MENU){
-    MENU[c].forEach((it)=>{
-      const nmRu = (it.n && it.n.ru) ? String(it.n.ru).toLowerCase() : '';
-      const nmUz = (it.n && it.n.uz) ? String(it.n.uz).toLowerCase() : '';
-      const nmEn = (it.n && it.n.en) ? String(it.n.en).toLowerCase() : '';
-      const nmCur = (it.n && it.n[lang]) ? String(it.n[lang]).toLowerCase() : '';
-      if(nmCur.includes(q) || nmRu.includes(q) || nmUz.includes(q) || nmEn.includes(q)){
-        cart[it.id]=cart[it.id]||0;
-        products.innerHTML += cardHTML(it, q);
-      }
-    });
-  }
-}
-
-document.addEventListener('click', (e)=>{
-  if(!isSearchOpen()) return;
-  const t = e.target;
-  const insideSearch = searchWrap.contains(t) || searchTitle.contains(t);
-  const onBtn = t.closest && t.closest('.search-btn');
-  if(!insideSearch && !onBtn) closeSearch();
-}, true);
-
+/* order */
 function genOrderId(){
-  const d = new Date();
-  const dd = String(d.getDate()).padStart(2,'0');
-  const mm = String(d.getMonth()+1).padStart(2,'0');
-  const key = `chokoart_seq_${d.getFullYear()}${mm}${dd}`;
-  let n = Number(localStorage.getItem(key) || 0) + 1;
-  localStorage.setItem(key, String(n));
-  const num = String(n).padStart(3,'0');
-  return `CHK-${dd}${mm}-${num}`;
+  const d=new Date();
+  const dd=String(d.getDate()).padStart(2,'0');
+  const mm=String(d.getMonth()+1).padStart(2,'0');
+  const key=`chokoart_seq_${d.getFullYear()}${mm}${dd}`;
+  let n=Number(localStorage.getItem(key)||0)+1;
+  localStorage.setItem(key,String(n));
+  return `CHK-${dd}${mm}-${String(n).padStart(3,'0')}`;
 }
-
 function sendOrder(){
   popup.classList.add('show');
 
-  const items = [];
-  for (const id in cart) {
-    const qty = Number(cart[id] || 0);
-    if (qty > 0) {
-      const it = ITEM_INDEX[id] || {};
-      items.push({
-        id,
-        qty,
-        price: it.p || 0,
-        name_ru: (it.n && it.n.ru) ? it.n.ru : id,
-        name_lang: nameOf(id)
-      });
+  const items=[];
+  for(const id in cart){
+    const qty=Number(cart[id]||0);
+    if(qty>0){
+      const it=ITEM_INDEX[id]||{};
+      items.push({id,qty,price:it.p||0,name_ru:it.n?.ru||id,name_lang:nameOf(id)});
     }
   }
-
-  if (items.length === 0) {
+  if(items.length===0){
     popup.classList.remove('show');
-    alert(TEXT[lang].empty);
+    alert('Корзина пустая');
     return;
   }
 
-  const items_sum = calcItemsSum();
-  const delivery_fee = calcDeliveryFee();
-  const grand_total_num = items_sum + delivery_fee;
-
-  const payload = {
-    tg: { id: tg_id, username: tg_username, first_name: tg_first_name },
+  const payload={
+    tg:{id:tg_id,username:tg_username,first_name:tg_first_name},
     items,
-    items_sum,
-    delivery_fee,
-    total_num: grand_total_num,
-    total: formatSum(grand_total_num),
+    total: total.innerText,
+    total_num: Number(total.innerText.replace(/\s/g,'')) || 0,
     payment,
     type,
-    address: (type==='pickup' ? '' : address.value),
-    phone: phone.value,
-    comment: comment.value,
+    address:(type==='pickup'?'':address.value),
+    phone:phone.value,
+    comment:comment.value,
     order_id: genOrderId(),
-    lang,
-    category,
-    subcat
+    lang
   };
 
   setTimeout(()=>{
     Telegram.WebApp.sendData(JSON.stringify(payload));
     Telegram.WebApp.close();
-  }, 700);
+  },700);
+}
+
+function toggleReviewWidget(){
+  const w = document.getElementById('reviewWidgetWrap');
+  w.style.display = (w.style.display==='none' || !w.style.display) ? 'block' : 'none';
+}
+const YANDEX_REVIEWS_URL="https://yandex.uz/maps/org/239856130727/?ll=66.960593%2C39.684041&mode=search&z=16.65";
+function openYandexReviews(e){ try{e.preventDefault();e.stopPropagation();}catch(_){}
+  try{Telegram.WebApp.openLink(YANDEX_REVIEWS_URL);}catch(_){window.open(YANDEX_REVIEWS_URL,'_blank');}
+}
+function openInstagram(e){ try{e.preventDefault();e.stopPropagation();}catch(_){}
+  const url="https://www.instagram.com/choko_art_motrid/";
+  closeTopMenu();
+  try{Telegram.WebApp.openLink(url);}catch(_){window.open(url,'_blank');}
 }
 
 /* init */
-loadSaved();
-bindSave();
-applyLang();
+btnDelivery.innerText='🚚 Доставка';
+btnPickup.innerText='🏃 Самовывоз';
+address.placeholder='📍 Адрес доставки';
+phone.placeholder='📞 Телефон';
+cartTitle.innerText='🛒 Корзина';
+orderBtn.innerText='Оформить заказ';
+stickyCartBtn.innerText='Корзина';
 
-/* ✅ небольшой фикс “дерганья” на iOS при открытии клавиатуры */
-window.addEventListener('resize', ()=>{
+renderPopular();
+renderNew();
+renderGift();
+renderCats();
+renderProducts();
+updateTotal();
+
+address.value = localStorage.getItem('chokoart_address') || '';
+phone.value = localStorage.getItem('chokoart_phone') || '+998 90 505 07 45';
+address.addEventListener('input',()=>localStorage.setItem('chokoart_address',address.value));
+phone.addEventListener('input',()=>localStorage.setItem('chokoart_phone',phone.value));
+
+/* тема */
+function applyTheme(theme){
+  document.body.setAttribute('data-theme', theme);
+  localStorage.setItem('chokoart_theme', theme);
+  const sub = document.getElementById('themeMenuSub');
+  if(sub) sub.innerText = (theme === 'dark') ? 'Тёмная' : 'Светлая';
   try{
-    document.documentElement.style.setProperty('--vh', (window.innerHeight * 0.01) + 'px');
+    Telegram.WebApp.setHeaderColor?.(theme === 'dark' ? '#121212' : '#F8F3E9');
+    Telegram.WebApp.setBackgroundColor?.(theme === 'dark' ? '#121212' : '#F8F3E9');
   }catch(_){}
-});
+}
+function toggleThemeFromMenu(){
+  const cur = document.body.getAttribute('data-theme') || 'light';
+  applyTheme(cur==='dark'?'light':'dark');
+}
+(function initTheme(){
+  const saved = localStorage.getItem('chokoart_theme');
+  if(saved==='dark'||saved==='light') applyTheme(saved);
+  else{
+    const tgTheme = Telegram.WebApp.colorScheme || 'light';
+    applyTheme(tgTheme==='dark'?'dark':'light');
+  }
+})();
 </script>
 </body>
 </html>
