@@ -16,7 +16,8 @@
   --pink-2:#F2A9BE;
   --pink-deep:#E98AA6;
 
-  --accent-red:#8B1E1E; /* оставим для цен */
+  /* ✅ красно-бордовый как цена */
+  --price-red:#8B1E1E;
 
   --stroke: rgba(0,0,0,.08);
   --stroke-strong: rgba(0,0,0,.14);
@@ -67,8 +68,8 @@ body[data-theme="dark"]{ color:#f1f1f1; }
 .header img{
   position:absolute;
   left:12px;
-  width:126px;   /* было 84px */
-  height:126px;  /* было 84px */
+  width:126px;
+  height:126px;
   object-fit:contain;
   border-radius:22px;
   background:rgba(255,255,255,.10);
@@ -77,7 +78,16 @@ body[data-theme="dark"]{ color:#f1f1f1; }
   box-shadow:0 12px 26px rgba(0,0,0,.12);
 }
 
-.brand-wrap{display:flex;flex-direction:column;align-items:center;gap:2px;}
+/* ✅✅✅ СДВИГ ТЕКСТА В ШАПКЕ ВПРАВО (примерно на 4 буквы) */
+.brand-wrap{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:2px;
+  transform: translateX(18px); /* ← регулирует сдвиг вправо */
+}
+
+/* Bakery / CHOKOART */
 .brand-title{
   font-family:'Lobster',cursive;
   font-size:34px;
@@ -91,6 +101,8 @@ body[data-theme="dark"]{ color:#f1f1f1; }
   letter-spacing:2px;
   line-height:1.1;
 }
+
+/* лозунг Lobster */
 .brand-slogan{
   font-family:'Lobster',cursive;
   font-size:18px;
@@ -172,7 +184,7 @@ body[data-theme="dark"]{ color:#f1f1f1; }
   justify-content:center;
 }
 
-/* ✅ активные кнопки (язык/доставка/категории/оплата) */
+/* ✅✅✅ КНОПКИ: текст бордовый */
 .btn{
   padding:12px 20px;
   border-radius:var(--r-pill);
@@ -184,6 +196,7 @@ body[data-theme="dark"]{ color:#f1f1f1; }
 
   border:1px solid var(--stroke);
   background:#fffdf9;
+  color:var(--price-red);
   box-shadow: inset 0 0 0 2px var(--inner), 0 6px 14px var(--shadow);
 }
 body[data-theme="dark"] .btn{
@@ -193,7 +206,7 @@ body[data-theme="dark"] .btn{
 .btn:active{transform:scale(.98);}
 .btn.active{
   background:linear-gradient(135deg,var(--pink-deep),var(--pink-2));
-  color:white;
+  color:#fff;
   border:1px solid rgba(255,255,255,.42);
   box-shadow: inset 0 0 0 2px rgba(255,255,255,.16), 0 10px 22px rgba(0,0,0,.16);
 }
@@ -285,7 +298,7 @@ body[data-theme="dark"] .card{
 }
 
 /* price */
-.price{font-weight:900;color:var(--accent-red);margin-top:6px;}
+.price{font-weight:900;color:var(--price-red);margin-top:6px;}
 .price small{font-weight:800;opacity:.75;margin-left:4px;}
 
 /* ✅✅✅ +/- КНОПКИ = пастельно-розовые */
@@ -390,6 +403,7 @@ mark{background:rgba(246,183,200,.45);padding:0 .12em;border-radius:6px;}
   cursor:pointer;
   white-space:nowrap;
   transition:.15s;
+  color:var(--price-red);
 }
 body[data-theme="dark"] .qbtn{background:rgba(255,255,255,.06); color:#f1f1f1;}
 .qbtn:active{transform:scale(.98);}
@@ -422,7 +436,7 @@ body[data-theme="dark"] .pop-card{background:rgba(255,255,255,.06); color:#f1f1f
 }
 .pop-img img{width:100%;height:100%;object-fit:cover;}
 .pop-name{font-weight:900;margin-top:8px;}
-.pop-price{font-weight:900;color:var(--accent-red);margin-top:4px;}
+.pop-price{font-weight:900;color:var(--price-red);margin-top:4px;}
 .pop-badge{position:absolute;left:10px;top:10px;font-size:18px;pointer-events:none;}
 
 /* ✅ +/- в популярном тоже пастельно-розовые */
@@ -502,7 +516,7 @@ body[data-theme="dark"] .menu-sheet{background:#1c1c1c;border-color:rgba(255,255
 .menu-handle{width:44px;height:5px;border-radius:999px;background:rgba(0,0,0,.18);margin:6px auto 10px;}
 body[data-theme="dark"] .menu-handle{background:rgba(255,255,255,.18);}
 .menu-head{display:flex;align-items:center;justify-content:space-between;padding:2px 4px 10px;}
-.menu-head b{font-size:16px;}
+.menu-head b{font-size:16px;color:var(--price-red);}
 .menu-close{width:38px;height:38px;border:none;border-radius:12px;background:transparent;cursor:pointer;font-size:22px;line-height:1;color:#777;}
 body[data-theme="dark"] .menu-close{color:#bbb;}
 .menu-list{display:flex;flex-direction:column;gap:8px;}
@@ -527,8 +541,8 @@ body[data-theme="dark"] .menu-ic{background:rgba(255,255,255,.06);}
 .about-card{max-width:680px;margin:0 auto;background:#fffdf9;border:1px solid var(--stroke);border-radius:22px;box-shadow:0 18px 40px rgba(0,0,0,.18);padding:14px 14px 12px;}
 body[data-theme="dark"] .about-card{background:#1c1c1c;border-color:rgba(255,255,255,.14);color:#f1f1f1;}
 .about-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px;}
-.about-head b{font-size:16px;}
-.about-body{font-size:14px;line-height:1.45;}
+.about-head b{font-size:16px;color:var(--price-red);}
+.about-body{font-size:14px;line-height:1.45;white-space:pre-wrap;}
 .about-muted{opacity:.75;}
 </style>
 </head>
@@ -652,10 +666,7 @@ body[data-theme="dark"] .about-card{background:#1c1c1c;border-color:rgba(255,255
       <b>О нас</b>
       <button class="menu-close" onclick="closeAbout()">×</button>
     </div>
-    <div class="about-body">
-      <b>Bakery CHOKOART</b> — кондитерская и кафе.<br>
-      <span class="about-muted">Добавь сюда текст: адрес, график, доставка, особенности, и т.д.</span>
-    </div>
+    <div class="about-body" id="aboutBody"></div>
   </div>
 </div>
 
@@ -671,7 +682,6 @@ body[data-theme="dark"] .about-card{background:#1c1c1c;border-color:rgba(255,255
   <button class="btn" onclick="setLang('en',this)">EN</button>
 </div>
 
-<!-- Популярное оставим, но ids поменяли на новые -->
 <div class="popular-wrap" id="popularWrap">
   <div class="popular-title" id="popularTitle">🔥 Популярное</div>
   <div class="popular-row" id="popularRow"></div>
@@ -714,6 +724,46 @@ body[data-theme="dark"] .about-card{background:#1c1c1c;border-color:rgba(255,255
 <script>
 Telegram.WebApp.ready();
 
+/* ======= ТЕКСТ "О НАС" ======= */
+const ABOUT_TEXT = `🇷🇺 Русский
+
+Bakery CHOKOART — это место, где десерты становятся искусством 🍫✨
+Мы создаём авторские торты, изысканную выпечку и шоколадные шедевры из натуральных ингредиентов, с любовью к деталям и без компромиссов по вкусу.
+
+Каждый десерт в CHOKOART — это баланс эстетики, свежести и настоящего удовольствия. Мы работаем как для особенных событий, так и для тех моментов, когда хочется порадовать себя просто так.
+
+📍 Самарканд, ул. Мотрид, 103V
+📞 +998 90 505 07 45
+📞 +998 95 500 62 62
+
+CHOKOART — сладкое искусство, созданное для вас.
+
+🇺🇿 O‘zbekcha (lotin)
+
+Bakery CHOKOART — shirinliklar san’atga aylanadigan maskan 🍫✨
+Biz tabiiy ingredientlardan, mayda tafsilotlarga mehr bilan yondashib, ta’mdan hech qanday murosasiz mualliflik tortlar, nafis pishiriqlar va shokolad asarlarini tayyorlaymiz.
+
+CHOKOARTdagi har bir desert — bu estetika, yangilik va haqiqiy rohatning mukammal muvozanati. Biz ham muhim tadbirlar, ham o‘zingizni shunchaki xursand qilishni istagan onlar uchun xizmat qilamiz.
+
+📍 Samarqand, Motrid ko‘chasi, 103V
+📞 +998 90 505 07 45
+📞 +998 95 500 62 62
+
+CHOKOART — siz uchun yaratilgan shirin san’at.
+
+🇬🇧 English
+
+Bakery CHOKOART is a place where desserts become art 🍫✨
+We create signature cakes, refined pastries, and chocolate masterpieces using natural ingredients, with love for every detail and no compromise on taste.
+
+Every dessert at CHOKOART is a perfect balance of aesthetics, freshness, and true enjoyment. We craft sweets for special occasions as well as for moments when you simply want to treat yourself.
+
+📍 Samarkand, Motrid Street, 103V
+📞 +998 90 505 07 45
+📞 +998 95 500 62 62
+
+CHOKOART — sweet art created for you.`;
+
 /* ======= ШАПКА: звонок ======= */
 function callPhone(e){
   try{ e.preventDefault(); e.stopPropagation(); }catch(_){}
@@ -742,9 +792,11 @@ function toggleReviewWidget(){
   const w = document.getElementById('reviewWidgetWrap');
   w.style.display = (w.style.display === 'none' || !w.style.display) ? 'block' : 'none';
 }
+
+/* ✅✅✅ НОВАЯ ССЫЛКА НА ОТЗЫВЫ */
 function openYandexReviews(e){
   try{ e.preventDefault(); e.stopPropagation(); }catch(_){}
-  const url = "https://yandex.ru/sprav/widget/rating-badge/11046753996?type=rating";
+  const url = "https://yandex.uz/maps/org/239856130727/?ll=66.960593%2C39.684041&mode=search&sctx=ZAAAAAgBEAAaKAoSCaetEcE4MVFAEfxVgO82QURAEhIJDJQUWABT1j8RPUfku5S6xD8iBgABAgMEBSgKOABA1LoGSAFiJHNuaXBwZXRfZXhwX25hbWU9ZnVsbG9iamVjdHMvMS54OnJlZmIjc25pcHBldF9leHBfbmFtZT10b3BvYmplY3RzLzEueDpyZWZiHnNuaXBwZXRfZXhwX25hbWU9Z29vZHMvMS54OnJlZmInc25pcHBldF9leHBfbmFtZT1nb29kc19yZWdpc3Rlci8xLng6cmVmYgtmcmVzaG5lc3M9MGIXc291cmNlPWJ1c2luZXNzOmV4cF9yZWZiFXNvdXJjZT1wcmljZXM6ZXhwX3JlZmoCdXqdAc3MzD2gAQCoAQC9AXc%2FZizCAQantajE%2FQaCAg9iYWtlcnkgY2hva29hcnSKAgCSAgCaAgxkZXNrdG9wLW1hcHM%3D&sll=66.960593%2C39.684041&sspn=0.013893%2C0.006530&text=bakery%20chokoart&z=16.65";
   try{
     if (window.Telegram && Telegram.WebApp && typeof Telegram.WebApp.openLink === "function"){
       Telegram.WebApp.openLink(url);
@@ -790,6 +842,8 @@ function toggleThemeFromMenu(){
 
 function openAbout(){
   closeTopMenu();
+  const ab = document.getElementById('aboutBody');
+  if(ab) ab.textContent = ABOUT_TEXT;
   document.getElementById('aboutModal').classList.add('show');
 }
 function closeAbout(){
@@ -824,7 +878,6 @@ const TEXT={
   en:{delivery:'🚚 Delivery',pickup:'🏃 Pickup',address:'📍 Address',phone:'📞 Phone',cart:'🛒 Cart',order:'Place order',comment:'✍️ Comment',cash:'💵 Cash',click:'💳 CLICK',results:'Search results',popular:'🔥 Popular',empty:'Cart is empty'}
 };
 
-/* ✅ Новые категории (как просил) */
 const CATS={
   ru:{
     cheesecakes:'🍰 Чизкейки',
@@ -855,7 +908,6 @@ const CATS={
   }
 };
 
-/* ✅ В каждой категории — только 2 блюда */
 const MENU = {
   cheesecakes:[
     {id:'cheese_ny', p:45000, img:'images/cheesecake_ny.png', n:{ru:'Чизкейк Нью-Йорк', uz:'Nyu-York chizkeyk', en:'New York cheesecake'}},
@@ -887,26 +939,21 @@ const MENU = {
   ]
 };
 
-/* Популярное — из новых id */
-const POPULAR = ['cheese_ny','cake_redvel','tiramisu','croissant'].filter(Boolean);
+/* популярное */
+const POPULAR = ['cheese_ny','cake_redvel','dessert_tiramisu','croissant'];
 
-/* index */
 const ITEM_INDEX = {};
-for (const c in MENU){
-  MENU[c].forEach(it => { ITEM_INDEX[it.id] = it; });
-}
+for (const c in MENU){ MENU[c].forEach(it => { ITEM_INDEX[it.id] = it; }); }
 
 function nameOf(id){
   const it = ITEM_INDEX[id];
   if(!it) return id;
   return (it.n && (it.n[lang] || it.n.ru)) || id;
 }
-
 function formatSum(x){
   const n = Number(x) || 0;
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ');
 }
-
 function escapeHtml(s){
   return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 }
@@ -975,7 +1022,7 @@ function openCart(){
   catch(_){ window.location.hash = '#cartBox'; }
 }
 
-/* popular with counter */
+/* popular */
 function renderPopular(){
   popularRow.innerHTML = '';
   POPULAR.forEach((id)=>{
@@ -999,7 +1046,6 @@ function renderPopular(){
     `;
   });
 }
-
 function onPopularCardClick(e,id){
   if(e && e.target && (e.target.closest && e.target.closest('button'))) return;
   chg(id, 1);
@@ -1016,7 +1062,6 @@ function popChg(e,id,delta){
 }
 
 function renderQuickFilters(){
-  /* быстрые кнопки только на 4 категории */
   const keys = ['cheesecakes','cakes','desserts','bakery'];
   quickFilters.innerHTML = '';
   keys.forEach(k=>{
@@ -1076,7 +1121,6 @@ function syncPopularCounters(){
     if(el) el.innerText = cart[id] || 0;
   });
 }
-
 function chg(id,v){
   cart[id]=Math.max(0,(cart[id]||0)+v);
   const el = document.getElementById('c_'+id);
@@ -1084,11 +1128,9 @@ function chg(id,v){
   updateTotal();
   syncPopularCounters();
 }
-
 function price(id){
   return (ITEM_INDEX[id] && ITEM_INDEX[id].p) ? ITEM_INDEX[id].p : 0;
 }
-
 function updateTotal(){
   let s=0;
   for(let id in cart) s += (cart[id]||0) * price(id);
@@ -1103,7 +1145,6 @@ function setType(t,b){
   b.classList.add('active');
   updateTypeFields();
 }
-
 function setPayment(p){
   payment=p;
   payCash.classList.toggle('active',p==='cash');
@@ -1113,7 +1154,6 @@ function setPayment(p){
 /* search */
 function isSearchOpen(){ return searchWrap.classList.contains('show'); }
 function toggleSearch(){ if(isSearchOpen()) closeSearch(); else openSearch(); }
-
 function openSearch(){
   searchWrap.classList.add('show');
   searchTitle.classList.add('show');
@@ -1124,7 +1164,6 @@ function openSearch(){
   searchInput.focus();
   searchProducts();
 }
-
 function closeSearch(){
   searchWrap.classList.remove('show');
   searchTitle.classList.remove('show');
@@ -1134,7 +1173,6 @@ function closeSearch(){
   searchInput.value = '';
   renderProducts();
 }
-
 function clearSearch(){ closeSearch(); }
 function onSearchKey(e){ if(e.key === 'Enter') closeSearch(); }
 
@@ -1149,7 +1187,6 @@ function searchProducts(){
     });
     return;
   }
-
   for(let c in MENU){
     MENU[c].forEach((it)=>{
       const nmRu = (it.n && it.n.ru) ? String(it.n.ru).toLowerCase() : '';
@@ -1163,7 +1200,6 @@ function searchProducts(){
     });
   }
 }
-
 document.addEventListener('click', (e)=>{
   if(!isSearchOpen()) return;
   const t = e.target;
@@ -1178,10 +1214,8 @@ function genOrderId(){
   const dd = String(d.getDate()).padStart(2,'0');
   const mm = String(d.getMonth()+1).padStart(2,'0');
   const key = `chokoart_seq_${d.getFullYear()}${mm}${dd}`;
-
   let n = Number(localStorage.getItem(key) || 0) + 1;
   localStorage.setItem(key, String(n));
-
   const num = String(n).padStart(3,'0');
   return `CHK-${dd}${mm}-${num}`;
 }
@@ -1238,6 +1272,16 @@ function sendOrder(){
 /* init */
 function ensurePhonePrefill(){
   if(!phone.value) phone.value = "+998 90 505 07 45";
+}
+function loadSaved(){
+  const a = localStorage.getItem('chokoart_address') || '';
+  const p = localStorage.getItem('chokoart_phone') || '';
+  if(a && !address.value) address.value = a;
+  if(p && !phone.value) phone.value = p;
+}
+function bindSave(){
+  address.addEventListener('input', ()=>localStorage.setItem('chokoart_address', address.value));
+  phone.addEventListener('input', ()=>localStorage.setItem('chokoart_phone', phone.value));
 }
 
 loadSaved();
