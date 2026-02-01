@@ -40,14 +40,23 @@ body[data-theme="dark"]{
 }
 
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;}
 body{
   margin:0;
   font-family:'Montserrat',sans-serif;
   background:var(--bg);
   color:#2b2b2b;
   padding-bottom:88px;
+  overflow-x:hidden;                 /* ✅ фикс дерганья/гориз.скролла */
+  -webkit-text-size-adjust:100%;     /* ✅ стабильнее на телефонах */
 }
 body[data-theme="dark"]{ color:#f1f1f1; }
+
+/* ✅ центрируем контент и стабилизируем ширину на телефонах */
+.page{
+  max-width:560px;
+  margin:0 auto;
+}
 
 /* ✅✅✅ ШАПКА: пастельно-розовая */
 .header{
@@ -62,22 +71,22 @@ body[data-theme="dark"]{ color:#f1f1f1; }
   text-align:center;
 }
 
-/* ✅ ЛОГО */
+/* ✅ ЛОГО (уменьшили в 1.5 раза: 126 -> 84) */
 .header img{
   position:absolute;
   left:12px;
-  width:126px;
-  height:126px;
+  width:84px;
+  height:84px;
   object-fit:contain;
-  border-radius:20px;
+  border-radius:18px;
   background:rgba(255,255,255,.10);
-  padding:10px;
+  padding:8px;
   border:1px solid rgba(255,255,255,.22);
   box-shadow:0 12px 26px rgba(0,0,0,.14);
 }
 
 .brand-wrap{display:flex;flex-direction:column;align-items:center;gap:2px;}
-.brand-wrap{ transform: translateX(20px); }
+.brand-wrap{ transform: translateX(16px); } /* немного меньше, чтобы на телефоне не уплывало */
 
 /* Bakery / CHOKOART */
 .brand-title{
@@ -202,7 +211,7 @@ body[data-theme="dark"]{ color:#f1f1f1; }
   justify-content:center;
 }
 
-/* ✅ текст кнопок бордовый как цена */
+/* ✅ базовая кнопка */
 .btn{
   padding:12px 20px;
   border-radius:var(--r-pill);
@@ -229,6 +238,14 @@ body[data-theme="dark"] .btn{
   color:white;
   border:1px solid rgba(255,255,255,.35);
   box-shadow: inset 0 0 0 2px rgba(255,255,255,.14), 0 10px 22px rgba(197,108,134,.28);
+}
+
+/* ✅✅✅ Кнопки категорий — больше */
+.cat-btn{
+  padding:14px 22px;
+  min-width:140px;
+  font-size:15px;
+  border-radius:999px;
 }
 
 /* inputs */
@@ -262,6 +279,8 @@ body[data-theme="dark"] .input{
   padding:14px;
   overflow-x:auto;
   scroll-behavior:smooth;
+  -webkit-overflow-scrolling: touch; /* ✅ стабильный свайп */
+  overscroll-behavior-x: contain;
 }
 .products{
   display:grid;
@@ -319,19 +338,14 @@ body[data-theme="dark"] .card{
 .price{font-weight:900;color:var(--accent-red);margin-top:6px;}
 .price small{font-weight:800;opacity:.75;margin-left:4px;}
 
-/* ✅✅✅ +/- КНОПКИ = пастельно-розовые */
+/* +/- */
 .counter{display:flex;justify-content:center;gap:10px;margin-top:8px;align-items:center;}
 .counter button{
-  width:32px;
-  height:32px;
-  border-radius:50%;
-  cursor:pointer;
-
+  width:32px;height:32px;border-radius:50%;cursor:pointer;
   border:1px solid rgba(255,255,255,.35);
   background:linear-gradient(135deg,var(--pink-deep),var(--pink-2));
   color:#fff;
-  font-size:18px;
-  font-weight:900;
+  font-size:18px;font-weight:900;
   box-shadow:0 10px 22px rgba(0,0,0,.12);
   transition:.15s;
 }
@@ -347,16 +361,14 @@ body[data-theme="dark"] .card{
   box-shadow: inset 0 0 0 2px var(--inner), 0 8px 18px rgba(0,0,0,.08);
 }
 body[data-theme="dark"] .cart{ background:rgba(255,255,255,.06); color:#f1f1f1; }
-
 textarea.input{height:90px;}
 
 .cart-lines{margin-top:8px; font-weight:800; opacity:.9;}
 .cart-line{display:flex; justify-content:space-between; gap:10px; padding:4px 0;}
-.cart-line small{opacity:.75; font-weight:800;}
 .cart-divider{height:1px; background:rgba(0,0,0,.08); margin:8px 0;}
 body[data-theme="dark"] .cart-divider{background:rgba(255,255,255,.12);}
 
-/* ✅✅✅ ОФОРМИТЬ ЗАКАЗ = пастельно-розовая */
+/* order btn */
 .order-btn{
   width:100%;
   padding:18px;
@@ -366,7 +378,6 @@ body[data-theme="dark"] .cart-divider{background:rgba(255,255,255,.12);}
   color:white;
   font-size:17px;
   font-weight:900;
-
   border:1px solid rgba(255,255,255,.22);
   background:linear-gradient(135deg,var(--pink-deep),var(--pink));
   box-shadow: inset 0 0 0 2px rgba(255,255,255,.10), 0 12px 26px rgba(0,0,0,.14);
@@ -396,14 +407,9 @@ body[data-theme="dark"] .popup-box{ background:#1c1c1c; color:#f1f1f1; }
   right:10px;
   top:50%;
   transform:translateY(-50%);
-  width:30px;
-  height:30px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  width:30px;height:30px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
   cursor:pointer;
-
   border:1px solid var(--stroke);
   background:#fffdf9;
   box-shadow: inset 0 0 0 2px var(--inner), 0 6px 14px var(--shadow);
@@ -416,26 +422,12 @@ body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f
 mark{background:rgba(246,183,199,.35);padding:0 .12em;border-radius:6px;}
 
 /* quick filters */
-.quick-filters{display:flex;gap:10px;padding:0 12px 10px;overflow-x:auto;}
-.qbtn{
-  border:1px solid var(--stroke);
-  background:#fffdf9;
-  box-shadow: inset 0 0 0 2px var(--inner), 0 6px 14px var(--shadow);
-  border-radius:999px;
-  padding:10px 14px;
-  font-weight:900;
-  cursor:pointer;
-  white-space:nowrap;
-  transition:.15s;
-  color: var(--accent-red);
-}
-body[data-theme="dark"] .qbtn{background:rgba(255,255,255,.06); color: var(--accent-red);}
-.qbtn:active{transform:scale(.98);}
+.quick-filters{display:flex;gap:10px;padding:0 12px 10px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
 
 /* popular & carousels */
 .popular-wrap{width:100%;padding:4px 12px 6px;}
 .popular-title{width:100%;font-weight:900;padding:8px 2px 10px;display:flex;align-items:center;gap:8px;}
-.popular-row{display:flex;gap:12px;overflow-x:auto;padding:2px 2px 10px;}
+.popular-row{display:flex;gap:12px;overflow-x:auto;padding:2px 2px 10px;-webkit-overflow-scrolling:touch;}
 .pop-card{
   min-width:150px;
   border-radius:var(--r-lg);
@@ -449,36 +441,25 @@ body[data-theme="dark"] .qbtn{background:rgba(255,255,255,.06); color: var(--acc
 }
 body[data-theme="dark"] .pop-card{background:rgba(255,255,255,.06); color:#f1f1f1;}
 .pop-card:active{transform:scale(.99);}
-.pop-img{
-  height:74px;
-  border-radius:18px;
-  overflow:hidden;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:rgba(197,108,134,.10);
-}
+.pop-img{height:74px;border-radius:18px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(197,108,134,.10);}
 .pop-img img{width:100%;height:100%;object-fit:cover;}
 .pop-name{font-weight:900;margin-top:8px;}
 .pop-price{font-weight:900;color:var(--accent-red);margin-top:4px;}
 .pop-badge{position:absolute;left:10px;top:10px;font-size:18px;pointer-events:none;}
-
 .pop-counter{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:8px;}
 .pop-counter button{
   width:30px;height:30px;border-radius:50%;cursor:pointer;
   border:1px solid rgba(255,255,255,.35);
   background:linear-gradient(135deg,var(--pink-deep),var(--pink-2));
-  color:#fff;
-  font-size:18px;
-  font-weight:900;
+  color:#fff;font-size:18px;font-weight:900;
   box-shadow:0 10px 22px rgba(0,0,0,.12);
   transition:.15s;
 }
 .pop-counter button:active{transform:scale(.96);}
 .pop-counter span{font-weight:900; min-width:18px; text-align:center;}
 
-/* ✅ маленькие иконки-карточки (Новинки / Для подарка) */
-.mini-row{display:flex;gap:12px;overflow-x:auto;padding:2px 2px 10px;}
+/* мини-карусели */
+.mini-row{display:flex;gap:12px;overflow-x:auto;padding:2px 2px 10px;-webkit-overflow-scrolling:touch;}
 .mini-card{
   min-width:132px;
   border-radius:22px;
@@ -493,26 +474,16 @@ body[data-theme="dark"] .pop-card{background:rgba(255,255,255,.06); color:#f1f1f
 body[data-theme="dark"] .mini-card{background:rgba(255,255,255,.06); color:#f1f1f1;}
 .mini-card:active{transform:scale(.99);}
 .mini-badge{position:absolute;left:10px;top:10px;font-size:18px;pointer-events:none;}
-.mini-img{
-  height:70px;
-  border-radius:18px;
-  overflow:hidden;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:rgba(197,108,134,.10);
-}
+.mini-img{height:70px;border-radius:18px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(197,108,134,.10);}
 .mini-img img{width:100%;height:100%;object-fit:cover;}
-.mini-name{font-weight:900;margin-top:8px; font-size:12px; line-height:1.15; min-height:28px;}
+.mini-name{font-weight:900;margin-top:8px;font-size:12px;line-height:1.15;min-height:28px;}
 .mini-price{font-weight:900;color:var(--accent-red);margin-top:4px;}
 .mini-counter{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:8px;}
 .mini-counter button{
   width:28px;height:28px;border-radius:50%;cursor:pointer;
   border:1px solid rgba(255,255,255,.35);
   background:linear-gradient(135deg,var(--pink-deep),var(--pink-2));
-  color:#fff;
-  font-size:18px;
-  font-weight:900;
+  color:#fff;font-size:18px;font-weight:900;
   box-shadow:0 10px 22px rgba(0,0,0,.12);
   transition:.15s;
 }
@@ -521,18 +492,14 @@ body[data-theme="dark"] .mini-card{background:rgba(255,255,255,.06); color:#f1f1
 
 /* sticky checkout */
 .sticky-checkout{
-  position:fixed;
-  left:0; right:0; bottom:0;
+  position:fixed;left:0;right:0;bottom:0;
   padding:10px 12px;
   background:rgba(248,243,233,.88);
   backdrop-filter: blur(10px);
   z-index:999;
   border-top:1px solid rgba(0,0,0,.06);
 }
-body[data-theme="dark"] .sticky-checkout{
-  background:rgba(18,18,18,.88);
-  border-top:1px solid rgba(255,255,255,.12);
-}
+body[data-theme="dark"] .sticky-checkout{background:rgba(18,18,18,.88);border-top:1px solid rgba(255,255,255,.12);}
 .sticky-inner{
   max-width:520px;
   margin:0 auto;
@@ -541,24 +508,17 @@ body[data-theme="dark"] .sticky-checkout{
   background:#fffdf9;
   border:1px solid var(--stroke);
   box-shadow: inset 0 0 0 2px var(--inner), 0 10px 22px rgba(0,0,0,.10);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
 }
 body[data-theme="dark"] .sticky-inner{background:rgba(255,255,255,.06);}
 .sticky-sum{font-weight:900;line-height:1.1;}
 .sticky-sum small{display:block;font-weight:800;opacity:.75;margin-top:2px;}
-
-/* ✅ кнопка "Корзина" */
 .sticky-btn{
   padding:12px 14px;
   border-radius:16px;
   border:1px solid rgba(255,255,255,.22);
   background:linear-gradient(135deg,var(--pink-deep),var(--pink));
-  color:#fff;
-  font-weight:900;
-  cursor:pointer;
+  color:#fff;font-weight:900;cursor:pointer;
   box-shadow: inset 0 0 0 2px rgba(255,255,255,.10), 0 12px 26px rgba(0,0,0,.14);
   transition:.15s;
   white-space:nowrap;
@@ -576,6 +536,9 @@ body[data-theme="dark"] .sticky-inner{background:rgba(255,255,255,.06);}
   box-shadow:0 18px 40px rgba(0,0,0,.18);
   transition:.22s;z-index:1010;
   padding:10px 12px 14px;
+  max-height: 86vh;
+  overflow:auto;
+  -webkit-overflow-scrolling: touch;
 }
 body[data-theme="dark"] .menu-sheet{background:#1c1c1c;border-color:rgba(255,255,255,.14);}
 .menu-sheet.show{bottom:0;}
@@ -602,34 +565,24 @@ body[data-theme="dark"] .menu-ic{background:rgba(255,255,255,.06);}
 .menu-sub{font-size:12px;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;}
 .menu-right{opacity:.65;font-weight:900;}
 
-/* ✅ модалка "О нас" */
-.about-modal{position:fixed;inset:0;background:rgba(0,0,0,.40);display:none;z-index:1100;padding:18px 14px;}
-.about-modal.show{display:block;}
-.about-card{
-  max-width:680px;
-  margin:0 auto;
-  background:#fffdf9;
+/* ✅ блок "Юридическим лицам" внутри бургера */
+.legal-wrap{
+  display:none;
+  padding:8px 4px 10px;
+}
+.legal-card{
   border:1px solid var(--stroke);
-  border-radius:22px;
-  box-shadow:0 18px 40px rgba(0,0,0,.18);
-  padding:14px 14px 12px;
-  max-height: calc(100vh - 40px);
-  overflow: hidden;
+  border-radius:16px;
+  background:rgba(0,0,0,.03);
+  padding:12px;
 }
-body[data-theme="dark"] .about-card{background:#1c1c1c;border-color:rgba(255,255,255,.14);color:#f1f1f1;}
-.about-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px;}
-.about-head b{font-size:16px;}
-.about-body{
-  font-size:14px;
-  line-height:1.45;
-  max-height: calc(100vh - 140px);
-  overflow:auto;
-  padding-right:6px;
-  -webkit-overflow-scrolling: touch;
-}
-.about-body .t{white-space:pre-wrap;}
+body[data-theme="dark"] .legal-card{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);}
+.legal-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0;}
+.legal-row b{font-weight:900;}
+.legal-actions{display:flex;gap:10px;justify-content:center;margin-top:10px;flex-wrap:wrap;}
+.legal-actions .btn{min-width:auto;padding:10px 14px;}
 
-/* ✅✅✅ Подкатегории — отдельное окно снизу */
+/* Подкатегории снизу */
 .subcat-btn-wrap{padding:0 12px 8px;}
 .subcat-open{
   width:100%;
@@ -694,18 +647,36 @@ body[data-theme="dark"] .subcat-tile{background:rgba(255,255,255,.06); color:#f1
   color:#fff;
   border:1px solid rgba(255,255,255,.35);
 }
-.subcat-ic{height:46px;display:flex;align-items:center;justify-content:center;font-size:34px;line-height:1;margin-bottom:6px;}
+.subcat-ic{height:52px;display:flex;align-items:center;justify-content:center;font-size:38px;line-height:1;margin-bottom:6px;}
 .subcat-nm{font-weight:900;font-size:12px;line-height:1.15;min-height:30px;display:flex;align-items:center;justify-content:center;}
-.subcat-footer{
-  padding-top:10px;
-}
+.subcat-footer{padding-top:10px;}
 .subcat-footer .subcat-open{border-radius:18px;}
+
 /* в поиске скрываем карусели/подкатегории */
 body.searching .subcat-btn-wrap,
 body.searching .popular-wrap,
 body.searching #newWrap,
 body.searching #giftWrap,
 body.searching .quick-filters{display:none;}
+
+/* ✅ адаптация */
+@media (max-width:420px){
+  .brand-title{font-size:30px;}
+  .brand-title2{font-size:18px;}
+  .brand-wrap{transform: translateX(10px);}
+  .header{padding:14px 10px 24px;}
+  .input{width:92%;}
+  .products{gap:14px;}
+}
+@media (max-width:360px){
+  .header img{width:76px;height:76px;left:10px;}
+  .brand-title{font-size:28px;}
+  .brand-title2{font-size:17px;letter-spacing:1.6px;}
+  .brand-phone a{font-size:13px;}
+  .btn{min-width:110px;padding:12px 16px;}
+  .cat-btn{min-width:132px;padding:14px 18px;font-size:14px;}
+  .subcat-grid{grid-template-columns:repeat(2,1fr);} /* ✅ чтобы не ломалось на узких */
+}
 </style>
 </head>
 
@@ -733,6 +704,8 @@ body.searching .quick-filters{display:none;}
   <div class="geo-btn" onclick="openRoute()" title="Маршрут">📍</div>
   <div class="search-btn" onclick="toggleSearch()">🔍</div>
 </div>
+
+<div class="page">
 
 <div class="menu-backdrop" id="menuBackdrop" onclick="closeTopMenu()"></div>
 
@@ -801,6 +774,40 @@ body.searching .quick-filters{display:none;}
       <div class="menu-right">›</div>
     </a>
 
+    <!-- ✅✅✅ Юридическим лицам -->
+    <div class="menu-item" onclick="toggleLegal()" role="button">
+      <div class="menu-left">
+        <div class="menu-ic">🏢</div>
+        <div class="menu-txt">
+          <div class="menu-name">Юридическим лицам</div>
+          <div class="menu-sub">Контакты для счетов и договоров</div>
+        </div>
+      </div>
+      <div class="menu-right">›</div>
+    </div>
+
+    <div class="legal-wrap" id="legalWrap">
+      <div class="legal-card">
+        <div class="legal-row">
+          <span>✉️ Почта</span>
+          <b>—</b>
+        </div>
+        <div class="legal-row">
+          <span>📞 Телефон</span>
+          <b><a href="tel:+998955006262" onclick="callPhone2(event)" style="color:inherit;text-decoration:none;">+998 95 500 62 62</a></b>
+        </div>
+        <div class="legal-row">
+          <span>💬 Чат с менеджером</span>
+          <b>@manager</b>
+        </div>
+
+        <div class="legal-actions">
+          <button class="btn" onclick="openManagerChat(event)">Написать менеджеру</button>
+          <button class="btn" onclick="callPhone2(event)">Позвонить</button>
+        </div>
+      </div>
+    </div>
+
     <div class="menu-item" onclick="toggleThemeFromMenu()" role="button">
       <div class="menu-left">
         <div class="menu-ic">🌓</div>
@@ -825,13 +832,13 @@ body.searching .quick-filters{display:none;}
   </div>
 </div>
 
-<div class="about-modal" id="aboutModal" onclick="aboutBackdropClick(event)">
-  <div class="about-card">
-    <div class="about-head">
+<div class="about-modal" id="aboutModal" onclick="aboutBackdropClick(event)" style="position:fixed;inset:0;background:rgba(0,0,0,.40);display:none;z-index:1100;padding:18px 14px;">
+  <div class="about-card" style="max-width:680px;margin:0 auto;background:#fffdf9;border:1px solid var(--stroke);border-radius:22px;box-shadow:0 18px 40px rgba(0,0,0,.18);padding:14px 14px 12px;max-height: calc(100vh - 40px);overflow:hidden;">
+    <div class="about-head" style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px;">
       <b>О нас</b>
       <button class="menu-close" onclick="closeAbout()">×</button>
     </div>
-    <div class="about-body" id="aboutBody"></div>
+    <div class="about-body" id="aboutBody" style="font-size:14px;line-height:1.45;max-height: calc(100vh - 140px);overflow:auto;padding-right:6px;-webkit-overflow-scrolling:touch;"></div>
   </div>
 </div>
 
@@ -852,13 +859,11 @@ body.searching .quick-filters{display:none;}
   <div class="popular-row" id="popularRow"></div>
 </div>
 
-<!-- ✅✅✅ Новинки (карусель иконок) -->
 <div class="popular-wrap" id="newWrap">
   <div class="popular-title" id="newTitle">🆕 Новинки</div>
   <div class="mini-row" id="newRow"></div>
 </div>
 
-<!-- ✅✅✅ Для подарка (карусель иконок) -->
 <div class="popular-wrap" id="giftWrap">
   <div class="popular-title" id="giftTitle">🎁 Для подарка</div>
   <div class="mini-row" id="giftRow"></div>
@@ -876,7 +881,7 @@ body.searching .quick-filters{display:none;}
 
 <div class="categories" id="cats"></div>
 
-<!-- ✅ кнопка открытия подкатегорий -->
+<!-- кнопка открытия подкатегорий (остается, но категории теперь открывают подкатегории сразу) -->
 <div class="subcat-btn-wrap" id="subcatBtnWrap">
   <button class="subcat-open" onclick="openSubcats()">
     <span id="subcatBtnText">Подкатегории</span>
@@ -884,7 +889,6 @@ body.searching .quick-filters{display:none;}
   </button>
 </div>
 
-<!-- ✅ окно подкатегорий снизу -->
 <div class="subcat-backdrop" id="subcatBackdrop" onclick="closeSubcats()"></div>
 <div class="subcat-sheet" id="subcatSheet">
   <div class="menu-handle"></div>
@@ -894,7 +898,6 @@ body.searching .quick-filters{display:none;}
   </div>
   <div class="subcat-grid" id="subcatGrid"></div>
 
-  <!-- ✅ внизу отдельной строкой: "Все торты" (появляется только в Тортах) -->
   <div class="subcat-footer" id="subcatFooter" style="display:none;">
     <button class="subcat-open" onclick="pickAllCakesFromFooter()">
       <span>🎂 <span id="allCakesText">Все торты</span></span>
@@ -908,7 +911,6 @@ body.searching .quick-filters{display:none;}
 <div class="cart" id="cartBox">
   <b id="cartTitle"></b>: <span id="total">0</span> сум
 
-  <!-- ✅ детализация суммы + доставка -->
   <div class="cart-lines">
     <div class="cart-line"><span id="lineItemsLabel">Товары</span><span id="itemsTotal">0</span></div>
     <div class="cart-line"><span id="lineDeliveryLabel">Доставка (Самарканд)</span><span id="deliveryFee">0</span></div>
@@ -935,8 +937,13 @@ body.searching .quick-filters{display:none;}
   </div>
 </div>
 
+</div><!-- /page -->
+
 <script>
 Telegram.WebApp.ready();
+
+/* ✅ админ для чата с менеджером (впиши свой) */
+const ADMIN_TG_ID = 6013591658;
 
 /* ✅ доставка по Самарканду */
 const DELIVERY_FEE_SAMARKAND = 10000;
@@ -964,7 +971,33 @@ function callPhone(e){
   }catch(_){}
   try{ window.location.href = tel; }catch(_){}
 }
+function callPhone2(e){
+  try{ if(e){ e.preventDefault(); e.stopPropagation(); } }catch(_){}
+  const tel = "tel:+998955006262";
+  try{
+    if (window.Telegram && Telegram.WebApp && typeof Telegram.WebApp.openLink === "function"){
+      Telegram.WebApp.openLink(tel);
+      return;
+    }
+  }catch(_){}
+  try{ window.location.href = tel; }catch(_){}
+}
 
+/* ✅ чат с менеджером */
+function openManagerChat(e){
+  try{ if(e){ e.preventDefault(); e.stopPropagation(); } }catch(_){}
+  const url = `tg://user?id=${ADMIN_TG_ID}`;
+  try{
+    if (window.Telegram && Telegram.WebApp && typeof Telegram.WebApp.openLink === "function"){
+      Telegram.WebApp.openLink(url);
+      return;
+    }
+  }catch(_){}
+  // fallback
+  window.open(url, "_blank");
+}
+
+/* верхнее меню */
 function openTopMenu(){
   try{ closeSearch(); }catch(_){}
   document.getElementById('menuBackdrop').classList.add('show');
@@ -973,6 +1006,12 @@ function openTopMenu(){
 function closeTopMenu(){
   document.getElementById('menuBackdrop').classList.remove('show');
   document.getElementById('menuSheet').classList.remove('show');
+}
+
+/* Юридическим лицам */
+function toggleLegal(){
+  const w = document.getElementById('legalWrap');
+  w.style.display = (w.style.display === 'none' || !w.style.display) ? 'block' : 'none';
 }
 
 function toggleReviewWidget(){
@@ -1075,13 +1114,13 @@ function openAbout(){
   closeTopMenu();
   const el = document.getElementById('aboutBody');
   if(el){
-    el.innerHTML = `<div class="t">${escapeHtml(ABOUT_TEXT)}</div>`;
+    el.innerHTML = `<div class="t" style="white-space:pre-wrap;">${escapeHtml(ABOUT_TEXT)}</div>`;
     el.scrollTop = 0;
   }
-  document.getElementById('aboutModal').classList.add('show');
+  document.getElementById('aboutModal').style.display = 'block';
 }
 function closeAbout(){
-  document.getElementById('aboutModal').classList.remove('show');
+  document.getElementById('aboutModal').style.display = 'none';
 }
 function aboutBackdropClick(e){
   if(e.target && e.target.id === 'aboutModal') closeAbout();
@@ -1106,72 +1145,9 @@ let lang='ru',category='cheesecakes',type='delivery',payment='cash',cart={};
 let subcat = 'all';
 
 const TEXT={
-  ru:{
-    delivery:'🚚 Доставка',
-    pickup:'🏃 Самовывоз',
-    address:'📍 Адрес доставки',
-    phone:'📞 Телефон',
-    cart:'🛒 Корзина',
-    order:'Оформить заказ',
-    comment:'✍️ Комментарий к заказу',
-    cash:'💵 Наличные',
-    click:'💳 CLICK',
-    results:'Результаты поиска',
-    popular:'🔥 Популярное',
-    empty:'Корзина пустая',
-    subcats:'Подкатегории',
-    new:'🆕 Новинки',
-    gift:'🎁 Для подарка',
-    items:'Товары',
-    deliveryFee:'Доставка (Самарканд)',
-    total:'Итого',
-    all:'Все',
-    allCakes:'Все торты'
-  },
-  uz:{
-    delivery:'🚚 Yetkazish',
-    pickup:'🏃 Olib ketish',
-    address:'📍 Manzil',
-    phone:'📞 Telefon',
-    cart:'🛒 Savat',
-    order:'Buyurtma berish',
-    comment:'✍️ Izoh',
-    cash:'💵 Naqd',
-    click:'💳 CLICK',
-    results:'Qidiruv natijalari',
-    popular:'🔥 Ommabop',
-    empty:"Savat bo‘sh",
-    subcats:'Subkategoriyalar',
-    new:'🆕 Yangi',
-    gift:'🎁 Sovg‘a uchun',
-    items:'Mahsulotlar',
-    deliveryFee:'Yetkazish (Samarqand)',
-    total:'Jami',
-    all:'Barchasi',
-    allCakes:'Barcha tortlar'
-  },
-  en:{
-    delivery:'🚚 Delivery',
-    pickup:'🏃 Pickup',
-    address:'📍 Address',
-    phone:'📞 Phone',
-    cart:'🛒 Cart',
-    order:'Place order',
-    comment:'✍️ Comment',
-    cash:'💵 Cash',
-    click:'💳 CLICK',
-    results:'Search results',
-    popular:'🔥 Popular',
-    empty:'Cart is empty',
-    subcats:'Subcategories',
-    new:'🆕 New',
-    gift:'🎁 For gift',
-    items:'Items',
-    deliveryFee:'Delivery (Samarkand)',
-    total:'Total',
-    all:'All',
-    allCakes:'All cakes'
-  }
+  ru:{delivery:'🚚 Доставка',pickup:'🏃 Самовывоз',address:'📍 Адрес доставки',phone:'📞 Телефон',cart:'🛒 Корзина',order:'Оформить заказ',comment:'✍️ Комментарий к заказу',cash:'💵 Наличные',click:'💳 CLICK',results:'Результаты поиска',popular:'🔥 Популярное',empty:'Корзина пустая',subcats:'Подкатегории',new:'🆕 Новинки',gift:'🎁 Для подарка',items:'Товары',deliveryFee:'Доставка (Самарканд)',total:'Итого',all:'Все',allCakes:'Все торты'},
+  uz:{delivery:'🚚 Yetkazish',pickup:'🏃 Olib ketish',address:'📍 Manzil',phone:'📞 Telefon',cart:'🛒 Savat',order:'Buyurtma berish',comment:'✍️ Izoh',cash:'💵 Naqd',click:'💳 CLICK',results:'Qidiruv natijalari',popular:'🔥 Ommabop',empty:"Savat bo‘sh",subcats:'Subkategoriyalar',new:'🆕 Yangi',gift:'🎁 Sovg‘a uchun',items:'Mahsulotlar',deliveryFee:'Yetkazish (Samarqand)',total:'Jami',all:'Barchasi',allCakes:'Barcha tortlar'},
+  en:{delivery:'🚚 Delivery',pickup:'🏃 Pickup',address:'📍 Address',phone:'📞 Phone',cart:'🛒 Cart',order:'Place order',comment:'✍️ Comment',cash:'💵 Cash',click:'💳 CLICK',results:'Search results',popular:'🔥 Popular',empty:'Cart is empty',subcats:'Subcategories',new:'🆕 New',gift:'🎁 For gift',items:'Items',deliveryFee:'Delivery (Samarkand)',total:'Total',all:'All',allCakes:'All cakes'}
 };
 
 const CATS={
@@ -1180,7 +1156,6 @@ const CATS={
   en:{cheesecakes:'🍰 Cheesecakes',cakes:'🎂 Cakes',rolls:'🍥 Rolls',bakery:'🥐 Pastry',cookies:'🍪 Cookies',desserts:'🍨 Desserts',pies:'🥧 Pies'}
 };
 
-/* ✅ Подкатегории */
 const SUBCATS = {
   cakes: [
     {id:'wedding', ic:'💍', n:{ru:'Свадебные торты', uz:'To‘y tortlari', en:'Wedding cakes'}},
@@ -1207,7 +1182,6 @@ const SUBCATS = {
   ]
 };
 
-/* ✅ меню */
 const MENU = {
   cheesecakes:[
     {id:'cheesecake_classic', p:45000, img:'images/cheesecake_classic.png', n:{ru:'Чизкейк классический', uz:'Klassik chizkeyk', en:'Classic cheesecake'}},
@@ -1240,12 +1214,9 @@ const MENU = {
 };
 
 const POPULAR = ['cheesecake_classic','cake_choco','dessert_tiramisu','croissant'];
-
-/* ✅✅✅ карусели */
 const NEW_ITEMS = ['cheesecake_oreo','roll_berry','danish','dessert_trifle'];
 const GIFT_ITEMS = ['cake_redvelvet','cookie_choco','dessert_tiramisu','pie_cherry'];
 
-/* индекс */
 const ITEM_INDEX = {};
 for (const c in MENU){ MENU[c].forEach(it => { ITEM_INDEX[it.id] = it; }); }
 
@@ -1257,16 +1228,6 @@ function nameOf(id){
 function formatSum(x){
   const n = Number(x) || 0;
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ');
-}
-function highlight(name, q){
-  const n = escapeHtml(name);
-  if(!q) return n;
-  const idx = n.toLowerCase().indexOf(q.toLowerCase());
-  if(idx === -1) return n;
-  const before = n.slice(0, idx);
-  const mid = n.slice(idx, idx + q.length);
-  const after = n.slice(idx + q.length);
-  return `${before}<mark>${mid}</mark>${after}`;
 }
 
 function loadSaved(){
@@ -1280,7 +1241,6 @@ function bindSave(){
   address.addEventListener('input', ()=>localStorage.setItem('chokoart_address', address.value));
   phone.addEventListener('input', ()=>localStorage.setItem('chokoart_phone', phone.value));
 }
-
 function updateTypeFields(){
   if(type === 'pickup'){
     address.style.display = 'none';
@@ -1320,7 +1280,6 @@ function applyLang(){
   lineItemsLabel.innerText = TEXT[lang].items;
   lineDeliveryLabel.innerText = TEXT[lang].deliveryFee;
   lineGrandLabel.innerText = TEXT[lang].total;
-
   allCakesText.innerText = TEXT[lang].allCakes;
 
   renderPopular();
@@ -1343,7 +1302,7 @@ function openCart(){
   catch(_){ window.location.hash = '#cartBox'; }
 }
 
-/* популярное */
+/* popular */
 function renderPopular(){
   popularRow.innerHTML = '';
   POPULAR.forEach((id)=>{
@@ -1357,7 +1316,6 @@ function renderPopular(){
         <div class="pop-img"><img src="${it.img}" onerror="this.src='images/logo.png'"></div>
         <div class="pop-name">${escapeHtml(nameOf(id))}</div>
         <div class="pop-price">${formatSum(it.p)} <small>сум</small></div>
-
         <div class="pop-counter">
           <button type="button" onclick="popChg(event,'${id}',-1)">−</button>
           <span id="pc_${id}">${cart[id]||0}</span>
@@ -1382,7 +1340,7 @@ function popChg(e,id,delta){
   if(isSearchOpen()) closeSearch();
 }
 
-/* ✅ мини-карусели */
+/* mini carousels */
 function miniCardHTML(id, badge){
   const it = ITEM_INDEX[id];
   if(!it) return '';
@@ -1401,14 +1359,8 @@ function miniCardHTML(id, badge){
     </div>
   `;
 }
-function renderNew(){
-  newRow.innerHTML = '';
-  NEW_ITEMS.forEach(id => newRow.innerHTML += miniCardHTML(id,'🆕'));
-}
-function renderGift(){
-  giftRow.innerHTML = '';
-  GIFT_ITEMS.forEach(id => giftRow.innerHTML += miniCardHTML(id,'🎁'));
-}
+function renderNew(){ newRow.innerHTML = ''; NEW_ITEMS.forEach(id => newRow.innerHTML += miniCardHTML(id,'🆕')); }
+function renderGift(){ giftRow.innerHTML = ''; GIFT_ITEMS.forEach(id => giftRow.innerHTML += miniCardHTML(id,'🎁')); }
 function onMiniCardClick(e,id){
   if(e && e.target && (e.target.closest && e.target.closest('button'))) return;
   chg(id, 1);
@@ -1424,13 +1376,13 @@ function miniChg(e,id,delta){
   if(isSearchOpen()) closeSearch();
 }
 
-/* быстрые фильтры */
+/* quick filters */
 function renderQuickFilters(){
   const keys = ['cheesecakes','cakes','desserts','bakery'];
   quickFilters.innerHTML = '';
   keys.forEach(k=>{
     if(!MENU[k]) return;
-    quickFilters.innerHTML += `<button class="qbtn" onclick="pickCategory('${k}')">${CATS[lang][k]}</button>`;
+    quickFilters.innerHTML += `<button class="btn" style="min-width:auto; padding:10px 14px;" onclick="pickCategory('${k}')">${CATS[lang][k]}</button>`;
   });
 }
 function pickCategory(k){
@@ -1441,9 +1393,14 @@ function pickCategory(k){
   refreshSubcatButton();
   updateSubcatUI();
   renderProducts();
+
+  // ✅ при выборе через быстрые фильтры тоже сразу открываем подкатегории (если есть)
+  if(SUBCATS[category] && SUBCATS[category].length){
+    openSubcats();
+  }
 }
 
-/* ✅ кнопка/окно подкатегорий */
+/* Subcats */
 function openSubcats(){
   if(!SUBCATS[category] || !SUBCATS[category].length) return;
   document.getElementById('subcatBackdrop').classList.add('show');
@@ -1461,7 +1418,6 @@ function renderSubcatGrid(){
   const grid = document.getElementById('subcatGrid');
   grid.innerHTML = '';
 
-  // "Все" первым
   grid.innerHTML += `
     <div class="subcat-tile ${subcat==='all'?'active':''}" onclick="setSubcat('all')">
       <div class="subcat-ic">✨</div>
@@ -1479,7 +1435,6 @@ function renderSubcatGrid(){
     `;
   });
 
-  // ✅ внизу "Все торты" только для Торты
   const footer = document.getElementById('subcatFooter');
   footer.style.display = (category === 'cakes') ? 'block' : 'none';
 }
@@ -1517,10 +1472,25 @@ function refreshSubcatButton(){
   right.innerText = sc ? subcatName(sc) : '›';
 }
 
+/* ✅✅✅ категории: при нажатии сразу открываем подкатегории */
+function onCategoryClick(k){
+  if(isSearchOpen()) closeSearch();
+  category = k;
+  subcat = 'all';
+  renderCats();
+  refreshSubcatButton();
+  updateSubcatUI();
+  renderProducts();
+
+  if(SUBCATS[category] && SUBCATS[category].length){
+    openSubcats();
+  }
+}
+
 function renderCats(){
   cats.innerHTML='';
   for(let k in MENU){
-    cats.innerHTML+=`<button class="btn ${k===category?'active':''}" onclick="category='${k}';subcat='all';renderCats();refreshSubcatButton();updateSubcatUI();renderProducts()">${CATS[lang][k] || k}</button>`;
+    cats.innerHTML+=`<button class="btn cat-btn ${k===category?'active':''}" onclick="onCategoryClick('${k}')">${CATS[lang][k] || k}</button>`;
   }
   setTimeout(()=>{
     const active = cats.querySelector('.btn.active');
@@ -1532,13 +1502,11 @@ function renderCats(){
 
 function cardHTML(it, q=''){
   const id = it.id;
-  const displayName = nameOf(id);
-  const nameHtml = highlight(displayName, q);
   const qty = cart[id] || 0;
 
   return `<div class="card">
     <div class="img"><img src="${it.img}" onerror="this.src='images/logo.png'"></div>
-    <div class="item-name">${nameHtml}</div>
+    <div class="item-name">${escapeHtml(nameOf(id))}</div>
     <div class="price">${formatSum(it.p)} <small>сум</small></div>
     <div class="counter">
       <button onclick="chg('${id}',-1)">−</button>
@@ -1590,7 +1558,6 @@ function calcItemsSum(){
   return s;
 }
 function calcDeliveryFee(){
-  // доставка только если выбран delivery
   if(type !== 'delivery') return 0;
   return DELIVERY_FEE_SAMARKAND;
 }
@@ -1599,7 +1566,6 @@ function updateTotal(){
   const deliveryFee = calcDeliveryFee();
   const grand = itemsSum + deliveryFee;
 
-  // оставили старый total как "итого"
   total.innerText = formatSum(grand);
   stickyTotal.innerText = formatSum(grand);
 
@@ -1615,7 +1581,7 @@ function setType(t,b){
   document.querySelectorAll('.types .btn').forEach(x=>x.classList.remove('active'));
   b.classList.add('active');
   updateTypeFields();
-  updateTotal(); // ✅ обновляем с доставкой
+  updateTotal();
 }
 function setPayment(p){
   payment=p;
@@ -1649,6 +1615,7 @@ function closeSearch(){
 function clearSearch(){ closeSearch(); }
 function onSearchKey(e){ if(e.key === 'Enter') closeSearch(); }
 
+/* поиск */
 function searchProducts(){
   const q = (searchInput.value || '').trim().toLowerCase();
   products.innerHTML='';
@@ -1669,6 +1636,7 @@ function searchProducts(){
     });
   }
 }
+
 document.addEventListener('click', (e)=>{
   if(!isSearchOpen()) return;
   const t = e.target;
@@ -1744,6 +1712,13 @@ function sendOrder(){
 loadSaved();
 bindSave();
 applyLang();
+
+/* ✅ небольшой фикс “дерганья” на iOS при открытии клавиатуры */
+window.addEventListener('resize', ()=>{
+  try{
+    document.documentElement.style.setProperty('--vh', (window.innerHeight * 0.01) + 'px');
+  }catch(_){}
+});
 </script>
 </body>
 </html>
