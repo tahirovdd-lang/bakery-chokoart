@@ -78,6 +78,11 @@ body[data-theme="dark"]{ color:#f1f1f1; }
 
 .brand-wrap{display:flex;flex-direction:column;align-items:center;gap:2px;}
 
+/* ✅✅✅ СДВИГ НАДПИСЕЙ ВПРАВО (Bakery / CHOKOART / BIZ...) */
+.brand-wrap{
+  transform: translateX(20px); /* примерно “на 4 буквы” вправо */
+}
+
 /* Bakery / CHOKOART */
 .brand-title{
   font-family:'Lobster',cursive;
@@ -93,13 +98,12 @@ body[data-theme="dark"]{ color:#f1f1f1; }
   line-height:1.1;
 }
 
-/* ✅ лозунг Lobster + сдвиг вправо только для BIZ... */
+/* лозунг */
 .brand-slogan{
   font-family:'Lobster',cursive;
   font-size:18px;
   opacity:.95;
   margin-top:2px;
-  transform: translateX(20px); /* ✅ “на 4 буквы” вправо */
 }
 
 .brand-phone{position:relative; z-index:50; pointer-events:auto; margin-top:4px;}
@@ -145,29 +149,28 @@ body[data-theme="dark"]{ color:#f1f1f1; }
 .burger span:nth-child(2){top:6.5px;}
 .burger span:nth-child(3){bottom:0;}
 
-/* ✅ гео-кнопка под бургером */
-.geo-link{
+/* ✅✅✅ гео-кнопка: только значок под бургером */
+.geo-btn{
   position:absolute;
-  right:12px;
-  top:58px; /* под бургером */
-  z-index:85;
+  right:18px;         /* по центру под бургером */
+  top:58px;           /* под бургером */
+  width:36px;
+  height:36px;
+  border-radius:50%;
   display:flex;
   align-items:center;
-  gap:8px;
-  max-width:210px;
-  padding:8px 10px;
-  border-radius:14px;
+  justify-content:center;
   cursor:pointer;
+  z-index:85;
 
   background:rgba(255,255,255,.18);
-  border:1px solid rgba(255,255,255,.22);
+  border:1px solid rgba(255,255,255,.24);
   box-shadow:0 10px 22px rgba(0,0,0,.12);
   color:#fff;
-  text-align:left;
+  font-size:18px;
+  line-height:1;
 }
-.geo-emoji{font-size:18px; line-height:1;}
-.geo-text{font-size:12px; font-weight:900; line-height:1.15; opacity:.98;}
-.geo-link:active{transform:scale(.99);}
+.geo-btn:active{transform:scale(.98);}
 
 /* 🔍 поиск */
 .search-btn{
@@ -221,7 +224,7 @@ body[data-theme="dark"] .btn{
 }
 .btn:active{transform:scale(.98);}
 
-/* ✅ активные кнопки: розовые (а не оранжевые) */
+/* ✅ активные кнопки: розовые */
 .btn.active{
   background:linear-gradient(135deg,var(--pink-deep),var(--pink-2));
   color:white;
@@ -573,12 +576,10 @@ body[data-theme="dark"] .about-card{background:#1c1c1c;border-color:rgba(255,255
   font-size:14px;
   line-height:1.45;
   max-height: calc(100vh - 140px);
-  overflow:auto;              /* ✅ скролл */
+  overflow:auto;
   padding-right:6px;
   -webkit-overflow-scrolling: touch;
 }
-.about-muted{opacity:.75;}
-.about-body b{font-weight:900;}
 .about-body .t{white-space:pre-wrap;}
 </style>
 </head>
@@ -604,11 +605,8 @@ body[data-theme="dark"] .about-card{background:#1c1c1c;border-color:rgba(255,255
     </div>
   </div>
 
-  <!-- ✅ геопозиция под бургером -->
-  <div class="geo-link" onclick="openRoute()" title="Построить маршрут">
-    <div class="geo-emoji">📍</div>
-    <div class="geo-text">Самарканд, ул. Мотрид, 103V</div>
-  </div>
+  <!-- ✅ только значок геопозиции под бургером -->
+  <div class="geo-btn" onclick="openRoute()" title="Маршрут">📍</div>
 
   <div class="search-btn" onclick="toggleSearch()">🔍</div>
 </div>
@@ -807,9 +805,8 @@ function toggleReviewWidget(){
   w.style.display = (w.style.display === 'none' || !w.style.display) ? 'block' : 'none';
 }
 
-/* ✅✅✅ ОТЗЫВЫ: ссылка как ты дал */
+/* ✅ отзывы: ссылка как ты дал */
 const YANDEX_REVIEWS_URL = "https://yandex.uz/maps/org/239856130727/?ll=66.960593%2C39.684041&mode=search&sctx=ZAAAAAgBEAAaKAoSCaetEcE4MVFAEfxVgO82QURAEhIJDJQUWABT1j8RPUfku5S6xD8iBgABAgMEBSgKOABA1LoGSAFiJHNuaXBwZXRfZXhwX25hbWU9ZnVsbG9iamVjdHMvMS54OnJlZmIjc25pcHBldF9leHBfbmFtZT10b3BvYmplY3RzLzEueDpyZWZiHnNuaXBwZXRfZXhwX25hbWU9Z29vZHMvMS54OnJlZmInc25pcHBldF9leHBfbmFtZT1nb29kc19yZWdpc3Rlci8xLng6cmVmYgtmcmVzaG5lc3M9MGIXc291cmNlPWJ1c2luZXNzOmV4cF9yZWZiFXNvdXJjZT1wcmljZXM6ZXhwX3JlZmoCdXqdAc3MzD2gAQCoAQC9AXc%2FZizCAQantajE%2FQaCAg9iYWtlcnkgY2hva29hcnSKAgCSAgCaAgxkZXNrdG9wLW1hcHM%3D&sll=66.960593%2C39.684041&sspn=0.013893%2C0.006530&text=bakery%20chokoart&z=16.65";
-
 function openYandexReviews(e){
   try{ e.preventDefault(); e.stopPropagation(); }catch(_){}
   const url = YANDEX_REVIEWS_URL;
@@ -846,7 +843,7 @@ function applyTheme(theme){
   try{
     if (window.Telegram && Telegram.WebApp){
       Telegram.WebApp.setHeaderColor?.(theme === 'dark' ? '#121212' : '#F8F3E9');
-      Telegram.WebApp.setBackgroundColor?.(theme === 'dark' ? '#121212' : '#F8F3E9');
+     Telegram.WebApp.setBackgroundColor?.(theme === 'dark' ? '#121212' : '#F8F3E9');
     }
   }catch(_){}
 }
@@ -856,7 +853,7 @@ function toggleThemeFromMenu(){
   applyTheme(next);
 }
 
-/* ✅ "О нас" — текст + скролл */
+/* О нас — текст + скролл */
 const ABOUT_TEXT = `🇷🇺 Русский
 
 Bakery CHOKOART — это место, где десерты становятся искусством 🍫✨
@@ -976,7 +973,6 @@ const MENU = {
   ]
 };
 
-/* ✅ популярное */
 const POPULAR = ['cheesecake_classic','cake_choco','dessert_tiramisu','croissant'];
 
 /* индекс */
