@@ -26,6 +26,9 @@
   --r-pill:28px;
 
   --vh: 1vh;
+
+  /* ✅ высота нижней фикс-панели (чтобы кнопка "Оформить заказ" не пряталась) */
+  --sticky-h: 86px;
 }
 
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -44,7 +47,9 @@ body{
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: none;
 
-  padding-bottom:88px;
+  /* ✅ добавили запас снизу под фикс-панель */
+  padding-bottom: calc(var(--sticky-h) + 16px);
+
   -webkit-text-size-adjust:100%;
 }
 
@@ -204,6 +209,7 @@ body[data-theme="dark"] .pop-card, body[data-theme="dark"] .mini-card{background
 .mini-name{font-weight:900;margin-top:8px;font-size:12px;line-height:1.15;min-height:28px;}
 .pop-counter span,.mini-counter span{font-weight:900; min-width:18px; text-align:center;}
 
+/* cart */
 .cart{
   background:#fffdf9;margin:12px;padding:16px;border-radius:24px;border:1px solid var(--stroke);
   box-shadow: inset 0 0 0 2px var(--inner), 0 8px 18px rgba(0,0,0,.08);
@@ -211,12 +217,24 @@ body[data-theme="dark"] .pop-card, body[data-theme="dark"] .mini-card{background
 body[data-theme="dark"] .cart{ background:rgba(255,255,255,.06); color:#f1f1f1; }
 textarea.input{height:90px;}
 .order-btn{
-  width:100%;padding:18px;margin-top:14px;border-radius:24px;cursor:pointer;color:white;
-  font-size:17px;font-weight:900;border:1px solid rgba(255,255,255,.22);
+  width:100%;
+  padding:18px;
+  margin-top:14px;
+  border-radius:24px;
+  cursor:pointer;
+  color:white;
+  font-size:17px;
+  font-weight:900;
+  border:1px solid rgba(255,255,255,.22);
   background:linear-gradient(135deg,var(--pink-deep),var(--pink));
   box-shadow: inset 0 0 0 2px rgba(255,255,255,.10), 0 12px 26px rgba(0,0,0,.14);
+
+  /* ✅ чтобы клики работали стабильно */
+  position:relative;
+  z-index:2;
 }
 
+/* popup */
 .popup{position:fixed;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:.3s;}
 .popup.show{opacity:1;pointer-events:auto;}
 .popup-box{
@@ -225,17 +243,29 @@ textarea.input{height:90px;}
 }
 body[data-theme="dark"] .popup-box{ background:#1c1c1c; color:#f1f1f1; }
 
+/* ✅ фикс панель снизу */
 .sticky-checkout{
-  position:fixed;left:0;right:0;bottom:0;padding:10px 12px;
+  position:fixed;
+  left:0;right:0;bottom:0;
+  padding:10px 12px;
+
   background:rgba(248,243,233,.88);
   backdrop-filter: blur(10px);
-  z-index:999;border-top:1px solid rgba(0,0,0,.06);
+  z-index:999;
+  border-top:1px solid rgba(0,0,0,.06);
+
+  /* ✅ фиксируем высоту, чтобы body padding-bottom совпадал */
+  height: var(--sticky-h);
+  display:flex;
+  align-items:center;
 }
 body[data-theme="dark"] .sticky-checkout{background:rgba(18,18,18,.88);border-top:1px solid rgba(255,255,255,.12);}
+
 .sticky-inner{
   max-width:520px;margin:0 auto;border-radius:18px;padding:10px 12px;background:#fffdf9;border:1px solid var(--stroke);
   box-shadow: inset 0 0 0 2px var(--inner), 0 10px 22px rgba(0,0,0,.10);
   display:flex;align-items:center;justify-content:space-between;gap:12px;
+  width:100%;
 }
 body[data-theme="dark"] .sticky-inner{background:rgba(255,255,255,.06);}
 .sticky-sum{font-weight:900;line-height:1.1;}
@@ -246,6 +276,9 @@ body[data-theme="dark"] .sticky-inner{background:rgba(255,255,255,.06);}
   color:#fff;font-weight:900;cursor:pointer;
   box-shadow: inset 0 0 0 2px rgba(255,255,255,.10), 0 12px 26px rgba(0,0,0,.14);
 }
+
+/* ✅ when user открывает корзину, проскроллим так, чтобы кнопка не пряталась */
+#cartBox{scroll-margin-bottom: calc(var(--sticky-h) + 16px);}
 
 /* menu sheet */
 .menu-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.38);opacity:0;pointer-events:none;transition:.18s;z-index:1000;}
@@ -568,7 +601,7 @@ body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f
 
 <div class="popup" id="popup"><div class="popup-box">✅ Заказ принят!</div></div>
 
-<div class="sticky-checkout">
+<div class="sticky-checkout" id="stickyBar">
   <div class="sticky-inner">
     <div class="sticky-sum">
       <span id="stickyTotal">0</span> <small id="sumCurrency">сум</small>
@@ -596,6 +629,16 @@ function setVH(){
 setVH();
 window.addEventListener('resize', setVH, {passive:true});
 window.addEventListener('orientationchange', ()=>setTimeout(setVH, 250), {passive:true});
+
+/* ✅ реальная высота sticky bar → в CSS переменную (чтобы ничего не перекрывалось) */
+function syncStickyHeight(){
+  const el = document.getElementById('stickyBar');
+  if(!el) return;
+  const h = Math.ceil(el.getBoundingClientRect().height || 86);
+  document.documentElement.style.setProperty('--sticky-h', h + 'px');
+}
+window.addEventListener('resize', ()=>setTimeout(syncStickyHeight, 50), {passive:true});
+window.addEventListener('orientationchange', ()=>setTimeout(syncStickyHeight, 250), {passive:true});
 
 /* ====== constants ====== */
 const ADMIN_ID = 6013591658;
@@ -678,7 +721,7 @@ const UI = {
     cash:'💵 Naqd',
     click:'💳 CLICK',
 
-    sum:'so‘m'
+    sum:"so‘m"
   },
   en:{
     menu:'Menu',
@@ -805,7 +848,6 @@ function formatSum(x){
 
 /* ✅ тексты на странице */
 function applyUI(){
-  // menu
   menuTitle.innerText = UI[lang].menu;
   mReviewTitle.innerText = UI[lang].reviewTitle;
   mReviewSub.innerText = UI[lang].reviewSub;
@@ -825,44 +867,37 @@ function applyUI(){
 
   searchTitle.innerText = UI[lang].searchResults;
 
-  // carousels titles
   popularTitle.innerText = UI[lang].popular;
   newTitle.innerText = UI[lang].new;
   giftTitle.innerText = UI[lang].gift;
 
-  // type buttons
   btnDelivery.innerText = UI[lang].delivery;
   btnPickup.innerText = UI[lang].pickup;
 
-  // placeholders
   address.placeholder = UI[lang].address;
   phone.placeholder = UI[lang].phone;
 
-  // cart / payments
   cartTitle.innerText = UI[lang].cart;
   totalLabel.innerText = UI[lang].total;
   orderBtn.innerText = UI[lang].order;
   comment.placeholder = UI[lang].comment;
+
   payCash.innerText = UI[lang].cash;
   payClick.innerText = UI[lang].click;
+
   stickyCartBtn.innerText = UI[lang].cart;
   sumCurrency.innerText = UI[lang].sum;
 
-  // redraw (names depend on lang)
   renderCats(); renderProducts(); renderPopular(); renderNew(); renderGift();
   updateTotal();
+
+  // ✅ после перерендера — пересинхроним высоту sticky bar
+  setTimeout(syncStickyHeight, 50);
 }
 
 /* header actions */
-function openTopMenu(){
-  closeSearch();
-  document.getElementById('menuBackdrop').classList.add('show');
-  document.getElementById('menuSheet').classList.add('show');
-}
-function closeTopMenu(){
-  document.getElementById('menuBackdrop').classList.remove('show');
-  document.getElementById('menuSheet').classList.remove('show');
-}
+function openTopMenu(){ closeSearch(); menuBackdrop.classList.add('show'); menuSheet.classList.add('show'); }
+function closeTopMenu(){ menuBackdrop.classList.remove('show'); menuSheet.classList.remove('show'); }
 function openRoute(){
   const url = "https://yandex.uz/maps/?rtext=~39.684041,66.960593&rtt=auto&z=16.65";
   try{ Telegram.WebApp.openLink(url); }catch(_){ window.open(url,'_blank'); }
@@ -905,19 +940,19 @@ function openInstagram(e){ try{e.preventDefault();e.stopPropagation();}catch(_){
 }
 
 /* search */
-function isSearchOpen(){ return document.getElementById('searchWrap').classList.contains('show'); }
+function isSearchOpen(){ return searchWrap.classList.contains('show'); }
 function toggleSearch(){ isSearchOpen()?closeSearch():openSearch(); }
 function openSearch(){
-  document.getElementById('searchWrap').classList.add('show');
-  document.getElementById('searchTitle').classList.add('show');
-  document.getElementById('searchInput').value='';
-  document.getElementById('searchInput').focus();
+  searchWrap.classList.add('show');
+  searchTitle.classList.add('show');
+  searchInput.value='';
+  searchInput.focus();
   searchProducts();
 }
 function closeSearch(){
-  document.getElementById('searchWrap').classList.remove('show');
-  document.getElementById('searchTitle').classList.remove('show');
-  document.getElementById('searchInput').value='';
+  searchWrap.classList.remove('show');
+  searchTitle.classList.remove('show');
+  searchInput.value='';
   renderProducts();
 }
 function clearSearch(){ closeSearch(); }
@@ -1139,8 +1174,10 @@ function setType(t,btn){
 
   address.style.display = (type==='pickup') ? 'none' : 'block';
 
-  // ✅ сразу пересчитать сумму с доставкой/без
   updateTotal();
+
+  // ✅ если пользователь переключил тип — можно слегка подсветить/проскроллить к корзине
+  // (не обязательно, но помогает)
 }
 
 function setPayment(p){
@@ -1149,8 +1186,19 @@ function setPayment(p){
   payClick.classList.toggle('active', p==='click');
 }
 
+/* ✅ openCart: скроллим чуть выше, чтобы "Оформить заказ" не оказалась под sticky bar */
 function openCart(){
-  try{ cartBox.scrollIntoView({behavior:'smooth', block:'start'}); }catch(_){}
+  const el = document.getElementById('cartBox');
+  if(!el) return;
+
+  const rect = el.getBoundingClientRect();
+  const top = rect.top + window.pageYOffset;
+  const stickyH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--sticky-h')) || 86;
+
+  window.scrollTo({ top: Math.max(0, top - 8), behavior:'smooth' });
+
+  // ✅ гарантируем актуальную высоту панели
+  setTimeout(syncStickyHeight, 80);
 }
 
 /* order */
@@ -1213,7 +1261,9 @@ function applyTheme(theme){
   document.body.setAttribute('data-theme', theme);
   localStorage.setItem('chokoart_theme', theme);
   const sub = document.getElementById('themeMenuSub');
-  if(sub) sub.innerText = (theme === 'dark') ? (lang==='ru'?'Тёмная':lang==='uz'?'Qorong‘i':'Dark') : (lang==='ru'?'Светлая':lang==='uz'?'Yorug‘':'Light');
+  if(sub) sub.innerText = (theme === 'dark')
+    ? (lang==='ru'?'Тёмная':lang==='uz'?'Qorong‘i':'Dark')
+    : (lang==='ru'?'Светлая':lang==='uz'?'Yorug‘':'Light');
   try{
     Telegram.WebApp.setHeaderColor?.(theme === 'dark' ? '#121212' : '#F8F3E9');
     Telegram.WebApp.setBackgroundColor?.(theme === 'dark' ? '#121212' : '#F8F3E9');
@@ -1233,23 +1283,14 @@ function toggleThemeFromMenu(){
 })();
 
 /* init */
-try{
-  Telegram.WebApp.expand();
-  Telegram.WebApp.disableVerticalSwipes?.();
-}catch(_){}
-
-renderPopular();
-renderNew();
-renderGift();
-renderCats();
-renderProducts();
+renderPopular(); renderNew(); renderGift();
+renderCats(); renderProducts();
 
 address.value = localStorage.getItem('chokoart_address') || '';
 phone.value = localStorage.getItem('chokoart_phone') || '+998 90 505 07 45';
 address.addEventListener('input',()=>localStorage.setItem('chokoart_address',address.value));
 phone.addEventListener('input',()=>localStorage.setItem('chokoart_phone',phone.value));
 
-/* language switch */
 function setLang(l,btn){
   lang=l;
   document.querySelectorAll('.langs .btn').forEach(b=>b.classList.remove('active'));
@@ -1257,17 +1298,16 @@ function setLang(l,btn){
   applyUI();
 }
 
-/* apply UI now */
+/* default */
 applyUI();
-
-/* default buttons states */
 setPayment('cash');
-
-/* default type text is already set by applyUI, but we ensure active */
 btnDelivery.classList.add('active');
 btnPickup.classList.remove('active');
 type='delivery';
 updateTotal();
+
+/* ✅ после загрузки — измеряем высоту sticky */
+setTimeout(syncStickyHeight, 50);
 </script>
 </body>
 </html>
