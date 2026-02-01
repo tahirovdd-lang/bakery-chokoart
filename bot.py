@@ -20,10 +20,10 @@ if not BOT_TOKEN:
     raise RuntimeError("❌ BOT_TOKEN не найден. Добавь переменную окружения BOT_TOKEN.")
 
 BOT_USERNAME = "kadima_cafe_bot"  # без @ (можно поменять позже)
-ADMIN_ID = 8145095421
+ADMIN_ID = 6013591658
 CHANNEL_ID = "@Kadimasignaturetaste"
 
-# ✅ ОБНОВИЛ: GitHub Pages CHOKOART
+# ✅ GitHub Pages Bakery CHOKOART
 WEBAPP_URL = "https://tahirovdd-lang.github.io/bakery-chokoart/?v=1"
 
 bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode="HTML"))
@@ -59,9 +59,9 @@ def kb_channel_deeplink() -> InlineKeyboardMarkup:
 def welcome_text() -> str:
     return (
         "🇷🇺 Добро пожаловать в <b>Bakery CHOKOART</b>! 👋 "
-        "Выберите любимые блюда и оформите заказ — просто нажмите «Открыть» ниже.\n\n"
+        "Выберите любимые позиции и оформите заказ — просто нажмите «Открыть» ниже.\n\n"
         "🇺🇿 <b>Bakery CHOKOART</b> ga xush kelibsiz! 👋 "
-        "Sevimli taomlaringizni tanlang va buyurtma bering — buning uchun pastdagi «Ochish» tugmasini bosing.\n\n"
+        "Sevimli mahsulotlarni tanlang va buyurtma bering — buning uchun pastdagi «Ochish» tugmasini bosing.\n\n"
         "🇬🇧 Welcome to <b>Bakery CHOKOART</b>! 👋 "
         "Choose your favorite items and place an order — just tap “Open” below."
     )
@@ -162,7 +162,10 @@ def build_order_lines(data: dict) -> tuple[list[str], dict]:
             if qty <= 0:
                 continue
             price = safe_int(it.get("price"), 0)
-            lines.append(f"• {name} × {qty} = {fmt_sum(price * qty)} сум")
+            if price > 0:
+                lines.append(f"• {name} × {qty} = {fmt_sum(price * qty)} сум")
+            else:
+                lines.append(f"• {name} × {qty}")
 
     if not lines and order_dict:
         for k, q in order_dict.items():
