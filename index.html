@@ -98,12 +98,15 @@ body[data-theme="dark"]{ color:#f1f1f1; }
   line-height:1.1;
 }
 
-/* лозунг */
+/* ✅ лозунг — уменьшили + классический шрифт */
 .brand-slogan{
-  font-family:'Lobster',cursive;
-  font-size:18px;
-  opacity:.95;
+  font-family: 'Montserrat', sans-serif; /* классический */
+  font-size:12px;                       /* уменьшили */
+  font-weight:800;
+  letter-spacing:1.2px;
+  opacity:.92;
   margin-top:2px;
+  text-transform:uppercase;
 }
 
 .brand-phone{position:relative; z-index:50; pointer-events:auto; margin-top:4px;}
@@ -581,6 +584,63 @@ body[data-theme="dark"] .about-card{background:#1c1c1c;border-color:rgba(255,255
   -webkit-overflow-scrolling: touch;
 }
 .about-body .t{white-space:pre-wrap;}
+
+/* ✅✅✅ Подкатегории (иконки + название под ними) */
+.subcats{
+  padding: 6px 12px 10px;
+}
+.subcats-title{
+  font-weight:900;
+  opacity:.92;
+  padding: 8px 2px 10px;
+}
+.subcats-row{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding: 0 2px 10px;
+  scroll-behavior:smooth;
+}
+.subcat{
+  min-width:120px;
+  border-radius:20px;
+  padding:10px 10px 12px;
+  background:#fffdf9;
+  border:1px solid var(--stroke);
+  box-shadow: inset 0 0 0 2px var(--inner), 0 8px 18px rgba(0,0,0,.08);
+  cursor:pointer;
+  transition:.15s;
+  text-align:center;
+}
+body[data-theme="dark"] .subcat{background:rgba(255,255,255,.06); color:#f1f1f1;}
+.subcat:active{transform:scale(.99);}
+.subcat.active{
+  background:linear-gradient(135deg,var(--pink-deep),var(--pink-2));
+  color:#fff;
+  border:1px solid rgba(255,255,255,.35);
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.14), 0 10px 22px rgba(197,108,134,.28);
+}
+.subcat .ic{
+  height:44px;              /* ✅ увеличили высоту иконки */
+  font-size:34px;           /* ✅ увеличили */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:6px;
+  line-height:1;
+}
+.subcat .nm{
+  font-weight:900;
+  font-size:12px;
+  line-height:1.15;
+  min-height:30px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* в поиске подкатегории прячем */
+body.searching .subcats{display:none;}
 </style>
 </head>
 
@@ -740,6 +800,13 @@ body[data-theme="dark"] .about-card{background:#1c1c1c;border-color:rgba(255,255
 <input id="phone" class="input">
 
 <div class="categories" id="cats"></div>
+
+<!-- ✅✅✅ Подкатегории (иконки + подписи) -->
+<div class="subcats" id="subcatsWrap">
+  <div class="subcats-title" id="subcatsTitle">Подкатегории</div>
+  <div class="subcats-row" id="subcatsRow"></div>
+</div>
+
 <div class="products" id="products"></div>
 
 <div class="cart" id="cartBox">
@@ -929,16 +996,46 @@ const tg_id = tgUser.id || "";
 
 let lang='ru',category='cheesecakes',type='delivery',payment='cash',cart={};
 
+/* ✅✅✅ выбранная подкатегория */
+let subcat = 'all';
+
 const TEXT={
-  ru:{delivery:'🚚 Доставка',pickup:'🏃 Самовывоз',address:'📍 Адрес доставки',phone:'📞 Телефон',cart:'🛒 Корзина',order:'Оформить заказ',comment:'✍️ Комментарий к заказу',cash:'💵 Наличные',click:'💳 CLICK',results:'Результаты поиска',popular:'🔥 Популярное',empty:'Корзина пустая'},
-  uz:{delivery:'🚚 Yetkazish',pickup:'🏃 Olib ketish',address:'📍 Manzil',phone:'📞 Telefon',cart:'🛒 Savat',order:'Buyurtma berish',comment:'✍️ Izoh',cash:'💵 Naqd',click:'💳 CLICK',results:'Qidiruv natijalari',popular:'🔥 Ommabop',empty:"Savat bo‘sh"},
-  en:{delivery:'🚚 Delivery',pickup:'🏃 Pickup',address:'📍 Address',phone:'📞 Phone',cart:'🛒 Cart',order:'Place order',comment:'✍️ Comment',cash:'💵 Cash',click:'💳 CLICK',results:'Search results',popular:'🔥 Popular',empty:'Cart is empty'}
+  ru:{delivery:'🚚 Доставка',pickup:'🏃 Самовывоз',address:'📍 Адрес доставки',phone:'📞 Телефон',cart:'🛒 Корзина',order:'Оформить заказ',comment:'✍️ Комментарий к заказу',cash:'💵 Наличные',click:'💳 CLICK',results:'Результаты поиска',popular:'🔥 Популярное',empty:'Корзина пустая',subcats:'Подкатегории'},
+  uz:{delivery:'🚚 Yetkazish',pickup:'🏃 Olib ketish',address:'📍 Manzil',phone:'📞 Telefon',cart:'🛒 Savat',order:'Buyurtma berish',comment:'✍️ Izoh',cash:'💵 Naqd',click:'💳 CLICK',results:'Qidiruv natijalari',popular:'🔥 Ommabop',empty:"Savat bo‘sh",subcats:'Subkategoriyalar'},
+  en:{delivery:'🚚 Delivery',pickup:'🏃 Pickup',address:'📍 Address',phone:'📞 Phone',cart:'🛒 Cart',order:'Place order',comment:'✍️ Comment',cash:'💵 Cash',click:'💳 CLICK',results:'Search results',popular:'🔥 Popular',empty:'Cart is empty',subcats:'Subcategories'}
 };
 
 const CATS={
   ru:{cheesecakes:'🍰 Чизкейки',cakes:'🎂 Торты',rolls:'🍥 Рулеты',bakery:'🥐 Выпечка',cookies:'🍪 Печенье',desserts:'🍨 Десерты',pies:'🥧 Пироги'},
   uz:{cheesecakes:'🍰 Chizkeyklar',cakes:'🎂 Tortlar',rolls:'🍥 Rulolar',bakery:'🥐 Pishiriqlar',cookies:'🍪 Pechenye',desserts:'🍨 Desertlar',pies:'🥧 Piroglar'},
   en:{cheesecakes:'🍰 Cheesecakes',cakes:'🎂 Cakes',rolls:'🍥 Rolls',bakery:'🥐 Pastry',cookies:'🍪 Cookies',desserts:'🍨 Desserts',pies:'🥧 Pies'}
+};
+
+/* ✅✅✅ Подкатегории (иконки + названия) */
+const SUBCATS = {
+  cakes: [
+    {id:'wedding', ic:'💍', n:{ru:'Свадебные торты', uz:'To‘y tortlari', en:'Wedding cakes'}},
+    {id:'bento', ic:'🍱', n:{ru:'Бенто торты', uz:'Bento tortlar', en:'Bento cakes'}},
+    {id:'rollcakes', ic:'🍥', n:{ru:'Торты рулеты', uz:'Rulet tortlar', en:'Roll cakes'}},
+    {id:'events', ic:'🎉', n:{ru:'Торты на мероприятия', uz:'Tadbir tortlari', en:'Event cakes'}}
+  ],
+  bakery: [
+    {id:'savory', ic:'🥨', n:{ru:'Несладкая выпечка', uz:'Shirin bo‘lmagan pishiriq', en:'Savory pastry'}},
+    {id:'sweet', ic:'🥐', n:{ru:'Сдобная выпечка', uz:'Sdobali pishiriq', en:'Sweet pastry'}},
+    {id:'puff', ic:'🥯', n:{ru:'Слоёная выпечка', uz:'Qavatli pishiriq', en:'Puff pastry'}}
+  ],
+  cookies: [
+    {id:'shortbread', ic:'🧈', n:{ru:'Песочное печенье', uz:'Qumli pechenye', en:'Shortbread'}},
+    {id:'filled', ic:'🍫', n:{ru:'Печенье с начинкой', uz:'Nachinkali pechenye', en:'Filled cookies'}}
+  ],
+  desserts: [
+    {id:'mousse', ic:'🍮', n:{ru:'Муссовые десерты', uz:'Musli desertlar', en:'Mousse desserts'}},
+    {id:'mini', ic:'🧁', n:{ru:'Мини десерты', uz:'Mini desertlar', en:'Mini desserts'}}
+  ],
+  pies: [
+    {id:'sliced', ic:'🍰', n:{ru:'Нарезные пироги', uz:'Bo‘laklangan piroglar', en:'Sliced pies'}},
+    {id:'whole', ic:'🥧', n:{ru:'Целые пироги', uz:'Butun piroglar', en:'Whole pies'}}
+  ]
 };
 
 /* ✅ по 2 блюда в категории */
@@ -948,28 +1045,29 @@ const MENU = {
     {id:'cheesecake_oreo', p:48000, img:'images/cheesecake_oreo.png', n:{ru:'Чизкейк Oreo', uz:'Oreo chizkeyk', en:'Oreo cheesecake'}}
   ],
   cakes:[
-    {id:'cake_redvelvet', p:52000, img:'images/cake_redvelvet.png', n:{ru:'Торт Red Velvet', uz:'Red Velvet tort', en:'Red Velvet cake'}},
-    {id:'cake_choco', p:54000, img:'images/cake_choco.png', n:{ru:'Шоколадный торт', uz:'Shokolad tort', en:'Chocolate cake'}}
+    /* ✅ добавили sub для фильтра подкатегорий */
+    {id:'cake_redvelvet', p:52000, img:'images/cake_redvelvet.png', sub:'events', n:{ru:'Торт Red Velvet', uz:'Red Velvet tort', en:'Red Velvet cake'}},
+    {id:'cake_choco', p:54000, img:'images/cake_choco.png', sub:'bento', n:{ru:'Шоколадный торт', uz:'Shokolad tort', en:'Chocolate cake'}}
   ],
   rolls:[
     {id:'roll_choco', p:35000, img:'images/roll_choco.png', n:{ru:'Рулет шоколадный', uz:'Shokolad rulet', en:'Chocolate roll'}},
     {id:'roll_berry', p:36000, img:'images/roll_berry.png', n:{ru:'Рулет ягодный', uz:'Mevali rulet', en:'Berry roll'}}
   ],
   bakery:[
-    {id:'croissant', p:18000, img:'images/croissant.png', n:{ru:'Круассан', uz:'Kruassan', en:'Croissant'}},
-    {id:'danish', p:20000, img:'images/danish.png', n:{ru:'Датская выпечка', uz:'Daniya pishirig‘i', en:'Danish pastry'}}
+    {id:'croissant', p:18000, img:'images/croissant.png', sub:'sweet', n:{ru:'Круассан', uz:'Kruassan', en:'Croissant'}},
+    {id:'danish', p:20000, img:'images/danish.png', sub:'puff', n:{ru:'Датская выпечка', uz:'Daniya pishirig‘i', en:'Danish pastry'}}
   ],
   cookies:[
-    {id:'cookie_choco', p:12000, img:'images/cookie_choco.png', n:{ru:'Печенье шоколадное', uz:'Shokolad pechenye', en:'Chocolate cookie'}},
-    {id:'cookie_nuts', p:13000, img:'images/cookie_nuts.png', n:{ru:'Печенье с орехом', uz:'Yong‘oqli pechenye', en:'Nut cookie'}}
+    {id:'cookie_choco', p:12000, img:'images/cookie_choco.png', sub:'filled', n:{ru:'Печенье шоколадное', uz:'Shokolad pechenye', en:'Chocolate cookie'}},
+    {id:'cookie_nuts', p:13000, img:'images/cookie_nuts.png', sub:'shortbread', n:{ru:'Печенье с орехом', uz:'Yong‘oqli pechenye', en:'Nut cookie'}}
   ],
   desserts:[
-    {id:'dessert_tiramisu', p:38000, img:'images/dessert_tiramisu.png', n:{ru:'Тирамису', uz:'Tiramisu', en:'Tiramisu'}},
-    {id:'dessert_trifle', p:36000, img:'images/dessert_trifle.png', n:{ru:'Трайфл', uz:'Trifle', en:'Trifle'}}
+    {id:'dessert_tiramisu', p:38000, img:'images/dessert_tiramisu.png', sub:'mousse', n:{ru:'Тирамису', uz:'Tiramisu', en:'Tiramisu'}},
+    {id:'dessert_trifle', p:36000, img:'images/dessert_trifle.png', sub:'mini', n:{ru:'Трайфл', uz:'Trifle', en:'Trifle'}}
   ],
   pies:[
-    {id:'pie_apple', p:32000, img:'images/pie_apple.png', n:{ru:'Пирог яблочный', uz:'Olmali pirog', en:'Apple pie'}},
-    {id:'pie_cherry', p:34000, img:'images/pie_cherry.png', n:{ru:'Пирог вишнёвый', uz:'Gilosli pirog', en:'Cherry pie'}}
+    {id:'pie_apple', p:32000, img:'images/pie_apple.png', sub:'whole', n:{ru:'Пирог яблочный', uz:'Olmali pirog', en:'Apple pie'}},
+    {id:'pie_cherry', p:34000, img:'images/pie_cherry.png', sub:'sliced', n:{ru:'Пирог вишнёвый', uz:'Gilosli pirog', en:'Cherry pie'}}
   ]
 };
 
@@ -1041,9 +1139,13 @@ function applyLang(){
   popularTitle.innerText = TEXT[lang].popular;
   stickyCartBtn.innerText = TEXT[lang].cart;
 
+  const st = document.getElementById('subcatsTitle');
+  if(st) st.innerText = TEXT[lang].subcats;
+
   renderPopular();
   renderQuickFilters();
   renderCats();
+  renderSubcats();       /* ✅ */
   renderProducts();
   updateTotal();
   updateTypeFields();
@@ -1105,14 +1207,64 @@ function renderQuickFilters(){
 function pickCategory(k){
   if(isSearchOpen()) closeSearch();
   category = k;
+  subcat = 'all';     /* ✅ сбрасываем */
   renderCats();
+  renderSubcats();    /* ✅ */
+  renderProducts();
+}
+
+/* ✅✅✅ рендер подкатегорий */
+function subcatName(sc){
+  return (sc.n && (sc.n[lang] || sc.n.ru)) || '';
+}
+function renderSubcats(){
+  const wrap = document.getElementById('subcatsWrap');
+  const row = document.getElementById('subcatsRow');
+  if(!wrap || !row) return;
+
+  const list = SUBCATS[category] || [];
+  if(!list.length){
+    wrap.style.display = 'none';
+    subcat = 'all';
+    return;
+  }
+
+  wrap.style.display = '';
+  row.innerHTML = '';
+
+  row.innerHTML += `
+    <div class="subcat ${subcat==='all'?'active':''}" onclick="setSubcat('all')">
+      <div class="ic">✨</div>
+      <div class="nm">${escapeHtml(lang==='ru'?'Все':(lang==='uz'?'Barchasi':'All'))}</div>
+    </div>
+  `;
+
+  list.forEach(sc=>{
+    row.innerHTML += `
+      <div class="subcat ${subcat===sc.id?'active':''}" onclick="setSubcat('${sc.id}')">
+        <div class="ic">${sc.ic}</div>
+        <div class="nm">${escapeHtml(subcatName(sc))}</div>
+      </div>
+    `;
+  });
+
+  setTimeout(()=>{
+    const active = row.querySelector('.subcat.active');
+    if(active && active.scrollIntoView){
+      active.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+    }
+  }, 30);
+}
+function setSubcat(id){
+  subcat = id;
+  renderSubcats();
   renderProducts();
 }
 
 function renderCats(){
   cats.innerHTML='';
   for(let k in MENU){
-    cats.innerHTML+=`<button class="btn ${k===category?'active':''}" onclick="category='${k}';renderCats();renderProducts()">${CATS[lang][k] || k}</button>`;
+    cats.innerHTML+=`<button class="btn ${k===category?'active':''}" onclick="category='${k}';subcat='all';renderCats();renderSubcats();renderProducts()">${CATS[lang][k] || k}</button>`;
   }
   setTimeout(()=>{
     const active = cats.querySelector('.btn.active');
@@ -1142,7 +1294,12 @@ function cardHTML(it, q=''){
 
 function renderProducts(){
   products.innerHTML='';
-  (MENU[category] || []).forEach((it)=>{
+  const list = (MENU[category] || []).filter(it=>{
+    if(subcat === 'all') return true;
+    return String(it.sub || '') === String(subcat);
+  });
+
+  list.forEach((it)=>{
     cart[it.id]=cart[it.id]||0;
     products.innerHTML+=cardHTML(it,'');
   });
@@ -1187,6 +1344,7 @@ function setPayment(p){
 function isSearchOpen(){ return searchWrap.classList.contains('show'); }
 function toggleSearch(){ if(isSearchOpen()) closeSearch(); else openSearch(); }
 function openSearch(){
+  document.body.classList.add('searching'); /* ✅ */
   searchWrap.classList.add('show');
   searchTitle.classList.add('show');
   cats.style.display = 'none';
@@ -1197,12 +1355,14 @@ function openSearch(){
   searchProducts();
 }
 function closeSearch(){
+  document.body.classList.remove('searching'); /* ✅ */
   searchWrap.classList.remove('show');
   searchTitle.classList.remove('show');
   cats.style.display = '';
   quickFilters.style.display = '';
   popularWrap.style.display = '';
   searchInput.value = '';
+  renderSubcats(); /* ✅ возвращаем/обновляем */
   renderProducts();
 }
 function clearSearch(){ closeSearch(); }
@@ -1212,10 +1372,7 @@ function searchProducts(){
   const q = (searchInput.value || '').trim().toLowerCase();
   products.innerHTML='';
   if(!q){
-    (MENU[category] || []).forEach((it)=>{
-      cart[it.id]=cart[it.id]||0;
-      products.innerHTML += cardHTML(it,'');
-    });
+    renderProducts();
     return;
   }
   for(let c in MENU){
@@ -1302,6 +1459,7 @@ function sendOrder(){
 loadSaved();
 bindSave();
 applyLang();
+renderSubcats(); /* ✅ на старте */
 </script>
 </body>
 </html>
