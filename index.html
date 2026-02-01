@@ -27,7 +27,7 @@
 
   --vh: 1vh;
 
-  /* ✅ высота нижней фикс-панели (чтобы кнопка "Оформить заказ" не пряталась) */
+  /* ✅ высота нижней фикс-панели (чтобы ничего не перекрывалось) */
   --sticky-h: 86px;
 }
 
@@ -47,7 +47,7 @@ body{
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: none;
 
-  /* ✅ добавили запас снизу под фикс-панель */
+  /* ✅ запас снизу под фикс-панель */
   padding-bottom: calc(var(--sticky-h) + 16px);
 
   -webkit-text-size-adjust:100%;
@@ -228,10 +228,18 @@ textarea.input{height:90px;}
   border:1px solid rgba(255,255,255,.22);
   background:linear-gradient(135deg,var(--pink-deep),var(--pink));
   box-shadow: inset 0 0 0 2px rgba(255,255,255,.10), 0 12px 26px rgba(0,0,0,.14);
-
-  /* ✅ чтобы клики работали стабильно */
   position:relative;
   z-index:2;
+
+  /* ✅ важное: чтобы при скролле якорем кнопка не пряталась */
+  scroll-margin-bottom: calc(var(--sticky-h) + 24px);
+}
+
+/* ✅✅✅ КЛЮЧЕВОЕ ИСПРАВЛЕНИЕ:
+   даём корзине доп. "низ" внутри, чтобы кнопка "Оформить заказ" была выше fixed панели */
+#cartBox{
+  scroll-margin-bottom: calc(var(--sticky-h) + 24px);
+  padding-bottom: calc(16px + var(--sticky-h));
 }
 
 /* popup */
@@ -248,13 +256,10 @@ body[data-theme="dark"] .popup-box{ background:#1c1c1c; color:#f1f1f1; }
   position:fixed;
   left:0;right:0;bottom:0;
   padding:10px 12px;
-
   background:rgba(248,243,233,.88);
   backdrop-filter: blur(10px);
   z-index:999;
   border-top:1px solid rgba(0,0,0,.06);
-
-  /* ✅ фиксируем высоту, чтобы body padding-bottom совпадал */
   height: var(--sticky-h);
   display:flex;
   align-items:center;
@@ -276,9 +281,6 @@ body[data-theme="dark"] .sticky-inner{background:rgba(255,255,255,.06);}
   color:#fff;font-weight:900;cursor:pointer;
   box-shadow: inset 0 0 0 2px rgba(255,255,255,.10), 0 12px 26px rgba(0,0,0,.14);
 }
-
-/* ✅ when user открывает корзину, проскроллим так, чтобы кнопка не пряталась */
-#cartBox{scroll-margin-bottom: calc(var(--sticky-h) + 16px);}
 
 /* menu sheet */
 .menu-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.38);opacity:0;pointer-events:none;transition:.18s;z-index:1000;}
@@ -597,6 +599,9 @@ body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f
   </div>
 
   <button class="order-btn" id="orderBtn" onclick="sendOrder()"></button>
+
+  <!-- ✅ дополнительный "хвост" внутри корзины (на всякий случай для iOS/Telegram) -->
+  <div style="height: 12px;"></div>
 </div>
 
 <div class="popup" id="popup"><div class="popup-box">✅ Заказ принят!</div></div>
@@ -630,7 +635,7 @@ setVH();
 window.addEventListener('resize', setVH, {passive:true});
 window.addEventListener('orientationchange', ()=>setTimeout(setVH, 250), {passive:true});
 
-/* ✅ реальная высота sticky bar → в CSS переменную (чтобы ничего не перекрывалось) */
+/* ✅ реальная высота sticky bar → в CSS переменную */
 function syncStickyHeight(){
   const el = document.getElementById('stickyBar');
   if(!el) return;
@@ -846,7 +851,7 @@ function formatSum(x){
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ');
 }
 
-/* ✅ тексты на странице */
+/* ✅ тексты для 3 языков */
 function applyUI(){
   menuTitle.innerText = UI[lang].menu;
   mReviewTitle.innerText = UI[lang].reviewTitle;
@@ -891,7 +896,6 @@ function applyUI(){
   renderCats(); renderProducts(); renderPopular(); renderNew(); renderGift();
   updateTotal();
 
-  // ✅ после перерендера — пересинхроним высоту sticky bar
   setTimeout(syncStickyHeight, 50);
 }
 
@@ -1101,7 +1105,7 @@ function calcItemsSum(){
   return s;
 }
 
-/* ✅ доставка считается сразу: delivery=10 000, pickup=0 */
+/* ✅ доставка считается сразу */
 function calcDeliveryFee(){
   return (type === 'delivery') ? DELIVERY_FEE_SAMARKAND : 0;
 }
@@ -1175,9 +1179,6 @@ function setType(t,btn){
   address.style.display = (type==='pickup') ? 'none' : 'block';
 
   updateTotal();
-
-  // ✅ если пользователь переключил тип — можно слегка подсветить/проскроллить к корзине
-  // (не обязательно, но помогает)
 }
 
 function setPayment(p){
@@ -1186,19 +1187,20 @@ function setPayment(p){
   payClick.classList.toggle('active', p==='click');
 }
 
-/* ✅ openCart: скроллим чуть выше, чтобы "Оформить заказ" не оказалась под sticky bar */
+/* ✅ openCart: скроллим к корзине и кнопка будет доступна (из-за padding-bottom в #cartBox) */
 function openCart(){
   const el = document.getElementById('cartBox');
   if(!el) return;
 
-  const rect = el.getBoundingClientRect();
-  const top = rect.top + window.pageYOffset;
-  const stickyH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--sticky-h')) || 86;
+  // обновим высоту панели, чтобы расчет был точным
+  syncStickyHeight();
 
-  window.scrollTo({ top: Math.max(0, top - 8), behavior:'smooth' });
-
-  // ✅ гарантируем актуальную высоту панели
-  setTimeout(syncStickyHeight, 80);
+  // прокрутка к корзине (scroll-margin-bottom уже задан)
+  try{
+    el.scrollIntoView({behavior:'smooth', block:'start'});
+  }catch(_){
+    window.location.hash = '#cartBox';
+  }
 }
 
 /* order */
