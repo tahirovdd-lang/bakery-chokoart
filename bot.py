@@ -23,8 +23,8 @@ BOT_USERNAME = "kadima_cafe_bot"  # без @ (можно поменять поз
 ADMIN_ID = 8145095421
 CHANNEL_ID = "@Kadimasignaturetaste"
 
-# ⚠️ версия для сброса кеша
-WEBAPP_URL = "https://tahirovdd-lang.github.io/kadima-menu/?v=3"
+# ✅ ОБНОВИЛ: GitHub Pages CHOKOART
+WEBAPP_URL = "https://tahirovdd-lang.github.io/bakery-chokoart/?v=1"
 
 bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode="HTML"))
 dp = Dispatcher()
