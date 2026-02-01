@@ -62,7 +62,7 @@ body[data-theme="dark"]{ color:#f1f1f1; }
   text-align:center;
 }
 
-/* ✅ ЛОГО (увеличено в 1.5 раза) */
+/* ✅ ЛОГО */
 .header img{
   position:absolute;
   left:12px;
@@ -77,11 +77,7 @@ body[data-theme="dark"]{ color:#f1f1f1; }
 }
 
 .brand-wrap{display:flex;flex-direction:column;align-items:center;gap:2px;}
-
-/* ✅✅✅ СДВИГ НАДПИСЕЙ ВПРАВО (Bakery / CHOKOART / BIZ...) */
-.brand-wrap{
-  transform: translateX(20px); /* примерно “на 4 буквы” вправо */
-}
+.brand-wrap{ transform: translateX(20px); }
 
 /* Bakery / CHOKOART */
 .brand-title{
@@ -98,10 +94,10 @@ body[data-theme="dark"]{ color:#f1f1f1; }
   line-height:1.1;
 }
 
-/* ✅ лозунг — уменьшили + классический шрифт */
+/* ✅ лозунг — уменьшили + классический */
 .brand-slogan{
-  font-family: 'Montserrat', sans-serif; /* классический */
-  font-size:12px;                       /* уменьшили */
+  font-family: 'Montserrat', sans-serif;
+  font-size:12px;
   font-weight:800;
   letter-spacing:1.2px;
   opacity:.92;
@@ -152,11 +148,11 @@ body[data-theme="dark"]{ color:#f1f1f1; }
 .burger span:nth-child(2){top:6.5px;}
 .burger span:nth-child(3){bottom:0;}
 
-/* ✅✅✅ гео-кнопка: только значок под бургером */
+/* ✅ гео-кнопка */
 .geo-btn{
   position:absolute;
-  right:18px;         /* по центру под бургером */
-  top:58px;           /* под бургером */
+  right:18px;
+  top:58px;
   width:36px;
   height:36px;
   border-radius:50%;
@@ -354,6 +350,12 @@ body[data-theme="dark"] .cart{ background:rgba(255,255,255,.06); color:#f1f1f1; 
 
 textarea.input{height:90px;}
 
+.cart-lines{margin-top:8px; font-weight:800; opacity:.9;}
+.cart-line{display:flex; justify-content:space-between; gap:10px; padding:4px 0;}
+.cart-line small{opacity:.75; font-weight:800;}
+.cart-divider{height:1px; background:rgba(0,0,0,.08); margin:8px 0;}
+body[data-theme="dark"] .cart-divider{background:rgba(255,255,255,.12);}
+
 /* ✅✅✅ ОФОРМИТЬ ЗАКАЗ = пастельно-розовая */
 .order-btn{
   width:100%;
@@ -430,7 +432,7 @@ mark{background:rgba(246,183,199,.35);padding:0 .12em;border-radius:6px;}
 body[data-theme="dark"] .qbtn{background:rgba(255,255,255,.06); color: var(--accent-red);}
 .qbtn:active{transform:scale(.98);}
 
-/* popular */
+/* popular & carousels */
 .popular-wrap{width:100%;padding:4px 12px 6px;}
 .popular-title{width:100%;font-weight:900;padding:8px 2px 10px;display:flex;align-items:center;gap:8px;}
 .popular-row{display:flex;gap:12px;overflow-x:auto;padding:2px 2px 10px;}
@@ -461,7 +463,6 @@ body[data-theme="dark"] .pop-card{background:rgba(255,255,255,.06); color:#f1f1f
 .pop-price{font-weight:900;color:var(--accent-red);margin-top:4px;}
 .pop-badge{position:absolute;left:10px;top:10px;font-size:18px;pointer-events:none;}
 
-/* ✅ +/- в популярном тоже розовые */
 .pop-counter{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:8px;}
 .pop-counter button{
   width:30px;height:30px;border-radius:50%;cursor:pointer;
@@ -476,6 +477,49 @@ body[data-theme="dark"] .pop-card{background:rgba(255,255,255,.06); color:#f1f1f
 .pop-counter button:active{transform:scale(.96);}
 .pop-counter span{font-weight:900; min-width:18px; text-align:center;}
 
+/* ✅ маленькие иконки-карточки (Новинки / Для подарка) */
+.mini-row{display:flex;gap:12px;overflow-x:auto;padding:2px 2px 10px;}
+.mini-card{
+  min-width:132px;
+  border-radius:22px;
+  padding:10px;
+  background:#fffdf9;
+  border:1px solid var(--stroke);
+  box-shadow: inset 0 0 0 2px var(--inner), 0 8px 18px rgba(0,0,0,.08);
+  cursor:pointer;
+  transition:.15s;
+  position:relative;
+}
+body[data-theme="dark"] .mini-card{background:rgba(255,255,255,.06); color:#f1f1f1;}
+.mini-card:active{transform:scale(.99);}
+.mini-badge{position:absolute;left:10px;top:10px;font-size:18px;pointer-events:none;}
+.mini-img{
+  height:70px;
+  border-radius:18px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(197,108,134,.10);
+}
+.mini-img img{width:100%;height:100%;object-fit:cover;}
+.mini-name{font-weight:900;margin-top:8px; font-size:12px; line-height:1.15; min-height:28px;}
+.mini-price{font-weight:900;color:var(--accent-red);margin-top:4px;}
+.mini-counter{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:8px;}
+.mini-counter button{
+  width:28px;height:28px;border-radius:50%;cursor:pointer;
+  border:1px solid rgba(255,255,255,.35);
+  background:linear-gradient(135deg,var(--pink-deep),var(--pink-2));
+  color:#fff;
+  font-size:18px;
+  font-weight:900;
+  box-shadow:0 10px 22px rgba(0,0,0,.12);
+  transition:.15s;
+}
+.mini-counter button:active{transform:scale(.96);}
+.mini-counter span{font-weight:900; min-width:18px; text-align:center;}
+
+/* sticky checkout */
 .sticky-checkout{
   position:fixed;
   left:0; right:0; bottom:0;
@@ -506,7 +550,7 @@ body[data-theme="dark"] .sticky-inner{background:rgba(255,255,255,.06);}
 .sticky-sum{font-weight:900;line-height:1.1;}
 .sticky-sum small{display:block;font-weight:800;opacity:.75;margin-top:2px;}
 
-/* ✅✅✅ КНОПКА "Корзина" = пастельно-розовая */
+/* ✅ кнопка "Корзина" */
 .sticky-btn{
   padding:12px 14px;
   border-radius:16px;
@@ -558,7 +602,7 @@ body[data-theme="dark"] .menu-ic{background:rgba(255,255,255,.06);}
 .menu-sub{font-size:12px;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;}
 .menu-right{opacity:.65;font-weight:900;}
 
-/* ✅ модалка "О нас" со скроллом */
+/* ✅ модалка "О нас" */
 .about-modal{position:fixed;inset:0;background:rgba(0,0,0,.40);display:none;z-index:1100;padding:18px 14px;}
 .about-modal.show{display:block;}
 .about-card{
@@ -585,26 +629,57 @@ body[data-theme="dark"] .about-card{background:#1c1c1c;border-color:rgba(255,255
 }
 .about-body .t{white-space:pre-wrap;}
 
-/* ✅✅✅ Подкатегории (иконки + название под ними) */
-.subcats{
-  padding: 6px 12px 10px;
-}
-.subcats-title{
+/* ✅✅✅ Подкатегории — отдельное окно снизу */
+.subcat-btn-wrap{padding:0 12px 8px;}
+.subcat-open{
+  width:100%;
+  border-radius:18px;
+  padding:12px 14px;
+  border:1px solid var(--stroke);
+  background:#fffdf9;
+  box-shadow: inset 0 0 0 2px var(--inner), 0 6px 14px var(--shadow);
   font-weight:900;
-  opacity:.92;
-  padding: 8px 2px 10px;
-}
-.subcats-row{
+  color:var(--accent-red);
+  cursor:pointer;
   display:flex;
-  gap:12px;
-  overflow-x:auto;
-  padding: 0 2px 10px;
-  scroll-behavior:smooth;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
 }
-.subcat{
-  min-width:120px;
-  border-radius:20px;
-  padding:10px 10px 12px;
+body[data-theme="dark"] .subcat-open{background:rgba(255,255,255,.06); color:var(--accent-red);}
+.subcat-open:active{transform:scale(.99);}
+.subcat-open small{opacity:.75; font-weight:900;}
+
+.subcat-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.38);opacity:0;pointer-events:none;transition:.18s;z-index:1200;}
+.subcat-backdrop.show{opacity:1;pointer-events:auto;}
+.subcat-sheet{
+  position:fixed;left:0;right:0;bottom:-110%;
+  background:#fffdf9;
+  border-top-left-radius:22px;border-top-right-radius:22px;
+  border:1px solid var(--stroke);
+  box-shadow:0 18px 40px rgba(0,0,0,.18);
+  transition:.22s;
+  z-index:1210;
+  padding:10px 12px 14px;
+  max-height: 78vh;
+  overflow:hidden;
+}
+body[data-theme="dark"] .subcat-sheet{background:#1c1c1c;border-color:rgba(255,255,255,.14);color:#f1f1f1;}
+.subcat-sheet.show{bottom:0;}
+.subcat-head{display:flex;align-items:center;justify-content:space-between;padding:2px 4px 10px;}
+.subcat-head b{font-size:16px;}
+.subcat-grid{
+  overflow:auto;
+  max-height: calc(78vh - 78px);
+  padding:2px 2px 10px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  -webkit-overflow-scrolling: touch;
+}
+.subcat-tile{
+  border-radius:18px;
+  padding:10px 8px 12px;
   background:#fffdf9;
   border:1px solid var(--stroke);
   box-shadow: inset 0 0 0 2px var(--inner), 0 8px 18px rgba(0,0,0,.08);
@@ -612,35 +687,25 @@ body[data-theme="dark"] .about-card{background:#1c1c1c;border-color:rgba(255,255
   transition:.15s;
   text-align:center;
 }
-body[data-theme="dark"] .subcat{background:rgba(255,255,255,.06); color:#f1f1f1;}
-.subcat:active{transform:scale(.99);}
-.subcat.active{
+body[data-theme="dark"] .subcat-tile{background:rgba(255,255,255,.06); color:#f1f1f1;}
+.subcat-tile:active{transform:scale(.99);}
+.subcat-tile.active{
   background:linear-gradient(135deg,var(--pink-deep),var(--pink-2));
   color:#fff;
   border:1px solid rgba(255,255,255,.35);
-  box-shadow: inset 0 0 0 2px rgba(255,255,255,.14), 0 10px 22px rgba(197,108,134,.28);
 }
-.subcat .ic{
-  height:44px;              /* ✅ увеличили высоту иконки */
-  font-size:34px;           /* ✅ увеличили */
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin-bottom:6px;
-  line-height:1;
+.subcat-ic{height:46px;display:flex;align-items:center;justify-content:center;font-size:34px;line-height:1;margin-bottom:6px;}
+.subcat-nm{font-weight:900;font-size:12px;line-height:1.15;min-height:30px;display:flex;align-items:center;justify-content:center;}
+.subcat-footer{
+  padding-top:10px;
 }
-.subcat .nm{
-  font-weight:900;
-  font-size:12px;
-  line-height:1.15;
-  min-height:30px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-/* в поиске подкатегории прячем */
-body.searching .subcats{display:none;}
+.subcat-footer .subcat-open{border-radius:18px;}
+/* в поиске скрываем карусели/подкатегории */
+body.searching .subcat-btn-wrap,
+body.searching .popular-wrap,
+body.searching #newWrap,
+body.searching #giftWrap,
+body.searching .quick-filters{display:none;}
 </style>
 </head>
 
@@ -665,9 +730,7 @@ body.searching .subcats{display:none;}
     </div>
   </div>
 
-  <!-- ✅ только значок геопозиции под бургером -->
   <div class="geo-btn" onclick="openRoute()" title="Маршрут">📍</div>
-
   <div class="search-btn" onclick="toggleSearch()">🔍</div>
 </div>
 
@@ -789,6 +852,18 @@ body.searching .subcats{display:none;}
   <div class="popular-row" id="popularRow"></div>
 </div>
 
+<!-- ✅✅✅ Новинки (карусель иконок) -->
+<div class="popular-wrap" id="newWrap">
+  <div class="popular-title" id="newTitle">🆕 Новинки</div>
+  <div class="mini-row" id="newRow"></div>
+</div>
+
+<!-- ✅✅✅ Для подарка (карусель иконок) -->
+<div class="popular-wrap" id="giftWrap">
+  <div class="popular-title" id="giftTitle">🎁 Для подарка</div>
+  <div class="mini-row" id="giftRow"></div>
+</div>
+
 <div class="quick-filters" id="quickFilters"></div>
 
 <div class="types">
@@ -801,16 +876,46 @@ body.searching .subcats{display:none;}
 
 <div class="categories" id="cats"></div>
 
-<!-- ✅✅✅ Подкатегории (иконки + подписи) -->
-<div class="subcats" id="subcatsWrap">
-  <div class="subcats-title" id="subcatsTitle">Подкатегории</div>
-  <div class="subcats-row" id="subcatsRow"></div>
+<!-- ✅ кнопка открытия подкатегорий -->
+<div class="subcat-btn-wrap" id="subcatBtnWrap">
+  <button class="subcat-open" onclick="openSubcats()">
+    <span id="subcatBtnText">Подкатегории</span>
+    <small id="subcatBtnRight">›</small>
+  </button>
+</div>
+
+<!-- ✅ окно подкатегорий снизу -->
+<div class="subcat-backdrop" id="subcatBackdrop" onclick="closeSubcats()"></div>
+<div class="subcat-sheet" id="subcatSheet">
+  <div class="menu-handle"></div>
+  <div class="subcat-head">
+    <b id="subcatSheetTitle">Подкатегории</b>
+    <button class="menu-close" onclick="closeSubcats()">×</button>
+  </div>
+  <div class="subcat-grid" id="subcatGrid"></div>
+
+  <!-- ✅ внизу отдельной строкой: "Все торты" (появляется только в Тортах) -->
+  <div class="subcat-footer" id="subcatFooter" style="display:none;">
+    <button class="subcat-open" onclick="pickAllCakesFromFooter()">
+      <span>🎂 <span id="allCakesText">Все торты</span></span>
+      <small>✓</small>
+    </button>
+  </div>
 </div>
 
 <div class="products" id="products"></div>
 
 <div class="cart" id="cartBox">
   <b id="cartTitle"></b>: <span id="total">0</span> сум
+
+  <!-- ✅ детализация суммы + доставка -->
+  <div class="cart-lines">
+    <div class="cart-line"><span id="lineItemsLabel">Товары</span><span id="itemsTotal">0</span></div>
+    <div class="cart-line"><span id="lineDeliveryLabel">Доставка (Самарканд)</span><span id="deliveryFee">0</span></div>
+    <div class="cart-divider"></div>
+    <div class="cart-line"><span id="lineGrandLabel">Итого</span><span id="grandTotal">0</span></div>
+  </div>
+
   <textarea id="comment" class="input"></textarea>
   <div class="payments">
     <button class="btn active" id="payCash" onclick="setPayment('cash')"></button>
@@ -832,6 +937,9 @@ body.searching .subcats{display:none;}
 
 <script>
 Telegram.WebApp.ready();
+
+/* ✅ доставка по Самарканду */
+const DELIVERY_FEE_SAMARKAND = 10000;
 
 /* ✅ маршрут */
 function openRoute(){
@@ -872,7 +980,7 @@ function toggleReviewWidget(){
   w.style.display = (w.style.display === 'none' || !w.style.display) ? 'block' : 'none';
 }
 
-/* ✅ отзывы: ссылка как ты дал */
+/* ✅ отзывы */
 const YANDEX_REVIEWS_URL = "https://yandex.uz/maps/org/239856130727/?ll=66.960593%2C39.684041&mode=search&sctx=ZAAAAAgBEAAaKAoSCaetEcE4MVFAEfxVgO82QURAEhIJDJQUWABT1j8RPUfku5S6xD8iBgABAgMEBSgKOABA1LoGSAFiJHNuaXBwZXRfZXhwX25hbWU9ZnVsbG9iamVjdHMvMS54OnJlZmIjc25pcHBldF9leHBfbmFtZT10b3BvYmplY3RzLzEueDpyZWZiHnNuaXBwZXRfZXhwX25hbWU9Z29vZHMvMS54OnJlZmInc25pcHBldF9leHBfbmFtZT1nb29kc19yZWdpc3Rlci8xLng6cmVmYgtmcmVzaG5lc3M9MGIXc291cmNlPWJ1c2luZXNzOmV4cF9yZWZiFXNvdXJjZT1wcmljZXM6ZXhwX3JlZmoCdXqdAc3MzD2gAQCoAQC9AXc%2FZizCAQantajE%2FQaCAg9iYWtlcnkgY2hva29hcnSKAgCSAgCaAgxkZXNrdG9wLW1hcHM%3D&sll=66.960593%2C39.684041&sspn=0.013893%2C0.006530&text=bakery%20chokoart&z=16.65";
 function openYandexReviews(e){
   try{ e.preventDefault(); e.stopPropagation(); }catch(_){}
@@ -910,7 +1018,7 @@ function applyTheme(theme){
   try{
     if (window.Telegram && Telegram.WebApp){
       Telegram.WebApp.setHeaderColor?.(theme === 'dark' ? '#121212' : '#F8F3E9');
-     Telegram.WebApp.setBackgroundColor?.(theme === 'dark' ? '#121212' : '#F8F3E9');
+      Telegram.WebApp.setBackgroundColor?.(theme === 'dark' ? '#121212' : '#F8F3E9');
     }
   }catch(_){}
 }
@@ -920,7 +1028,7 @@ function toggleThemeFromMenu(){
   applyTheme(next);
 }
 
-/* О нас — текст + скролл */
+/* О нас */
 const ABOUT_TEXT = `🇷🇺 Русский
 
 Bakery CHOKOART — это место, где десерты становятся искусством 🍫✨
@@ -995,14 +1103,75 @@ const tg_first_name = tgUser.first_name || "";
 const tg_id = tgUser.id || "";
 
 let lang='ru',category='cheesecakes',type='delivery',payment='cash',cart={};
-
-/* ✅✅✅ выбранная подкатегория */
 let subcat = 'all';
 
 const TEXT={
-  ru:{delivery:'🚚 Доставка',pickup:'🏃 Самовывоз',address:'📍 Адрес доставки',phone:'📞 Телефон',cart:'🛒 Корзина',order:'Оформить заказ',comment:'✍️ Комментарий к заказу',cash:'💵 Наличные',click:'💳 CLICK',results:'Результаты поиска',popular:'🔥 Популярное',empty:'Корзина пустая',subcats:'Подкатегории'},
-  uz:{delivery:'🚚 Yetkazish',pickup:'🏃 Olib ketish',address:'📍 Manzil',phone:'📞 Telefon',cart:'🛒 Savat',order:'Buyurtma berish',comment:'✍️ Izoh',cash:'💵 Naqd',click:'💳 CLICK',results:'Qidiruv natijalari',popular:'🔥 Ommabop',empty:"Savat bo‘sh",subcats:'Subkategoriyalar'},
-  en:{delivery:'🚚 Delivery',pickup:'🏃 Pickup',address:'📍 Address',phone:'📞 Phone',cart:'🛒 Cart',order:'Place order',comment:'✍️ Comment',cash:'💵 Cash',click:'💳 CLICK',results:'Search results',popular:'🔥 Popular',empty:'Cart is empty',subcats:'Subcategories'}
+  ru:{
+    delivery:'🚚 Доставка',
+    pickup:'🏃 Самовывоз',
+    address:'📍 Адрес доставки',
+    phone:'📞 Телефон',
+    cart:'🛒 Корзина',
+    order:'Оформить заказ',
+    comment:'✍️ Комментарий к заказу',
+    cash:'💵 Наличные',
+    click:'💳 CLICK',
+    results:'Результаты поиска',
+    popular:'🔥 Популярное',
+    empty:'Корзина пустая',
+    subcats:'Подкатегории',
+    new:'🆕 Новинки',
+    gift:'🎁 Для подарка',
+    items:'Товары',
+    deliveryFee:'Доставка (Самарканд)',
+    total:'Итого',
+    all:'Все',
+    allCakes:'Все торты'
+  },
+  uz:{
+    delivery:'🚚 Yetkazish',
+    pickup:'🏃 Olib ketish',
+    address:'📍 Manzil',
+    phone:'📞 Telefon',
+    cart:'🛒 Savat',
+    order:'Buyurtma berish',
+    comment:'✍️ Izoh',
+    cash:'💵 Naqd',
+    click:'💳 CLICK',
+    results:'Qidiruv natijalari',
+    popular:'🔥 Ommabop',
+    empty:"Savat bo‘sh",
+    subcats:'Subkategoriyalar',
+    new:'🆕 Yangi',
+    gift:'🎁 Sovg‘a uchun',
+    items:'Mahsulotlar',
+    deliveryFee:'Yetkazish (Samarqand)',
+    total:'Jami',
+    all:'Barchasi',
+    allCakes:'Barcha tortlar'
+  },
+  en:{
+    delivery:'🚚 Delivery',
+    pickup:'🏃 Pickup',
+    address:'📍 Address',
+    phone:'📞 Phone',
+    cart:'🛒 Cart',
+    order:'Place order',
+    comment:'✍️ Comment',
+    cash:'💵 Cash',
+    click:'💳 CLICK',
+    results:'Search results',
+    popular:'🔥 Popular',
+    empty:'Cart is empty',
+    subcats:'Subcategories',
+    new:'🆕 New',
+    gift:'🎁 For gift',
+    items:'Items',
+    deliveryFee:'Delivery (Samarkand)',
+    total:'Total',
+    all:'All',
+    allCakes:'All cakes'
+  }
 };
 
 const CATS={
@@ -1011,7 +1180,7 @@ const CATS={
   en:{cheesecakes:'🍰 Cheesecakes',cakes:'🎂 Cakes',rolls:'🍥 Rolls',bakery:'🥐 Pastry',cookies:'🍪 Cookies',desserts:'🍨 Desserts',pies:'🥧 Pies'}
 };
 
-/* ✅✅✅ Подкатегории (иконки + названия) */
+/* ✅ Подкатегории */
 const SUBCATS = {
   cakes: [
     {id:'wedding', ic:'💍', n:{ru:'Свадебные торты', uz:'To‘y tortlari', en:'Wedding cakes'}},
@@ -1038,14 +1207,13 @@ const SUBCATS = {
   ]
 };
 
-/* ✅ по 2 блюда в категории */
+/* ✅ меню */
 const MENU = {
   cheesecakes:[
     {id:'cheesecake_classic', p:45000, img:'images/cheesecake_classic.png', n:{ru:'Чизкейк классический', uz:'Klassik chizkeyk', en:'Classic cheesecake'}},
     {id:'cheesecake_oreo', p:48000, img:'images/cheesecake_oreo.png', n:{ru:'Чизкейк Oreo', uz:'Oreo chizkeyk', en:'Oreo cheesecake'}}
   ],
   cakes:[
-    /* ✅ добавили sub для фильтра подкатегорий */
     {id:'cake_redvelvet', p:52000, img:'images/cake_redvelvet.png', sub:'events', n:{ru:'Торт Red Velvet', uz:'Red Velvet tort', en:'Red Velvet cake'}},
     {id:'cake_choco', p:54000, img:'images/cake_choco.png', sub:'bento', n:{ru:'Шоколадный торт', uz:'Shokolad tort', en:'Chocolate cake'}}
   ],
@@ -1072,6 +1240,10 @@ const MENU = {
 };
 
 const POPULAR = ['cheesecake_classic','cake_choco','dessert_tiramisu','croissant'];
+
+/* ✅✅✅ карусели */
+const NEW_ITEMS = ['cheesecake_oreo','roll_berry','danish','dessert_trifle'];
+const GIFT_ITEMS = ['cake_redvelvet','cookie_choco','dessert_tiramisu','pie_cherry'];
 
 /* индекс */
 const ITEM_INDEX = {};
@@ -1139,13 +1311,28 @@ function applyLang(){
   popularTitle.innerText = TEXT[lang].popular;
   stickyCartBtn.innerText = TEXT[lang].cart;
 
-  const st = document.getElementById('subcatsTitle');
-  if(st) st.innerText = TEXT[lang].subcats;
+  newTitle.innerText = TEXT[lang].new;
+  giftTitle.innerText = TEXT[lang].gift;
+
+  subcatBtnText.innerText = TEXT[lang].subcats;
+  subcatSheetTitle.innerText = TEXT[lang].subcats;
+
+  lineItemsLabel.innerText = TEXT[lang].items;
+  lineDeliveryLabel.innerText = TEXT[lang].deliveryFee;
+  lineGrandLabel.innerText = TEXT[lang].total;
+
+  allCakesText.innerText = TEXT[lang].allCakes;
 
   renderPopular();
+  renderNew();
+  renderGift();
+
   renderQuickFilters();
   renderCats();
-  renderSubcats();       /* ✅ */
+
+  refreshSubcatButton();
+  updateSubcatUI();
+
   renderProducts();
   updateTotal();
   updateTypeFields();
@@ -1195,6 +1382,48 @@ function popChg(e,id,delta){
   if(isSearchOpen()) closeSearch();
 }
 
+/* ✅ мини-карусели */
+function miniCardHTML(id, badge){
+  const it = ITEM_INDEX[id];
+  if(!it) return '';
+  cart[id]=cart[id]||0;
+  return `
+    <div class="mini-card" onclick="onMiniCardClick(event,'${id}')">
+      <div class="mini-badge">${badge}</div>
+      <div class="mini-img"><img src="${it.img}" onerror="this.src='images/logo.png'"></div>
+      <div class="mini-name">${escapeHtml(nameOf(id))}</div>
+      <div class="mini-price">${formatSum(it.p)} <small>сум</small></div>
+      <div class="mini-counter">
+        <button type="button" onclick="miniChg(event,'${id}',-1)">−</button>
+        <span id="mc_${id}">${cart[id]||0}</span>
+        <button type="button" onclick="miniChg(event,'${id}',1)">+</button>
+      </div>
+    </div>
+  `;
+}
+function renderNew(){
+  newRow.innerHTML = '';
+  NEW_ITEMS.forEach(id => newRow.innerHTML += miniCardHTML(id,'🆕'));
+}
+function renderGift(){
+  giftRow.innerHTML = '';
+  GIFT_ITEMS.forEach(id => giftRow.innerHTML += miniCardHTML(id,'🎁'));
+}
+function onMiniCardClick(e,id){
+  if(e && e.target && (e.target.closest && e.target.closest('button'))) return;
+  chg(id, 1);
+  const el = document.getElementById('mc_'+id);
+  if(el) el.innerText = cart[id] || 0;
+  if(isSearchOpen()) closeSearch();
+}
+function miniChg(e,id,delta){
+  if(e){ e.preventDefault(); e.stopPropagation(); }
+  chg(id, delta);
+  const el = document.getElementById('mc_'+id);
+  if(el) el.innerText = cart[id] || 0;
+  if(isSearchOpen()) closeSearch();
+}
+
 /* быстрые фильтры */
 function renderQuickFilters(){
   const keys = ['cheesecakes','cakes','desserts','bakery'];
@@ -1207,64 +1436,91 @@ function renderQuickFilters(){
 function pickCategory(k){
   if(isSearchOpen()) closeSearch();
   category = k;
-  subcat = 'all';     /* ✅ сбрасываем */
+  subcat = 'all';
   renderCats();
-  renderSubcats();    /* ✅ */
+  refreshSubcatButton();
+  updateSubcatUI();
   renderProducts();
 }
 
-/* ✅✅✅ рендер подкатегорий */
+/* ✅ кнопка/окно подкатегорий */
+function openSubcats(){
+  if(!SUBCATS[category] || !SUBCATS[category].length) return;
+  document.getElementById('subcatBackdrop').classList.add('show');
+  document.getElementById('subcatSheet').classList.add('show');
+  renderSubcatGrid();
+}
+function closeSubcats(){
+  document.getElementById('subcatBackdrop').classList.remove('show');
+  document.getElementById('subcatSheet').classList.remove('show');
+}
 function subcatName(sc){
   return (sc.n && (sc.n[lang] || sc.n.ru)) || '';
 }
-function renderSubcats(){
-  const wrap = document.getElementById('subcatsWrap');
-  const row = document.getElementById('subcatsRow');
-  if(!wrap || !row) return;
+function renderSubcatGrid(){
+  const grid = document.getElementById('subcatGrid');
+  grid.innerHTML = '';
 
-  const list = SUBCATS[category] || [];
-  if(!list.length){
-    wrap.style.display = 'none';
-    subcat = 'all';
-    return;
-  }
-
-  wrap.style.display = '';
-  row.innerHTML = '';
-
-  row.innerHTML += `
-    <div class="subcat ${subcat==='all'?'active':''}" onclick="setSubcat('all')">
-      <div class="ic">✨</div>
-      <div class="nm">${escapeHtml(lang==='ru'?'Все':(lang==='uz'?'Barchasi':'All'))}</div>
+  // "Все" первым
+  grid.innerHTML += `
+    <div class="subcat-tile ${subcat==='all'?'active':''}" onclick="setSubcat('all')">
+      <div class="subcat-ic">✨</div>
+      <div class="subcat-nm">${escapeHtml(TEXT[lang].all)}</div>
     </div>
   `;
 
+  const list = SUBCATS[category] || [];
   list.forEach(sc=>{
-    row.innerHTML += `
-      <div class="subcat ${subcat===sc.id?'active':''}" onclick="setSubcat('${sc.id}')">
-        <div class="ic">${sc.ic}</div>
-        <div class="nm">${escapeHtml(subcatName(sc))}</div>
+    grid.innerHTML += `
+      <div class="subcat-tile ${subcat===sc.id?'active':''}" onclick="setSubcat('${sc.id}')">
+        <div class="subcat-ic">${sc.ic}</div>
+        <div class="subcat-nm">${escapeHtml(subcatName(sc))}</div>
       </div>
     `;
   });
 
-  setTimeout(()=>{
-    const active = row.querySelector('.subcat.active');
-    if(active && active.scrollIntoView){
-      active.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
-    }
-  }, 30);
+  // ✅ внизу "Все торты" только для Торты
+  const footer = document.getElementById('subcatFooter');
+  footer.style.display = (category === 'cakes') ? 'block' : 'none';
 }
 function setSubcat(id){
   subcat = id;
-  renderSubcats();
   renderProducts();
+  refreshSubcatButton();
+  renderSubcatGrid();
+}
+function pickAllCakesFromFooter(){
+  subcat = 'all';
+  renderProducts();
+  refreshSubcatButton();
+  closeSubcats();
+}
+function updateSubcatUI(){
+  const btnWrap = document.getElementById('subcatBtnWrap');
+  if(SUBCATS[category] && SUBCATS[category].length){
+    btnWrap.style.display = '';
+  }else{
+    btnWrap.style.display = 'none';
+    subcat = 'all';
+  }
+}
+function refreshSubcatButton(){
+  const right = document.getElementById('subcatBtnRight');
+  if(!right) return;
+
+  if(subcat === 'all'){
+    right.innerText = (category === 'cakes') ? TEXT[lang].allCakes : TEXT[lang].all;
+    return;
+  }
+  const list = SUBCATS[category] || [];
+  const sc = list.find(x => x.id === subcat);
+  right.innerText = sc ? subcatName(sc) : '›';
 }
 
 function renderCats(){
   cats.innerHTML='';
   for(let k in MENU){
-    cats.innerHTML+=`<button class="btn ${k===category?'active':''}" onclick="category='${k}';subcat='all';renderCats();renderSubcats();renderProducts()">${CATS[lang][k] || k}</button>`;
+    cats.innerHTML+=`<button class="btn ${k===category?'active':''}" onclick="category='${k}';subcat='all';renderCats();refreshSubcatButton();updateSubcatUI();renderProducts()">${CATS[lang][k] || k}</button>`;
   }
   setTimeout(()=>{
     const active = cats.querySelector('.btn.active');
@@ -1311,21 +1567,46 @@ function syncPopularCounters(){
     if(el) el.innerText = cart[id] || 0;
   });
 }
+function syncMiniCounters(){
+  [...NEW_ITEMS, ...GIFT_ITEMS].forEach((id)=>{
+    const el = document.getElementById('mc_'+id);
+    if(el) el.innerText = cart[id] || 0;
+  });
+}
 function chg(id,v){
   cart[id]=Math.max(0,(cart[id]||0)+v);
   const el = document.getElementById('c_'+id);
   if(el) el.innerText=cart[id];
   updateTotal();
   syncPopularCounters();
+  syncMiniCounters();
 }
 function price(id){
   return (ITEM_INDEX[id] && ITEM_INDEX[id].p) ? ITEM_INDEX[id].p : 0;
 }
-function updateTotal(){
+function calcItemsSum(){
   let s=0;
   for(let id in cart) s += (cart[id]||0) * price(id);
-  total.innerText = formatSum(s);
-  stickyTotal.innerText = formatSum(s);
+  return s;
+}
+function calcDeliveryFee(){
+  // доставка только если выбран delivery
+  if(type !== 'delivery') return 0;
+  return DELIVERY_FEE_SAMARKAND;
+}
+function updateTotal(){
+  const itemsSum = calcItemsSum();
+  const deliveryFee = calcDeliveryFee();
+  const grand = itemsSum + deliveryFee;
+
+  // оставили старый total как "итого"
+  total.innerText = formatSum(grand);
+  stickyTotal.innerText = formatSum(grand);
+
+  itemsTotal.innerText = formatSum(itemsSum);
+  deliveryFeeEl = document.getElementById('deliveryFee');
+  deliveryFeeEl.innerText = formatSum(deliveryFee);
+  grandTotal.innerText = formatSum(grand);
 }
 
 function setType(t,b){
@@ -1334,6 +1615,7 @@ function setType(t,b){
   document.querySelectorAll('.types .btn').forEach(x=>x.classList.remove('active'));
   b.classList.add('active');
   updateTypeFields();
+  updateTotal(); // ✅ обновляем с доставкой
 }
 function setPayment(p){
   payment=p;
@@ -1344,7 +1626,7 @@ function setPayment(p){
 function isSearchOpen(){ return searchWrap.classList.contains('show'); }
 function toggleSearch(){ if(isSearchOpen()) closeSearch(); else openSearch(); }
 function openSearch(){
-  document.body.classList.add('searching'); /* ✅ */
+  document.body.classList.add('searching');
   searchWrap.classList.add('show');
   searchTitle.classList.add('show');
   cats.style.display = 'none';
@@ -1355,14 +1637,13 @@ function openSearch(){
   searchProducts();
 }
 function closeSearch(){
-  document.body.classList.remove('searching'); /* ✅ */
+  document.body.classList.remove('searching');
   searchWrap.classList.remove('show');
   searchTitle.classList.remove('show');
   cats.style.display = '';
   quickFilters.style.display = '';
   popularWrap.style.display = '';
   searchInput.value = '';
-  renderSubcats(); /* ✅ возвращаем/обновляем */
   renderProducts();
 }
 function clearSearch(){ closeSearch(); }
@@ -1406,11 +1687,6 @@ function genOrderId(){
   const num = String(n).padStart(3,'0');
   return `CHK-${dd}${mm}-${num}`;
 }
-function calcTotalNum(){
-  let s = 0;
-  for (const id in cart) s += (Number(cart[id] || 0) * price(id));
-  return s;
-}
 
 function sendOrder(){
   popup.classList.add('show');
@@ -1436,18 +1712,26 @@ function sendOrder(){
     return;
   }
 
+  const items_sum = calcItemsSum();
+  const delivery_fee = calcDeliveryFee();
+  const grand_total_num = items_sum + delivery_fee;
+
   const payload = {
     tg: { id: tg_id, username: tg_username, first_name: tg_first_name },
     items,
-    total: total.innerText,
-    total_num: calcTotalNum(),
+    items_sum,
+    delivery_fee,
+    total_num: grand_total_num,
+    total: formatSum(grand_total_num),
     payment,
     type,
     address: (type==='pickup' ? '' : address.value),
     phone: phone.value,
     comment: comment.value,
     order_id: genOrderId(),
-    lang
+    lang,
+    category,
+    subcat
   };
 
   setTimeout(()=>{
@@ -1456,10 +1740,10 @@ function sendOrder(){
   }, 700);
 }
 
+/* init */
 loadSaved();
 bindSave();
 applyLang();
-renderSubcats(); /* ✅ на старте */
 </script>
 </body>
 </html>
