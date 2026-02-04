@@ -101,7 +101,7 @@ body[data-theme="dark"]{
   margin-top:2px;
   text-transform:uppercase;
 }
-.brand-phone{position:relative; z-index:50; pointer-events:auto; margin-top:4px;}
+.brand-phone{position:relative; z-index:50; pointer-events:auto; margin-top:4px; display:flex; flex-direction:column; gap:2px;}
 .brand-phone a{
   color:white;text-decoration:none;font-size:14px;font-weight:800;
   position:relative;z-index:51;pointer-events:auto;cursor:pointer;opacity:.95;
@@ -405,8 +405,11 @@ body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f
     <div class="brand-title">Bakery</div>
     <div class="brand-title2">CHOKOART</div>
     <div class="brand-slogan">BIZ BILAN MAZZALIROQ</div>
+
+    <!-- ✅ второй номер добавлен ниже первого -->
     <div class="brand-phone">
       <a href="tel:+998905050745" onclick="callPhone(event)">+998 90 505 07 45</a>
+      <a href="tel:+998955006262" onclick="callPhone2(event)">+998 95 500 62 62</a>
     </div>
   </div>
 
@@ -769,72 +772,176 @@ const UI = {
 let lang='ru',category='cheesecakes',type='delivery',payment='cash',cart={};
 let currentSubcat = '';
 
+/* ✅✅✅ МЕНЮ ОБНОВЛЕНО ПО ТВОИМ КАТЕГОРИЯМ
+   ❗Категорию "Торты" и её подкатегории НЕ ТРОГАЕМ */
 const MENU = {
   cheesecakes:[
-    {id:'cheesecake_classic', p:45000, img:'images/cheesecake_classic.png', sub:'', n:{ru:'Чизкейк классический', uz:'Klassik chizkeyk', en:'Classic cheesecake'}},
-    {id:'cheesecake_oreo', p:48000, img:'images/cheesecake_oreo.png', sub:'', n:{ru:'Чизкейк Oreo', uz:'Oreo chizkeyk', en:'Oreo cheesecake'}}
+    {id:'cheesecake_pistachio', p:25000, img:'images/cheesecake_pistachio.png', sub:'', n:{ru:'Чизкейк Фисташковый', uz:'Fistashkali chizkeyk', en:'Pistachio cheesecake'}},
+    {id:'cheesecake_choco', p:25000, img:'images/cheesecake_choco.png', sub:'', n:{ru:'Чизкейк Шоколадный', uz:'Shokoladli chizkeyk', en:'Chocolate cheesecake'}},
+    {id:'cheesecake_raspberry', p:25000, img:'images/cheesecake_raspberry.png', sub:'', n:{ru:'Чизкейк Малиновый', uz:'Malinali chizkeyk', en:'Raspberry cheesecake'}},
+    {id:'cheesecake_caramel', p:25000, img:'images/cheesecake_caramel.png', sub:'', n:{ru:'Чизкейк Карамельный', uz:'Karamelli chizkeyk', en:'Caramel cheesecake'}}
   ],
+
+  /* ❗НЕ ТРОГАЕМ */
   cakes:[
     {id:'cake_redvelvet', p:52000, img:'images/cake_redvelvet.png', sub:'event', n:{ru:'Торт Red Velvet', uz:'Red Velvet tort', en:'Red Velvet cake'}},
     {id:'cake_choco', p:54000, img:'images/cake_choco.png', sub:'event', n:{ru:'Шоколадный торт', uz:'Shokolad tort', en:'Chocolate cake'}}
   ],
-  rolls:[
-    {id:'roll_choco', p:35000, img:'images/roll_choco.png', sub:'', n:{ru:'Рулет шоколадный', uz:'Shokolad rulet', en:'Chocolate roll'}},
-    {id:'roll_berry', p:36000, img:'images/roll_berry.png', sub:'', n:{ru:'Рулет ягодный', uz:'Mevali rulet', en:'Berry roll'}}
+
+  pastries:[
+    {id:'pastry_afghan', p:25000, img:'images/pastry_afghan.png', sub:'', n:{ru:'Афганский', uz:'Afg‘oncha', en:'Afghan'}},
+    {id:'pastry_nutella', p:30000, img:'images/pastry_nutella.png', sub:'', n:{ru:'Нутелла', uz:'Nutella', en:'Nutella'}},
+    {id:'pastry_banana_napoleon', p:21000, img:'images/pastry_banana_napoleon.png', sub:'', n:{ru:'Банановый наполеон', uz:'Bananli napoleon', en:'Banana napoleon'}},
+    {id:'pastry_napoleon', p:20000, img:'images/pastry_napoleon.png', sub:'', n:{ru:'Наполеон', uz:'Napoleon', en:'Napoleon'}},
+    {id:'pastry_medovik', p:14000, img:'images/pastry_medovik.png', sub:'', n:{ru:'Медовик', uz:'Medovik', en:'Honey cake'}},
+    {id:'pastry_spartak', p:12000, img:'images/pastry_spartak.png', sub:'', n:{ru:'Спартак', uz:'Spartak', en:'Spartak'}},
+    {id:'pastry_asalin', p:20000, img:'images/pastry_asalin.png', sub:'', n:{ru:'Асалин', uz:'Asalin', en:'Asalin'}},
+    {id:'pastry_smetanny', p:20000, img:'images/pastry_smetanny.png', sub:'', n:{ru:'Сметанный', uz:'Smetanali', en:'Sour cream cake'}},
+    {id:'pastry_ideal', p:20000, img:'images/pastry_ideal.png', sub:'', n:{ru:'Идеал', uz:'Ideal', en:'Ideal'}},
+    {id:'pastry_dubai', p:30000, img:'images/pastry_dubai.png', sub:'', n:{ru:'Дубайский', uz:'Dubaycha', en:'Dubai'}},
+    {id:'pastry_caramelka', p:10000, img:'images/pastry_caramelka.png', sub:'', n:{ru:'Карамелька', uz:'Karamel', en:'Caramel'}},
+    {id:'pastry_ferero', p:20000, img:'images/pastry_ferero.png', sub:'', n:{ru:'Фереро', uz:'Ferero', en:'Ferrero'}},
+    {id:'pastry_rafaello', p:14000, img:'images/pastry_rafaello.png', sub:'', n:{ru:'Рафаэлло', uz:'Rafaello', en:'Raffaello'}},
+    {id:'pastry_pistachio', p:14000, img:'images/pastry_pistachio.png', sub:'', n:{ru:'Фисташка', uz:'Fistashka', en:'Pistachio'}},
+    {id:'pastry_curd_sponge', p:11000, img:'images/pastry_curd_sponge.png', sub:'', n:{ru:'Творожный бисквит', uz:'Tvorogli biskvit', en:'Curd sponge'}},
+    {id:'pastry_opera', p:20000, img:'images/pastry_opera.png', sub:'', n:{ru:'Опера', uz:'Opera', en:'Opera'}},
+    {id:'pastry_raspberry', p:10000, img:'images/pastry_raspberry.png', sub:'', n:{ru:'Малина', uz:'Malina', en:'Raspberry'}},
+    {id:'pastry_mousse', p:10000, img:'images/pastry_mousse.png', sub:'', n:{ru:'Пирожное Муссовое', uz:'Mussli pirojnoye', en:'Mousse pastry'}},
+    {id:'pastry_pear_mousse', p:25000, img:'images/pastry_pear_mousse.png', sub:'', n:{ru:'Груша муссовая', uz:'Nok muss', en:'Pear mousse'}},
+    {id:'pastry_heart', p:25000, img:'images/pastry_heart.png', sub:'', n:{ru:'Сердечко', uz:'Yurakcha', en:'Heart'}},
+    {id:'pastry_coconut', p:25000, img:'images/pastry_coconut.png', sub:'', n:{ru:'Кокосовый', uz:'Kokosli', en:'Coconut'}},
+    {id:'pastry_cappuccino_cup', p:14000, img:'images/pastry_cappuccino_cup.png', sub:'', n:{ru:'Чашка капучино', uz:'Kapuchino chashkasi', en:'Cappuccino cup'}},
+    {id:'pastry_bird_milk', p:20000, img:'images/pastry_bird_milk.png', sub:'', n:{ru:'Птичье молоко', uz:'Qush suti', en:"Bird's milk"}}, 
+    {id:'pastry_kiev', p:20000, img:'images/pastry_kiev.png', sub:'', n:{ru:'Киевский', uz:'Kiyevcha', en:'Kyiv'}},
+    {id:'pastry_cake_nutella', p:50000, img:'images/pastry_cake_nutella.png', sub:'', n:{ru:'Торт пирожное Нутелла', uz:'Nutella tort-pirojnoye', en:'Nutella cake pastry'}},
+    {id:'pastry_roll', p:14000, img:'images/pastry_roll.png', sub:'', n:{ru:'Рулет', uz:'Rulet', en:'Roll'}},
+    {id:'pastry_tart_pistachio', p:12000, img:'images/pastry_tart_pistachio.png', sub:'', n:{ru:'Тарталетка фисташковая', uz:'Fistashkali tartaletka', en:'Pistachio tartlet'}},
+    {id:'pastry_tart_fruit', p:12000, img:'images/pastry_tart_fruit.png', sub:'', n:{ru:'Тарталетка фруктовая', uz:'Mevali tartaletka', en:'Fruit tartlet'}},
+    {id:'pastry_tart_choco', p:12000, img:'images/pastry_tart_choco.png', sub:'', n:{ru:'Тарталетка шоколадная', uz:'Shokoladli tartaletka', en:'Chocolate tartlet'}}
   ],
+
+  shortbread_pastries:[
+    {id:'sb_ragalik', p:5000, img:'images/sb_ragalik.png', sub:'', n:{ru:'Рагалик', uz:'Rogalik', en:'Rogaliki'}},
+    {id:'sb_curd', p:16000, img:'images/sb_curd.png', sub:'', n:{ru:'Творожное', uz:'Tvorogli', en:'Curd pastry'}},
+    {id:'sb_nut_roll', p:6000, img:'images/sb_nut_roll.png', sub:'', n:{ru:'Ореховый рулет', uz:'Yong‘oqli rulet', en:'Nut roll'}},
+    {id:'sb_pahlava', p:8000, img:'images/sb_pahlava.png', sub:'', n:{ru:'Пахлава', uz:'Pahlava', en:'Baklava'}},
+    {id:'sb_banana_curd', p:5000, img:'images/sb_banana_curd.png', sub:'', n:{ru:'Бананчик с творогом', uz:'Banan + tvorog', en:'Banana with curd'}},
+    {id:'sb_shortbread_cookie', p:5000, img:'images/sb_shortbread_cookie.png', sub:'', n:{ru:'Песочное печенье', uz:'Qumoq pechenye', en:'Shortbread cookie'}},
+    {id:'sb_ring', p:10000, img:'images/sb_ring.png', sub:'', n:{ru:'Кольцо', uz:'Halqa', en:'Ring'}},
+    {id:'sb_choux', p:5000, img:'images/sb_choux.png', sub:'', n:{ru:'Заварное', uz:'Zavarnoy', en:'Choux'}},
+    {id:'sb_tube', p:10000, img:'images/sb_tube.png', sub:'', n:{ru:'Трубочка', uz:'Trubochka', en:'Tube'}},
+    {id:'sb_bun_nutella', p:15000, img:'images/sb_bun_nutella.png', sub:'', n:{ru:'Булочка с нутеллой', uz:'Nutella bulochka', en:'Nutella bun'}},
+    {id:'sb_croissant_caramel', p:6000, img:'images/sb_croissant_caramel.png', sub:'', n:{ru:'Круасан с карамелью', uz:'Kruassan karamel', en:'Croissant with caramel'}},
+    {id:'sb_bun_nut', p:8000, img:'images/sb_bun_nut.png', sub:'', n:{ru:'Булочка с орехом', uz:'Yong‘oqli bulochka', en:'Nut bun'}},
+    {id:'sb_bun_caramel', p:8000, img:'images/sb_bun_caramel.png', sub:'', n:{ru:'Булочка с карамелью', uz:'Karamelli bulochka', en:'Caramel bun'}},
+    {id:'sb_vatrushka', p:8000, img:'images/sb_vatrushka.png', sub:'', n:{ru:'Ватрушка', uz:'Vatrushka', en:'Vatrushka'}},
+    {id:'sb_choco_cookie', p:5000, img:'images/sb_choco_cookie.png', sub:'', n:{ru:'Шоколадное печенье', uz:'Shokolad pechenye', en:'Chocolate cookie'}}
+  ],
+
+  trifles:[
+    {id:'trifle_choco', p:25000, img:'images/trifle_choco.png', sub:'', n:{ru:'Трайфл Шоколадный', uz:'Shokolad trifle', en:'Chocolate trifle'}},
+    {id:'trifle_berry', p:25000, img:'images/trifle_berry.png', sub:'', n:{ru:'Трайфл Ягодный', uz:'Rezavor trifle', en:'Berry trifle'}},
+    {id:'trifle_fruit', p:25000, img:'images/trifle_fruit.png', sub:'', n:{ru:'Трайфл Фруктовый', uz:'Mevali trifle', en:'Fruit trifle'}},
+    {id:'trifle_choco_prichuda', p:60000, img:'images/trifle_choco_prichuda.png', sub:'', n:{ru:'Трайфл Шоколадный Причуда', uz:'Shokolad trifle (Prichuda)', en:'Chocolate trifle (Prichuda)'}}
+  ],
+
+  shortbread_cookies:[
+    {id:'sc_heart_500', p:25000, img:'images/sc_heart_500.png', sub:'', n:{ru:'Сердечко 500гр', uz:'Yurakcha 500g', en:'Heart 500g'}},
+    {id:'sc_square_500', p:25000, img:'images/sc_square_500.png', sub:'', n:{ru:'Квадратное 500гр', uz:'Kvadrat 500g', en:'Square 500g'}}
+  ],
+
   bakery:[
-    {id:'croissant', p:18000, img:'images/croissant.png', sub:'butter', n:{ru:'Круассан', uz:'Kruassan', en:'Croissant'}},
-    {id:'danish', p:20000, img:'images/danish.png', sub:'puff', n:{ru:'Датская выпечка', uz:'Daniya pishirig‘i', en:'Danish pastry'}}
+    {id:'bak_durda_fatir_mid', p:14000, img:'images/bak_durda_fatir_mid.png', sub:'', n:{ru:'Дурда Фатир средний', uz:'Durda fatir (o‘rtacha)', en:'Durda fatir (medium)'}},
+    {id:'bak_durda_fatir_big', p:22000, img:'images/bak_durda_fatir_big.png', sub:'', n:{ru:'Дурда Фатир большая', uz:'Durda fatir (katta)', en:'Durda fatir (large)'}},
+    {id:'bak_durda_fatir_nut', p:37000, img:'images/bak_durda_fatir_nut.png', sub:'', n:{ru:'Дурда Фатир с орехом', uz:'Durda fatir yong‘oq', en:'Durda fatir with nuts'}},
+    {id:'bak_fatir_mid', p:12000, img:'images/bak_fatir_mid.png', sub:'', n:{ru:'Фатир средний', uz:'Fatir (o‘rtacha)', en:'Fatir (medium)'}},
+    {id:'bak_fatir_big', p:20000, img:'images/bak_fatir_big.png', sub:'', n:{ru:'Фатир большой', uz:'Fatir (katta)', en:'Fatir (large)'}},
+    {id:'bak_fatir_nut_mid', p:25000, img:'images/bak_fatir_nut_mid.png', sub:'', n:{ru:'Фатир с орехом средний', uz:'Fatir yong‘oq (o‘rtacha)', en:'Fatir with nuts (medium)'}},
+    {id:'bak_fatir_nut_big', p:35000, img:'images/bak_fatir_nut_big.png', sub:'', n:{ru:'Фатир с орехом большой', uz:'Fatir yong‘oq (katta)', en:'Fatir with nuts (large)'}}
   ],
-  cookies:[
-    {id:'cookie_choco', p:12000, img:'images/cookie_choco.png', sub:'filling', n:{ru:'Печенье шоколадное', uz:'Shokolad pechenye', en:'Chocolate cookie'}},
-    {id:'cookie_nuts', p:13000, img:'images/cookie_nuts.png', sub:'shortbread', n:{ru:'Печенье с орехом', uz:'Yong‘oqli pechenye', en:'Nut cookie'}}
-  ],
-  desserts:[
-    {id:'dessert_tiramisu', p:38000, img:'images/dessert_tiramisu.png', sub:'mousse', n:{ru:'Тирамису', uz:'Tiramisu', en:'Tiramisu'}},
-    {id:'dessert_trifle', p:36000, img:'images/dessert_trifle.png', sub:'mini', n:{ru:'Трайфл', uz:'Trifle', en:'Trifle'}}
-  ],
-  pies:[
-    {id:'pie_apple', p:32000, img:'images/pie_apple.png', sub:'whole', n:{ru:'Пирог яблочный', uz:'Olmali pirog', en:'Apple pie'}},
-    {id:'pie_cherry', p:34000, img:'images/pie_cherry.png', sub:'slice', n:{ru:'Пирог вишнёвый', uz:'Gilosli pirog', en:'Cherry pie'}}
+
+  drinks:[
+    {id:'dr_fansy_cool_cola_15', p:15000, img:'images/dr_fansy_cool_cola_15.png', sub:'', n:{ru:'Fansy Cool Cola 1.5L', uz:'Fansy Cool Cola 1.5L', en:'Fansy Cool Cola 1.5L'}},
+    {id:'dr_fansy_lemon_15', p:15000, img:'images/dr_fansy_lemon_15.png', sub:'', n:{ru:'Fansy Lemon 1.5L', uz:'Fansy Lemon 1.5L', en:'Fansy Lemon 1.5L'}},
+    {id:'dr_fansy_dyushes_15', p:15000, img:'images/dr_fansy_dyushes_15.png', sub:'', n:{ru:'Fansy Dyushes 1.5L', uz:'Fansy Dyushes 1.5L', en:'Fansy Dyushes 1.5L'}},
+
+    {id:'dr_bonaqua_gas_15', p:0, img:'images/dr_bonaqua_gas_15.png', sub:'', n:{ru:'Bonaqua Газ 1.5L', uz:'Bonaqua gaz 1.5L', en:'Bonaqua sparkling 1.5L'}},
+    {id:'dr_bonaqua_still_15', p:0, img:'images/dr_bonaqua_still_15.png', sub:'', n:{ru:'Bonaqua Без газа 1.5L', uz:'Bonaqua gazsiz 1.5L', en:'Bonaqua still 1.5L'}},
+
+    {id:'dr_cola_05', p:8000, img:'images/dr_cola_05.png', sub:'', n:{ru:'Coca Cola 0.5L', uz:'Coca Cola 0.5L', en:'Coca Cola 0.5L'}},
+    {id:'dr_fanta_05', p:8000, img:'images/dr_fanta_05.png', sub:'', n:{ru:'Fanta 0.5L', uz:'Fanta 0.5L', en:'Fanta 0.5L'}},
+    {id:'dr_sprite_05', p:8000, img:'images/dr_sprite_05.png', sub:'', n:{ru:'Sprite 0.5L', uz:'Sprite 0.5L', en:'Sprite 0.5L'}},
+    {id:'dr_fuse_tea_05', p:8000, img:'images/dr_fuse_tea_05.png', sub:'', n:{ru:'Fuse Tea 0.5L', uz:'Fuse Tea 0.5L', en:'Fuse Tea 0.5L'}},
+
+    {id:'dr_fuse_tea_1', p:0, img:'images/dr_fuse_tea_1.png', sub:'', n:{ru:'Fuse Tea 1L', uz:'Fuse Tea 1L', en:'Fuse Tea 1L'}},
+    {id:'dr_cappy_pulpy_orange', p:0, img:'images/dr_cappy_pulpy_orange.png', sub:'', n:{ru:'Cappy Pulpy Apelsin', uz:'Cappy Pulpy apelsin', en:'Cappy Pulpy Orange'}},
+
+    {id:'dr_bonaqua_gas_1', p:10000, img:'images/dr_bonaqua_gas_1.png', sub:'', n:{ru:'Bonaqua Газ 1L', uz:'Bonaqua gaz 1L', en:'Bonaqua sparkling 1L'}},
+    {id:'dr_bonaqua_still_1', p:10000, img:'images/dr_bonaqua_still_1.png', sub:'', n:{ru:'Bonaqua Без газа 1L', uz:'Bonaqua gazsiz 1L', en:'Bonaqua still 1L'}},
+
+    {id:'dr_bonaqua_gas_05', p:0, img:'images/dr_bonaqua_gas_05.png', sub:'', n:{ru:'Bonaqua Газ 0.5L', uz:'Bonaqua gaz 0.5L', en:'Bonaqua sparkling 0.5L'}},
+    {id:'dr_bonaqua_still_05', p:0, img:'images/dr_bonaqua_still_05.png', sub:'', n:{ru:'Bonaqua Без газа 0.5L', uz:'Bonaqua gazsiz 0.5L', en:'Bonaqua still 0.5L'}},
+
+    {id:'dr_cola_zero_1', p:12000, img:'images/dr_cola_zero_1.png', sub:'', n:{ru:'Coca Cola Zero 1L', uz:'Coca Cola Zero 1L', en:'Coca Cola Zero 1L'}},
+
+    {id:'dr_bogi_033', p:4000, img:'images/dr_bogi_033.png', sub:'', n:{ru:'Bogi Baland 0.33L', uz:'Bogi Baland 0.33L', en:'Bogi Baland 0.33L'}},
+    {id:'dr_bogi_05', p:5000, img:'images/dr_bogi_05.png', sub:'', n:{ru:'Bogi Baland 0.5L', uz:'Bogi Baland 0.5L', en:'Bogi Baland 0.5L'}},
+
+    {id:'dr_cola_025', p:7000, img:'images/dr_cola_025.png', sub:'', n:{ru:'Coca Cola 0.25L', uz:'Coca Cola 0.25L', en:'Coca Cola 0.25L'}},
+    {id:'dr_fanta_025', p:7000, img:'images/dr_fanta_025.png', sub:'', n:{ru:'Fanta 0.25L', uz:'Fanta 0.25L', en:'Fanta 0.25L'}},
+    {id:'dr_sprite_025', p:7000, img:'images/dr_sprite_025.png', sub:'', n:{ru:'Sprite 0.25L', uz:'Sprite 0.25L', en:'Sprite 0.25L'}},
+
+    {id:'dr_tesco_dyushes_05', p:0, img:'images/dr_tesco_dyushes_05.png', sub:'', n:{ru:'Tesco Duyshes 0.5L', uz:'Tesco Dyushes 0.5L', en:'Tesco Dyushes 0.5L'}}
   ]
 };
 
 const CATS = {
-  ru:{cheesecakes:'🍰 Чизкейки',cakes:'🎂 Торты',rolls:'🍥 Рулеты',bakery:'🥐 Выпечка',cookies:'🍪 Печенье',desserts:'🍨 Десерты',pies:'🥧 Пироги'},
-  uz:{cheesecakes:'🍰 Chizkeyklar',cakes:'🎂 Tortlar',rolls:'🍥 Rulolar',bakery:'🥐 Pishiriqlar',cookies:'🍪 Pechenye',desserts:'🍨 Desertlar',pies:'🥧 Piroglar'},
-  en:{cheesecakes:'🍰 Cheesecakes',cakes:'🎂 Cakes',rolls:'🍥 Rolls',bakery:'🥐 Pastry',cookies:'🍪 Cookies',desserts:'🍨 Desserts',pies:'🥧 Pies'}
+  ru:{
+    cheesecakes:'🍰 Чизкейки',
+    cakes:'🎂 Торты',
+    pastries:'🍮 Пирожное',
+    shortbread_pastries:'🥐 Песочное пирожное',
+    trifles:'🍨 Трайфл',
+    shortbread_cookies:'🍪 Печенье песочное',
+    bakery:'🥖 Выпечка',
+    drinks:'🥤 Напитки'
+  },
+  uz:{
+    cheesecakes:'🍰 Chizkeyklar',
+    cakes:'🎂 Tortlar',
+    pastries:'🍮 Pirojnoye',
+    shortbread_pastries:'🥐 Qumoq pirojnoye',
+    trifles:'🍨 Trifle',
+    shortbread_cookies:'🍪 Qumoq pechenye',
+    bakery:'🥖 Pishiriqlar',
+    drinks:'🥤 Ichimliklar'
+  },
+  en:{
+    cheesecakes:'🍰 Cheesecakes',
+    cakes:'🎂 Cakes',
+    pastries:'🍮 Pastries',
+    shortbread_pastries:'🥐 Shortbread pastries',
+    trifles:'🍨 Trifles',
+    shortbread_cookies:'🍪 Shortbread cookies',
+    bakery:'🥖 Bakery',
+    drinks:'🥤 Drinks'
+  }
 };
 
+/* ❗НЕ ТРОГАЕМ подкатегории для "Торты" */
 const SUBCATS = {
   cakes: [
     {key:'wedding', ico:'💍', n:{ru:'Свадебные', uz:"To‘y", en:'Wedding'}},
     {key:'bento',   ico:'🧁', n:{ru:'Бенто',    uz:'Bento', en:'Bento'}},
     {key:'roll',    ico:'🍥', n:{ru:'Торты-рулеты', uz:'Rulet', en:'Roll cakes'}},
     {key:'event',   ico:'🎉', n:{ru:'На мероприятия', uz:'Tadbir', en:'Events'}}
-  ],
-  bakery: [
-    {key:'savory',  ico:'🥨', n:{ru:'Несладкая', uz:'Shirin emas', en:'Savory'}},
-    {key:'butter',  ico:'🥖', n:{ru:'Сдобная',   uz:'Sdobnaya', en:'Butter'}},
-    {key:'puff',    ico:'🥐', n:{ru:'Слоёная',   uz:'Qavat-qavat', en:'Puff'}}
-  ],
-  cookies: [
-    {key:'shortbread', ico:'🍪', n:{ru:'Песочное', uz:'Qumoq', en:'Shortbread'}},
-    {key:'filling',    ico:'🍫', n:{ru:'С начинкой', uz:'Nachinkali', en:'Filled'}}
-  ],
-  desserts: [
-    {key:'mousse', ico:'🍮', n:{ru:'Муссовые', uz:'Muss', en:'Mousse'}},
-    {key:'mini',   ico:'🍰', n:{ru:'Мини',     uz:'Mini', en:'Mini'}}
-  ],
-  pies: [
-    {key:'slice', ico:'🔪', n:{ru:'Нарезные', uz:'Kesilgan', en:'Sliced'}},
-    {key:'whole', ico:'🥧', n:{ru:'Целые',    uz:'Butun',   en:'Whole'}}
   ]
 };
 
-const POPULAR = ['cheesecake_classic','cake_choco','dessert_tiramisu','croissant'];
-const NEW_ITEMS = ['cheesecake_oreo','roll_berry','danish','dessert_trifle'];
-const GIFT_ITEMS = ['cake_redvelvet','cookie_choco','dessert_tiramisu','pie_cherry'];
+/* карусели под новые категории */
+const POPULAR = ['cheesecake_pistachio','pastry_napoleon','bak_fatir_big','dr_cola_05','cake_choco'];
+const NEW_ITEMS = ['cheesecake_raspberry','pastry_dubai','trifle_fruit','dr_cola_zero_1'];
+const GIFT_ITEMS = ['cake_redvelvet','pastry_rafaello','sc_heart_500','trifle_choco'];
 
 const ITEM_INDEX = {};
 for (const c in MENU){ MENU[c].forEach(it => ITEM_INDEX[it.id]=it); }
