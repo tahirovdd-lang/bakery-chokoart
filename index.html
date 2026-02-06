@@ -46,7 +46,6 @@ body{
   overscroll-behavior-y: none;
 
   padding-bottom: calc(var(--sticky-h) + 16px);
-
   -webkit-text-size-adjust:100%;
 }
 
@@ -159,6 +158,23 @@ body[data-theme="dark"] .btn{background:rgba(255,255,255,.06);color:var(--accent
 body[data-theme="dark"] .input{background:rgba(255,255,255,.06);color:#f1f1f1;}
 
 .categories{display:flex;gap:12px;padding:14px;overflow-x:auto;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;}
+/* ✅ подкатегории */
+.subcats{display:none; gap:10px; padding:0 14px 10px; overflow-x:auto; -webkit-overflow-scrolling:touch;}
+.subcats.show{display:flex;}
+.subcat-pill{
+  padding:10px 14px;border-radius:999px;font-weight:900;font-size:13px;white-space:nowrap;
+  cursor:pointer;transition:.15s;border:1px solid var(--stroke);background:#fffdf9;
+  box-shadow: inset 0 0 0 2px var(--inner), 0 6px 14px var(--shadow);
+  color: var(--accent-red);
+}
+body[data-theme="dark"] .subcat-pill{background:rgba(255,255,255,.06);color:var(--accent-red);}
+.subcat-pill.active{
+  background:linear-gradient(135deg,var(--pink-deep),var(--pink-2));
+  color:#fff;border:1px solid rgba(255,255,255,.35);
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.14), 0 10px 22px rgba(197,108,134,.28);
+}
+.subcat-pill:active{transform:scale(.98);}
+
 .products{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;padding:12px;}
 .card{
   border-radius:24px;padding:12px;text-align:center;background:#fffdf9;border:1px solid var(--stroke);
@@ -166,6 +182,7 @@ body[data-theme="dark"] .input{background:rgba(255,255,255,.06);color:#f1f1f1;}
   transition:.15s;
 }
 body[data-theme="dark"] .card{background:rgba(255,255,255,.06);color:#f1f1f1;}
+
 /* ✅ увеличил фото блюд */
 .img{height:160px;display:flex;align-items:center;justify-content:center;margin-bottom:6px;}
 .img img{max-width:145px;max-height:145px;object-fit:contain;transform:scale(1.05);transition:.15s;cursor:pointer;}
@@ -192,7 +209,6 @@ body[data-theme="dark"] .card{background:rgba(255,255,255,.06);color:#f1f1f1;}
   cursor:pointer;transition:.15s;position:relative;
 }
 body[data-theme="dark"] .pop-card, body[data-theme="dark"] .mini-card{background:rgba(255,255,255,.06); color:#f1f1f1;}
-/* ✅ чуть увеличил превью в каруселях */
 .pop-img,.mini-img{height:82px;border-radius:18px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(197,108,134,.10);cursor:pointer;}
 .pop-img img,.mini-img img{width:100%;height:100%;object-fit:cover;}
 .pop-name{font-weight:900;margin-top:8px;}
@@ -372,6 +388,52 @@ body[data-theme="dark"] .menu-ic{background:rgba(255,255,255,.06);}
 }
 body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f1f1f1;}
 
+/* ✅ промо-окно при старте */
+.promo{
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.55);
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; pointer-events:none;
+  transition:.2s;
+  z-index:2500;
+  padding:18px;
+}
+.promo.show{opacity:1;pointer-events:auto;}
+.promo-box{
+  width:min(520px, 100%);
+  border-radius:22px;
+  overflow:hidden;
+  background:#fff;
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:0 18px 44px rgba(0,0,0,.22);
+}
+body[data-theme="dark"] .promo-box{background:#1c1c1c;}
+.promo-img{
+  width:100%;
+  height:260px;
+  object-fit:cover;
+  display:block;
+  background:#fff;
+}
+body[data-theme="dark"] .promo-img{background:#111;}
+.promo-cap{
+  padding:14px 14px 16px;
+  font-weight:900;
+  text-align:center;
+}
+.promo-cap small{display:block; opacity:.78; font-weight:800; margin-top:6px;}
+.promo-x{
+  position:absolute;
+  top:14px; right:14px;
+  width:38px;height:38px;border-radius:14px;
+  border:1px solid rgba(255,255,255,.22);
+  background:rgba(255,255,255,.92);
+  cursor:pointer;
+  font-size:22px; line-height:1;
+  display:flex; align-items:center; justify-content:center;
+}
+body[data-theme="dark"] .promo-x{background:rgba(28,28,28,.92); color:#fff; border-color:rgba(255,255,255,.18);}
+
 @media (max-width:420px){
   .brand-title{font-size:30px;}
   .brand-title2{font-size:18px;}
@@ -379,6 +441,7 @@ body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f
   .header{padding:14px 10px 24px;}
   .input{width:92%;}
   .products{gap:14px;}
+  .promo-img{height:240px;}
 }
 @media (max-width:360px){
   .header img{width:76px;height:76px;left:10px;}
@@ -387,6 +450,7 @@ body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f
   .brand-phone a{font-size:13px;}
   .btn{min-width:110px;padding:12px 16px;}
   .cat-btn{min-width:126px;padding:12px 16px;font-size:13px;}
+  .promo-img{height:220px;}
 }
 </style>
 </head>
@@ -476,9 +540,13 @@ body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f
     <div id="legalWrap" style="display:none; padding:6px 4px 10px;">
       <div style="border:1px solid var(--stroke); border-radius:16px; overflow:hidden; background:rgba(0,0,0,.03); padding:12px;">
         <div style="font-weight:900; margin-bottom:8px;" id="mLegalMail">✉️ Почта</div>
-        <div style="font-size:13px; opacity:.85;" id="mLegalMailHint">(позже допишем почту)</div>
+        <!-- ✅ почта внесена -->
+        <a href="mailto:chokoartbakery@gmail.com"
+           onclick="openMail(event)"
+           style="text-decoration:none; font-weight:900; color:var(--accent-red); word-break:break-all;"
+           id="mLegalMailAddr">chokoartbakery@gmail.com</a>
 
-        <div style="height:10px;"></div>
+        <div style="height:12px;"></div>
 
         <div style="font-weight:900; margin-bottom:6px;" id="mLegalPhone">📞 Телефон</div>
         <a href="tel:+998955006262" onclick="callPhone2(event)" style="text-decoration:none; font-weight:900; color:var(--accent-red);" id="mLegalPhoneNum">
@@ -568,6 +636,9 @@ body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f
 <input id="phone" class="input">
 
 <div class="categories" id="cats"></div>
+<!-- ✅ подкатегории -->
+<div class="subcats" id="subcats"></div>
+
 <div class="products" id="products"></div>
 
 <div class="cart" id="cartBox">
@@ -609,6 +680,18 @@ body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f
 </div>
 
 </div><!-- /page -->
+
+<!-- ✅ промо-окно 4 секунды -->
+<div class="promo" id="promo" aria-hidden="true">
+  <button class="promo-x" onclick="closePromo(event)" aria-label="Close">×</button>
+  <div class="promo-box" onclick="event.stopPropagation()">
+    <img class="promo-img" src="images/pas_napoleon_banana_half.jpg" onerror="this.src='images/logo.png'" alt="promo">
+    <div class="promo-cap">
+      Shahar bo'ylab yetkazish 10 000 so'm
+      <small></small>
+    </div>
+  </div>
+</div>
 
 <script>
 Telegram.WebApp.ready();
@@ -653,7 +736,6 @@ const UI = {
     legalTitle:'Юридическим лицам',
     legalSub:'Контакты для договоров / счетов',
     legalMail:'✉️ Почта',
-    legalMailHint:'(позже допишем почту)',
     legalPhone:'📞 Телефон',
     legalChat:'💬 Чат с менеджером',
     callTitle:'Позвонить',
@@ -689,7 +771,6 @@ const UI = {
     legalTitle:'Yuridik shaxslar',
     legalSub:"Shartnoma / hisob uchun kontaktlar",
     legalMail:'✉️ Pochta',
-    legalMailHint:"(keyinroq pochta yozamiz)",
     legalPhone:'📞 Telefon',
     legalChat:'💬 Menejer bilan chat',
     callTitle:"Qo'ng'iroq qilish",
@@ -725,7 +806,6 @@ const UI = {
     legalTitle:'For legal entities',
     legalSub:'Contacts for contracts / invoices',
     legalMail:'✉️ Email',
-    legalMailHint:'(we will add email later)',
     legalPhone:'📞 Phone',
     legalChat:'💬 Chat with manager',
     callTitle:'Call',
@@ -754,15 +834,21 @@ const UI = {
   }
 };
 
-let lang='ru',category='cheesecakes',type='delivery',payment='cash',cart={};
+let lang='ru',category='cheesecakes',subcat='all',type='delivery',payment='cash',cart={};
 
-/* ✅ MENU (восстановлены напитки, торты удалены) */
+/* ✅ MENU: вернул категорию Торты + торты как были */
 const MENU = {
   cheesecakes:[
     {id:'cheesecake_pistachio', p:25000, img:'images/cheesecake_pistachio.jpg', n:{ru:'Чизкейк Фисташковый', uz:'Fistashkali chizkeyk', en:'Pistachio cheesecake'}},
     {id:'cheesecake_choco', p:25000, img:'images/cheesecake_choco.jpg', n:{ru:'Чизкейк Шоколадный', uz:'Shokoladli chizkeyk', en:'Chocolate cheesecake'}},
     {id:'cheesecake_raspberry', p:25000, img:'images/cheesecake_raspberry.jpg', n:{ru:'Чизкейк Малиновый', uz:'Malinali chizkeyk', en:'Raspberry cheesecake'}},
     {id:'cheesecake_caramel', p:25000, img:'images/cheesecake_caramel.jpg', n:{ru:'Чизкейк Карамельный', uz:'Karamelli chizkeyk', en:'Caramel cheesecake'}}
+  ],
+
+  /* ✅ Торты (без подкатегорий в самих карточках, фильтр через подкатегории ниже) */
+  cakes:[
+    {id:'cake_redvelvet', p:52000, img:'images/cake_redvelvet.jpg', sub:'events', n:{ru:'Торт Red Velvet', uz:'Red Velvet tort', en:'Red Velvet cake'}},
+    {id:'cake_choco', p:54000, img:'images/cake_choco.jpg', sub:'events', n:{ru:'Шоколадный торт', uz:'Shokolad tort', en:'Chocolate cake'}}
   ],
 
   pastries:[
@@ -816,18 +902,14 @@ const MENU = {
     {id:'bak_roll_walnut', p:8000, img:'images/bak_roll_walnut.jpg', n:{ru:'Рулетик с грецкими орехами', uz:"Gretskiy yong‘oq rulet", en:'Walnut roll'}},
     {id:'bak_cookie_kurabye', p:5000, img:'images/bak_cookie_kurabye.jpg', n:{ru:'Печенье Курабье', uz:"Kurabye pechenye", en:'Kurabye cookie'}},
     {id:'bak_cookie_choco_filling', p:5000, img:'images/bak_cookie_choco_filling.jpg', n:{ru:'Печенье с шоколадной начинкой', uz:"Shokoladli nachinka pechenye", en:'Cookie with chocolate filling'}},
-
-    /* ✅ добавил 2 позиции */
     {id:'bak_shortbread_heart_500g', p:25000, img:'images/bak_shortbread_heart_500g.jpg', n:{ru:'Печенье песочное Сердечко 500гр', uz:"Qumli pechenye Yurak 500g", en:'Shortbread cookie Heart 500g'}},
     {id:'bak_shortbread_bar_500g', p:25000, img:'images/bak_shortbread_bar_500g.jpg', n:{ru:'Печенье песочное Батончик 500гр', uz:"Qumli pechenye Baton 500g", en:'Shortbread cookie Bar 500g'}},
-
     {id:'bak_fatir_big', p:20000, img:'images/bak_fatir_big.jpg', n:{ru:'Фатир (большой)', uz:'Fatir (katta)', en:'Fatir (large)'}},
     {id:'bak_fatir_durda', p:22000, img:'images/bak_fatir_durda.jpg', n:{ru:'Фатир Дурда', uz:'Durda fatir', en:'Durda fatir'}},
     {id:'bak_fatir_durda_mini', p:14000, img:'images/bak_fatir_durda_mini.jpg', n:{ru:'Фатир Дурда Мини', uz:'Durda fatir mini', en:'Durda fatir mini'}},
     {id:'bak_fatir_mid', p:12000, img:'images/bak_fatir_mid.jpg', n:{ru:'Фатир (средний)', uz:"Fatir (o‘rtacha)", en:'Fatir (medium)'}}
   ],
 
-  /* ✅✅✅ напитки восстановлены */
   drinks:[
     {id:'dr_cola_05', p:8000, img:'images/dr_cola_05.jpg', n:{ru:'Coca Cola 0.5L', uz:'Coca Cola 0.5L', en:'Coca Cola 0.5L'}},
     {id:'dr_fanta_05', p:8000, img:'images/dr_fanta_05.jpg', n:{ru:'Fanta 0.5L', uz:'Fanta 0.5L', en:'Fanta 0.5L'}},
@@ -836,9 +918,21 @@ const MENU = {
   ]
 };
 
+/* ✅ подкатегории тортов */
+const SUBCATS = {
+  cakes: [
+    {key:'all',  t:{ru:'🍰 Все', uz:'🍰 Hammasi', en:'🍰 All'}},
+    {key:'wedding', t:{ru:'💍 Свадебные', uz:'💍 To‘y', en:'💍 Wedding'}},
+    {key:'bento', t:{ru:'🎁 Бенто', uz:'🎁 Bento', en:'🎁 Bento'}},
+    {key:'roll',  t:{ru:'🌯 Рулеты', uz:'🌯 Rulon', en:'🌯 Rolls'}},
+    {key:'events',t:{ru:'🎉 На мероприятия', uz:'🎉 Tadbirlar', en:'🎉 Events'}}
+  ]
+};
+
 const CATS = {
   ru:{
     cheesecakes:'🍰 Чизкейки',
+    cakes:'🎂 Торты',
     pastries:'🍮 Пирожное',
     trifles:'🍨 Трайфл',
     bakery:'🥖 Выпечка',
@@ -846,6 +940,7 @@ const CATS = {
   },
   uz:{
     cheesecakes:'🍰 Chizkeyklar',
+    cakes:'🎂 Tortlar',
     pastries:'🍮 Pirojnoye',
     trifles:'🍨 Trifle',
     bakery:'🥖 Pishiriqlar',
@@ -853,6 +948,7 @@ const CATS = {
   },
   en:{
     cheesecakes:'🍰 Cheesecakes',
+    cakes:'🎂 Cakes',
     pastries:'🍮 Pastries',
     trifles:'🍨 Trifles',
     bakery:'🥖 Bakery',
@@ -860,10 +956,10 @@ const CATS = {
   }
 };
 
-/* ✅ карусели: убрал торты (cake_*) */
-const POPULAR = ['cheesecake_pistachio','pas_napoleon_icecream','bak_fatir_big','dr_cola_05','pas_nutella'];
+/* ✅ карусели: вернул торты */
+const POPULAR = ['cheesecake_pistachio','pas_napoleon_icecream','bak_fatir_big','dr_cola_05','cake_choco'];
 const NEW_ITEMS = ['cheesecake_raspberry','pas_dubai_kataifi','trifle_fruit','bak_cookie_kurabye'];
-const GIFT_ITEMS = ['pas_rafaello_mini','trifle_choco','bak_bun_nutella','pas_ferrero_rocher'];
+const GIFT_ITEMS = ['cake_redvelvet','pas_rafaello_mini','trifle_choco','bak_bun_nutella'];
 
 const ITEM_INDEX = {};
 for (const c in MENU){ MENU[c].forEach(it => ITEM_INDEX[it.id]=it); }
@@ -890,7 +986,6 @@ function applyUI(){
   mLegalTitle.innerText = UI[lang].legalTitle;
   mLegalSub.innerText = UI[lang].legalSub;
   mLegalMail.innerText = UI[lang].legalMail;
-  mLegalMailHint.innerText = UI[lang].legalMailHint;
   mLegalPhone.innerText = UI[lang].legalPhone;
   mLegalChatBtn.innerText = UI[lang].legalChat;
 
@@ -921,7 +1016,10 @@ function applyUI(){
   stickyCartBtn.innerText = UI[lang].cart;
   sumCurrency.innerText = UI[lang].sum;
 
-  renderCats(); renderProducts(); renderPopular(); renderNew(); renderGift();
+  renderCats();
+  renderSubcats();
+  renderProducts();
+  renderPopular(); renderNew(); renderGift();
   updateTotal();
 
   setTimeout(syncStickyHeight, 50);
@@ -943,6 +1041,11 @@ function callPhone2(e){
   try{ e.preventDefault(); e.stopPropagation(); }catch(_){}
   const tel = "tel:+998955006262";
   try{ Telegram.WebApp.openLink(tel); }catch(_){ window.location.href = tel; }
+}
+function openMail(e){
+  try{ e.preventDefault(); e.stopPropagation(); }catch(_){}
+  const url = "mailto:chokoartbakery@gmail.com";
+  try{ Telegram.WebApp.openLink(url); }catch(_){ window.location.href = url; }
 }
 
 function toggleLegal(){
@@ -986,6 +1089,27 @@ function closeImgModal(e){
   try{ e.preventDefault(); e.stopPropagation(); }catch(_){}
   imgModal.classList.remove('show');
   imgModalImg.src = '';
+}
+
+/* promo */
+let promoTimer=null;
+function showPromo(){
+  const p = document.getElementById('promo');
+  if(!p) return;
+  p.classList.add('show');
+  p.setAttribute('aria-hidden','false');
+  clearTimeout(promoTimer);
+  promoTimer = setTimeout(()=>{ hidePromo(); }, 4000);
+}
+function hidePromo(){
+  const p = document.getElementById('promo');
+  if(!p) return;
+  p.classList.remove('show');
+  p.setAttribute('aria-hidden','true');
+}
+function closePromo(e){
+  try{ e.preventDefault(); e.stopPropagation(); }catch(_){}
+  hidePromo();
 }
 
 /* search */
@@ -1121,7 +1245,9 @@ function chg(id,delta){
 /* categories */
 function onCategoryClick(k){
   category = k;
+  subcat = 'all'; /* сброс подкатегории */
   renderCats();
+  renderSubcats();
   renderProducts();
 }
 function renderCats(){
@@ -1130,6 +1256,30 @@ function renderCats(){
     cats.innerHTML += `<button class="btn cat-btn ${k===category?'active':''}" onclick="onCategoryClick('${k}')">${CATS[lang][k]||k}</button>`;
   }
 }
+
+/* ✅ подкатегории */
+function onSubcatClick(k){
+  subcat = k;
+  renderSubcats();
+  renderProducts();
+}
+function renderSubcats(){
+  const wrap = document.getElementById('subcats');
+  if(!wrap) return;
+  const list = SUBCATS[category];
+  if(!list){
+    wrap.classList.remove('show');
+    wrap.innerHTML = '';
+    return;
+  }
+  wrap.classList.add('show');
+  wrap.innerHTML = '';
+  list.forEach(sc=>{
+    const label = sc.t?.[lang] || sc.t?.ru || sc.key;
+    wrap.innerHTML += `<button class="subcat-pill ${sc.key===subcat?'active':''}" onclick="onSubcatClick('${sc.key}')">${label}</button>`;
+  });
+}
+
 function cardHTML(it){
   const id = it.id;
   const qty = cart[id]||0;
@@ -1147,7 +1297,13 @@ function cardHTML(it){
 }
 function renderProducts(){
   products.innerHTML='';
-  const list = (MENU[category]||[]);
+  let list = (MENU[category]||[]);
+
+  /* ✅ фильтр по подкатегории только для тортов */
+  if(category === 'cakes' && subcat && subcat !== 'all'){
+    list = list.filter(it => (it.sub || 'events') === subcat);
+  }
+
   list.forEach(it=>{
     cart[it.id]=cart[it.id]||0;
     products.innerHTML += cardHTML(it);
@@ -1256,7 +1412,7 @@ function toggleThemeFromMenu(){
 
 /* init */
 renderPopular(); renderNew(); renderGift();
-renderCats(); renderProducts();
+renderCats(); renderSubcats(); renderProducts();
 
 address.value = localStorage.getItem('chokoart_address') || '';
 phone.value = localStorage.getItem('chokoart_phone') || '+998 90 505 07 45';
@@ -1278,6 +1434,9 @@ type='delivery';
 updateTotal();
 
 setTimeout(syncStickyHeight, 50);
+
+/* ✅ показываем промо на старте (4 секунды) */
+setTimeout(showPromo, 350);
 </script>
 </body>
 </html>
