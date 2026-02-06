@@ -166,8 +166,10 @@ body[data-theme="dark"] .input{background:rgba(255,255,255,.06);color:#f1f1f1;}
   transition:.15s;
 }
 body[data-theme="dark"] .card{background:rgba(255,255,255,.06);color:#f1f1f1;}
-.img{height:140px;display:flex;align-items:center;justify-content:center;margin-bottom:6px;}
-.img img{max-width:125px;max-height:125px;object-fit:contain;transform:scale(1.05);transition:.15s;cursor:pointer;}
+/* ✅ увеличил фото блюд */
+.img{height:160px;display:flex;align-items:center;justify-content:center;margin-bottom:6px;}
+.img img{max-width:145px;max-height:145px;object-fit:contain;transform:scale(1.05);transition:.15s;cursor:pointer;}
+
 .item-name{margin-top:2px;padding:0 6px;font-weight:900;line-height:1.15;min-height:34px;display:flex;align-items:center;justify-content:center;word-break:break-word;}
 .price{font-weight:900;color:var(--accent-red);margin-top:6px;}
 .price small{font-weight:800;opacity:.75;margin-left:4px;}
@@ -190,7 +192,8 @@ body[data-theme="dark"] .card{background:rgba(255,255,255,.06);color:#f1f1f1;}
   cursor:pointer;transition:.15s;position:relative;
 }
 body[data-theme="dark"] .pop-card, body[data-theme="dark"] .mini-card{background:rgba(255,255,255,.06); color:#f1f1f1;}
-.pop-img,.mini-img{height:74px;border-radius:18px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(197,108,134,.10);cursor:pointer;}
+/* ✅ чуть увеличил превью в каруселях */
+.pop-img,.mini-img{height:82px;border-radius:18px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:rgba(197,108,134,.10);cursor:pointer;}
 .pop-img img,.mini-img img{width:100%;height:100%;object-fit:cover;}
 .pop-name{font-weight:900;margin-top:8px;}
 .pop-price,.mini-price{font-weight:900;color:var(--accent-red);margin-top:4px;}
@@ -753,18 +756,13 @@ const UI = {
 
 let lang='ru',category='cheesecakes',type='delivery',payment='cash',cart={};
 
-/* ✅✅✅ MENU (JPG для чизкейков и выпечки, удалены "Песочное пирожное" и "Песочное печенье") */
+/* ✅ MENU (восстановлены напитки, торты удалены) */
 const MENU = {
   cheesecakes:[
     {id:'cheesecake_pistachio', p:25000, img:'images/cheesecake_pistachio.jpg', n:{ru:'Чизкейк Фисташковый', uz:'Fistashkali chizkeyk', en:'Pistachio cheesecake'}},
     {id:'cheesecake_choco', p:25000, img:'images/cheesecake_choco.jpg', n:{ru:'Чизкейк Шоколадный', uz:'Shokoladli chizkeyk', en:'Chocolate cheesecake'}},
     {id:'cheesecake_raspberry', p:25000, img:'images/cheesecake_raspberry.jpg', n:{ru:'Чизкейк Малиновый', uz:'Malinali chizkeyk', en:'Raspberry cheesecake'}},
     {id:'cheesecake_caramel', p:25000, img:'images/cheesecake_caramel.jpg', n:{ru:'Чизкейк Карамельный', uz:'Karamelli chizkeyk', en:'Caramel cheesecake'}}
-  ],
-
-  cakes:[
-    {id:'cake_redvelvet', p:52000, img:'images/cake_redvelvet.jpg', n:{ru:'Торт Red Velvet', uz:'Red Velvet tort', en:'Red Velvet cake'}},
-    {id:'cake_choco', p:54000, img:'images/cake_choco.jpg', n:{ru:'Шоколадный торт', uz:'Shokolad tort', en:'Chocolate cake'}}
   ],
 
   pastries:[
@@ -806,7 +804,6 @@ const MENU = {
     {id:'trifle_choco_prichuda', p:60000, img:'images/trifle_choco_prichuda.jpg', n:{ru:'Трайфл Шоколадный Причуда', uz:'Shokolad trifle (Prichuda)', en:'Chocolate trifle (Prichuda)'}}
   ],
 
-  /* ✅✅✅ ВЫПЕЧКА — полностью заменено + JPG имена для фото */
   bakery:[
     {id:'bak_ring_curd', p:10000, img:'images/bak_ring_curd.jpg', n:{ru:'Кольцо с творогом', uz:"Tvorogli halqa", en:'Curd ring'}},
     {id:'bak_bun_nutella', p:15000, img:'images/bak_bun_nutella.jpg', n:{ru:'Булочка с нутеллой', uz:'Nutella bulochka', en:'Nutella bun'}},
@@ -820,13 +817,17 @@ const MENU = {
     {id:'bak_cookie_kurabye', p:5000, img:'images/bak_cookie_kurabye.jpg', n:{ru:'Печенье Курабье', uz:"Kurabye pechenye", en:'Kurabye cookie'}},
     {id:'bak_cookie_choco_filling', p:5000, img:'images/bak_cookie_choco_filling.jpg', n:{ru:'Печенье с шоколадной начинкой', uz:"Shokoladli nachinka pechenye", en:'Cookie with chocolate filling'}},
 
-    /* ✅ 2 разных "Фатир" по твоим ценам */
+    /* ✅ добавил 2 позиции */
+    {id:'bak_shortbread_heart_500g', p:25000, img:'images/bak_shortbread_heart_500g.jpg', n:{ru:'Печенье песочное Сердечко 500гр', uz:"Qumli pechenye Yurak 500g", en:'Shortbread cookie Heart 500g'}},
+    {id:'bak_shortbread_bar_500g', p:25000, img:'images/bak_shortbread_bar_500g.jpg', n:{ru:'Печенье песочное Батончик 500гр', uz:"Qumli pechenye Baton 500g", en:'Shortbread cookie Bar 500g'}},
+
     {id:'bak_fatir_big', p:20000, img:'images/bak_fatir_big.jpg', n:{ru:'Фатир (большой)', uz:'Fatir (katta)', en:'Fatir (large)'}},
     {id:'bak_fatir_durda', p:22000, img:'images/bak_fatir_durda.jpg', n:{ru:'Фатир Дурда', uz:'Durda fatir', en:'Durda fatir'}},
     {id:'bak_fatir_durda_mini', p:14000, img:'images/bak_fatir_durda_mini.jpg', n:{ru:'Фатир Дурда Мини', uz:'Durda fatir mini', en:'Durda fatir mini'}},
     {id:'bak_fatir_mid', p:12000, img:'images/bak_fatir_mid.jpg', n:{ru:'Фатир (средний)', uz:"Fatir (o‘rtacha)", en:'Fatir (medium)'}}
   ],
 
+  /* ✅✅✅ напитки восстановлены */
   drinks:[
     {id:'dr_cola_05', p:8000, img:'images/dr_cola_05.jpg', n:{ru:'Coca Cola 0.5L', uz:'Coca Cola 0.5L', en:'Coca Cola 0.5L'}},
     {id:'dr_fanta_05', p:8000, img:'images/dr_fanta_05.jpg', n:{ru:'Fanta 0.5L', uz:'Fanta 0.5L', en:'Fanta 0.5L'}},
@@ -838,7 +839,6 @@ const MENU = {
 const CATS = {
   ru:{
     cheesecakes:'🍰 Чизкейки',
-    cakes:'🎂 Торты',
     pastries:'🍮 Пирожное',
     trifles:'🍨 Трайфл',
     bakery:'🥖 Выпечка',
@@ -846,7 +846,6 @@ const CATS = {
   },
   uz:{
     cheesecakes:'🍰 Chizkeyklar',
-    cakes:'🎂 Tortlar',
     pastries:'🍮 Pirojnoye',
     trifles:'🍨 Trifle',
     bakery:'🥖 Pishiriqlar',
@@ -854,7 +853,6 @@ const CATS = {
   },
   en:{
     cheesecakes:'🍰 Cheesecakes',
-    cakes:'🎂 Cakes',
     pastries:'🍮 Pastries',
     trifles:'🍨 Trifles',
     bakery:'🥖 Bakery',
@@ -862,10 +860,10 @@ const CATS = {
   }
 };
 
-/* карусели (обновил так, чтобы не ссылались на удалённые категории) */
-const POPULAR = ['cheesecake_pistachio','pas_napoleon_icecream','bak_fatir_big','dr_cola_05','cake_choco'];
+/* ✅ карусели: убрал торты (cake_*) */
+const POPULAR = ['cheesecake_pistachio','pas_napoleon_icecream','bak_fatir_big','dr_cola_05','pas_nutella'];
 const NEW_ITEMS = ['cheesecake_raspberry','pas_dubai_kataifi','trifle_fruit','bak_cookie_kurabye'];
-const GIFT_ITEMS = ['cake_redvelvet','pas_rafaello_mini','trifle_choco','bak_bun_nutella'];
+const GIFT_ITEMS = ['pas_rafaello_mini','trifle_choco','bak_bun_nutella','pas_ferrero_rocher'];
 
 const ITEM_INDEX = {};
 for (const c in MENU){ MENU[c].forEach(it => ITEM_INDEX[it.id]=it); }
@@ -1173,11 +1171,8 @@ function openCart(){
   const el = document.getElementById('cartBox');
   if(!el) return;
   syncStickyHeight();
-  try{
-    el.scrollIntoView({behavior:'smooth', block:'start'});
-  }catch(_){
-    window.location.hash = '#cartBox';
-  }
+  try{ el.scrollIntoView({behavior:'smooth', block:'start'}); }
+  catch(_){ window.location.hash = '#cartBox'; }
 }
 
 /* order */
