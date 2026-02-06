@@ -772,8 +772,9 @@ const UI = {
 let lang='ru',category='cheesecakes',type='delivery',payment='cash',cart={};
 let currentSubcat = '';
 
-/* ✅✅✅ МЕНЮ ОБНОВЛЕНО ПО ТВОИМ КАТЕГОРИЯМ
-   ❗Категорию "Торты" и её подкатегории НЕ ТРОГАЕМ */
+/* ✅✅✅ МЕНЮ ОБНОВЛЕНО:
+   ✅ Добавлены в категорию "Торты" эти блюда + прописаны картинки .jpg (images/*.jpg)
+   ❗Категорию "Торты" и её подкатегории НЕ ТРОГАЕМ (подкатегории ниже остались как есть) */
 const MENU = {
   cheesecakes:[
     {id:'cheesecake_pistachio', p:25000, img:'images/cheesecake_pistachio.png', sub:'', n:{ru:'Чизкейк Фисташковый', uz:'Fistashkali chizkeyk', en:'Pistachio cheesecake'}},
@@ -782,22 +783,32 @@ const MENU = {
     {id:'cheesecake_caramel', p:25000, img:'images/cheesecake_caramel.png', sub:'', n:{ru:'Чизкейк Карамельный', uz:'Karamelli chizkeyk', en:'Caramel cheesecake'}}
   ],
 
-  /* ❗НЕ ТРОГАЕМ */
+  /* ❗НЕ ТРОГАЕМ + ✅ добавили нужные блюда в "Торты" */
   cakes:[
     {id:'cake_redvelvet', p:52000, img:'images/cake_redvelvet.png', sub:'event', n:{ru:'Торт Red Velvet', uz:'Red Velvet tort', en:'Red Velvet cake'}},
-    {id:'cake_choco', p:54000, img:'images/cake_choco.png', sub:'event', n:{ru:'Шоколадный торт', uz:'Shokolad tort', en:'Chocolate cake'}}
+    {id:'cake_choco', p:54000, img:'images/cake_choco.png', sub:'event', n:{ru:'Шоколадный торт', uz:'Shokolad tort', en:'Chocolate cake'}},
+
+    /* ✅ ДОБАВЛЕНО В КАТЕГОРИЮ "ТОРТЫ" + КАРТИНКИ .JPG */
+    {id:'pastry_afghan', p:25000, img:'images/afghanskiy.jpg', sub:'event', n:{ru:'Афганский', uz:"Afg‘oncha", en:'Afghan'}},
+    {id:'pastry_nutella', p:30000, img:'images/nutella.jpg', sub:'event', n:{ru:'Нутелла', uz:'Nutella', en:'Nutella'}},
+    {id:'pastry_banana_napoleon', p:21000, img:'images/napoleon_banan.jpg', sub:'event', n:{ru:'Наполеон Банановый', uz:'Bananli napoleon', en:'Banana napoleon'}},
+    {id:'pastry_napoleon', p:20000, img:'images/napoleon_morozhenoe.jpg', sub:'event', n:{ru:'Наполеон Мороженое', uz:'Napoleon (muzqaymoq)', en:'Napoleon ice cream'}},
+    {id:'pastry_asalin', p:20000, img:'images/asalin.jpg', sub:'event', n:{ru:'Асалин', uz:'Asalin', en:'Asalin'}},
+    {id:'pastry_smetanny', p:20000, img:'images/smetannik.jpg', sub:'event', n:{ru:'Сметанник', uz:'Smetanali', en:'Sour cream cake'}},
+    {id:'pastry_ideal', p:20000, img:'images/muzhskoy_ideal.jpg', sub:'event', n:{ru:'Мужской идеал', uz:'Ideal', en:'Ideal'}}
   ],
 
   pastries:[
-    {id:'pastry_afghan', p:25000, img:'images/pastry_afghan.png', sub:'', n:{ru:'Афганский', uz:'Afg‘oncha', en:'Afghan'}},
-    {id:'pastry_nutella', p:30000, img:'images/pastry_nutella.png', sub:'', n:{ru:'Нутелла', uz:'Nutella', en:'Nutella'}},
-    {id:'pastry_banana_napoleon', p:21000, img:'images/pastry_banana_napoleon.png', sub:'', n:{ru:'Банановый наполеон', uz:'Bananli napoleon', en:'Banana napoleon'}},
-    {id:'pastry_napoleon', p:20000, img:'images/pastry_napoleon.png', sub:'', n:{ru:'Наполеон', uz:'Napoleon', en:'Napoleon'}},
+    /* ✅ здесь тоже прописали .jpg для этих блюд (чтобы картинки открывались везде) */
+    {id:'pastry_afghan', p:25000, img:'images/afghanskiy.jpg', sub:'', n:{ru:'Афганский', uz:'Afg‘oncha', en:'Afghan'}},
+    {id:'pastry_nutella', p:30000, img:'images/nutella.jpg', sub:'', n:{ru:'Нутелла', uz:'Nutella', en:'Nutella'}},
+    {id:'pastry_banana_napoleon', p:21000, img:'images/napoleon_banan.jpg', sub:'', n:{ru:'Банановый наполеон', uz:'Bananli napoleon', en:'Banana napoleon'}},
+    {id:'pastry_napoleon', p:20000, img:'images/napoleon_morozhenoe.jpg', sub:'', n:{ru:'Наполеон', uz:'Napoleon', en:'Napoleon'}},
     {id:'pastry_medovik', p:14000, img:'images/pastry_medovik.png', sub:'', n:{ru:'Медовик', uz:'Medovik', en:'Honey cake'}},
     {id:'pastry_spartak', p:12000, img:'images/pastry_spartak.png', sub:'', n:{ru:'Спартак', uz:'Spartak', en:'Spartak'}},
-    {id:'pastry_asalin', p:20000, img:'images/pastry_asalin.png', sub:'', n:{ru:'Асалин', uz:'Asalin', en:'Asalin'}},
-    {id:'pastry_smetanny', p:20000, img:'images/pastry_smetanny.png', sub:'', n:{ru:'Сметанный', uz:'Smetanali', en:'Sour cream cake'}},
-    {id:'pastry_ideal', p:20000, img:'images/pastry_ideal.png', sub:'', n:{ru:'Идеал', uz:'Ideal', en:'Ideal'}},
+    {id:'pastry_asalin', p:20000, img:'images/asalin.jpg', sub:'', n:{ru:'Асалин', uz:'Asalin', en:'Asalin'}},
+    {id:'pastry_smetanny', p:20000, img:'images/smetannik.jpg', sub:'', n:{ru:'Сметанный', uz:'Smetanali', en:'Sour cream cake'}},
+    {id:'pastry_ideal', p:20000, img:'images/muzhskoy_ideal.jpg', sub:'', n:{ru:'Идеал', uz:'Ideal', en:'Ideal'}},
     {id:'pastry_dubai', p:30000, img:'images/pastry_dubai.png', sub:'', n:{ru:'Дубайский', uz:'Dubaycha', en:'Dubai'}},
     {id:'pastry_caramelka', p:10000, img:'images/pastry_caramelka.png', sub:'', n:{ru:'Карамелька', uz:'Karamel', en:'Caramel'}},
     {id:'pastry_ferero', p:20000, img:'images/pastry_ferero.png', sub:'', n:{ru:'Фереро', uz:'Ferero', en:'Ferrero'}},
