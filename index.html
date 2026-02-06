@@ -27,7 +27,6 @@
 
   --vh: 1vh;
 
-  /* ✅ высота нижней фикс-панели (чтобы ничего не перекрывалось) */
   --sticky-h: 86px;
 }
 
@@ -47,7 +46,6 @@ body{
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: none;
 
-  /* ✅ запас снизу под фикс-панель */
   padding-bottom: calc(var(--sticky-h) + 16px);
 
   -webkit-text-size-adjust:100%;
@@ -230,13 +228,8 @@ textarea.input{height:90px;}
   box-shadow: inset 0 0 0 2px rgba(255,255,255,.10), 0 12px 26px rgba(0,0,0,.14);
   position:relative;
   z-index:2;
-
-  /* ✅ важное: чтобы при скролле якорем кнопка не пряталась */
   scroll-margin-bottom: calc(var(--sticky-h) + 24px);
 }
-
-/* ✅✅✅ КЛЮЧЕВОЕ ИСПРАВЛЕНИЕ:
-   даём корзине доп. "низ" внутри, чтобы кнопка "Оформить заказ" была выше fixed панели */
 #cartBox{
   scroll-margin-bottom: calc(var(--sticky-h) + 24px);
   padding-bottom: calc(16px + var(--sticky-h));
@@ -251,7 +244,7 @@ textarea.input{height:90px;}
 }
 body[data-theme="dark"] .popup-box{ background:#1c1c1c; color:#f1f1f1; }
 
-/* ✅ ФОТО-МОДАЛКА (открытие фото по клику) */
+/* image modal */
 .img-modal{
   position:fixed; inset:0;
   background:rgba(0,0,0,.62);
@@ -298,7 +291,7 @@ body[data-theme="dark"] .img-modal-close{color:#bbb;}
 }
 body[data-theme="dark"] .img-modal-img{background:#111;}
 
-/* ✅ фикс панель снизу */
+/* sticky */
 .sticky-checkout{
   position:fixed;
   left:0;right:0;bottom:0;
@@ -362,53 +355,6 @@ body[data-theme="dark"] .menu-ic{background:rgba(255,255,255,.06);}
 .menu-name{font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .menu-sub{font-size:12px;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;}
 .menu-right{opacity:.65;font-weight:900;}
-
-/* subcats */
-.sub-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.38);opacity:0;pointer-events:none;transition:.18s;z-index:1200;}
-.sub-backdrop.show{opacity:1;pointer-events:auto;}
-.sub-sheet{
-  position:fixed;left:0;right:0;bottom:-100%;
-  background:#fffdf9;border-top-left-radius:22px;border-top-right-radius:22px;
-  border:1px solid var(--stroke);
-  box-shadow:0 18px 40px rgba(0,0,0,.18);
-  transition:.22s;z-index:1210;
-  padding:10px 12px 14px;
-  max-height: 72vh;
-  overflow:auto;
-  -webkit-overflow-scrolling:touch;
-}
-body[data-theme="dark"] .sub-sheet{background:#1c1c1c;border-color:rgba(255,255,255,.14);color:#f1f1f1;}
-.sub-sheet.show{bottom:0;}
-.sub-handle{width:44px;height:5px;border-radius:999px;background:rgba(0,0,0,.18);margin:6px auto 10px;}
-body[data-theme="dark"] .sub-handle{background:rgba(255,255,255,.18);}
-.sub-head{display:flex;align-items:center;justify-content:space-between;padding:2px 4px 10px;}
-.sub-head b{font-size:16px;}
-.sub-close{width:38px;height:38px;border:none;border-radius:12px;background:transparent;cursor:pointer;font-size:22px;line-height:1;color:#777;}
-body[data-theme="dark"] .sub-close{color:#bbb;}
-.sub-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:6px 2px 10px;}
-@media (max-width:420px){.sub-grid{grid-template-columns:repeat(3,1fr);}}
-.sub-tile{
-  border:1px solid var(--stroke);
-  background:rgba(0,0,0,.03);
-  border-radius:18px;
-  padding:10px 8px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:6px;
-  cursor:pointer;
-  transition:.12s;
-}
-body[data-theme="dark"] .sub-tile{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);}
-.sub-tile:active{transform:scale(.98);}
-.sub-ico{font-size:30px;line-height:1;}
-.sub-name{font-size:11px;font-weight:900;text-align:center;line-height:1.15;word-break:break-word;}
-.sub-all{margin-top:8px;padding-top:10px;border-top:1px solid rgba(0,0,0,.06);}
-body[data-theme="dark"] .sub-all{border-top:1px solid rgba(255,255,255,.12);}
-.sub-all .sub-tile{width:100%;flex-direction:row;justify-content:flex-start;padding:12px 12px;gap:10px;}
-.sub-all .sub-name{font-size:14px;}
-.sub-all .sub-ico{font-size:26px;}
 
 /* search */
 .search-wrap{width:85%;margin:8px auto;position:relative;display:none;z-index:70;}
@@ -584,18 +530,6 @@ body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f
   </div>
 </div>
 
-<div class="sub-backdrop" id="subBackdrop" onclick="closeSubcats()"></div>
-<div class="sub-sheet" id="subSheet">
-  <div class="sub-handle"></div>
-  <div class="sub-head">
-    <b id="subTitle">Подкатегории</b>
-    <button class="sub-close" onclick="closeSubcats()">×</button>
-  </div>
-
-  <div class="sub-grid" id="subGrid"></div>
-  <div class="sub-all" id="subAllWrap"></div>
-</div>
-
 <div class="search-title" id="searchTitle">Результаты поиска</div>
 <div class="search-wrap" id="searchWrap">
   <input id="searchInput" class="input" placeholder="Поиск..." oninput="searchProducts()" onkeydown="onSearchKey(event)">
@@ -653,7 +587,6 @@ body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f
 
 <div class="popup" id="popup"><div class="popup-box">✅ Заказ принят!</div></div>
 
-<!-- ✅ модалка фото -->
 <div class="img-modal" id="imgModal" onclick="closeImgModal(event)">
   <div class="img-modal-box" onclick="event.stopPropagation()">
     <div class="img-modal-top">
@@ -678,13 +611,11 @@ body[data-theme="dark"] .search-clear{background:rgba(255,255,255,.06); color:#f
 <script>
 Telegram.WebApp.ready();
 
-/* ✅✅✅ ПОЛНЫЙ ЭКРАН в Telegram */
 try{
   Telegram.WebApp.expand();
   Telegram.WebApp.disableVerticalSwipes?.();
 }catch(_){}
 
-/* ✅ фикс высоты viewport */
 function setVH(){
   const vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -693,7 +624,6 @@ setVH();
 window.addEventListener('resize', setVH, {passive:true});
 window.addEventListener('orientationchange', ()=>setTimeout(setVH, 250), {passive:true});
 
-/* ✅ реальная высота sticky bar → в CSS переменную */
 function syncStickyHeight(){
   const el = document.getElementById('stickyBar');
   if(!el) return;
@@ -703,7 +633,6 @@ function syncStickyHeight(){
 window.addEventListener('resize', ()=>setTimeout(syncStickyHeight, 50), {passive:true});
 window.addEventListener('orientationchange', ()=>setTimeout(syncStickyHeight, 250), {passive:true});
 
-/* ====== constants ====== */
 const ADMIN_ID = 6013591658;
 const DELIVERY_FEE_SAMARKAND = 10000;
 
@@ -712,7 +641,6 @@ const tg_username = tgUser.username || "";
 const tg_first_name = tgUser.first_name || "";
 const tg_id = tgUser.id || "";
 
-/* ✅ тексты для 3 языков (кнопки и заголовки) */
 const UI = {
   ru:{
     menu:'Меню',
@@ -827,9 +755,8 @@ const UI = {
 let lang='ru',category='cheesecakes',type='delivery',payment='cash',cart={};
 let currentSubcat = '';
 
-/* ✅✅✅ МЕНЮ:
-   ✅ Категория "Пирожное" полностью заменена на ваши новые позиции
-   ✅ Для всех пирожных поставлена картинка: images/images.jpg */
+/* ✅✅✅ МЕНЮ
+   ✅ Здесь самое главное: категория "Пирожное" теперь с уникальными именами фото */
 const MENU = {
   cheesecakes:[
     {id:'cheesecake_pistachio', p:25000, img:'images/cheesecake_pistachio.png', sub:'', n:{ru:'Чизкейк Фисташковый', uz:'Fistashkali chizkeyk', en:'Pistachio cheesecake'}},
@@ -851,37 +778,37 @@ const MENU = {
     {id:'pastry_male_ideal_cake', p:240000, img:'images/muzhskoy_ideal.jpg', sub:'event', n:{ru:'Мужской идеал', uz:'Ideal', en:'Ideal'}}
   ],
 
-  /* ✅ ВАШИ НОВЫЕ ПИРОЖНЫЕ + img = images/images.jpg */
+  /* ✅✅✅ ПИРОЖНОЕ — уникальные названия файлов для репозитория */
   pastries:[
-    {id:'pas_snickers', p:22000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Сникерс', uz:'Snickers pirojnoye', en:'Snickers pastry'}},
-    {id:'pas_rafaello', p:45000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Рафаэлло', uz:'Rafaello pirojnoye', en:'Raffaello pastry'}},
-    {id:'pas_napoleon_icecream', p:40000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Наполеон Мороженое', uz:'Napoleon (muzqaymoq)', en:'Napoleon ice cream'}},
-    {id:'pas_napoleon_banana', p:22000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Наполеон Банановый', uz:'Bananli napoleon', en:'Banana napoleon'}},
-    {id:'pas_napoleon_banana_quarter', p:60000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Наполеон Банановый четверть', uz:'Bananli napoleon (chorak)', en:'Banana napoleon (quarter)'}},
-    {id:'pas_napoleon_banana_half', p:120000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Наполеон Банановый половина', uz:'Bananli napoleon (yarim)', en:'Banana napoleon (half)'}},
-    {id:'pas_pear_mousse', p:25000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Груша муссовая', uz:'Nok muss', en:'Pear mousse'}},
-    {id:'pas_coconut_mousse', p:25000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Кокос муссовый', uz:'Kokos muss', en:'Coconut mousse'}},
-    {id:'pas_cappuccino_cup', p:14000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Чашка Капучино', uz:'Kapuchino chashka', en:'Cappuccino cup'}},
-    {id:'pas_cappuccino_cup_mini', p:12000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Чашка Капучино мини', uz:'Kapuchino mini', en:'Cappuccino cup mini'}},
-    {id:'pas_heart_mousse', p:25000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Сердце муссовое', uz:'Yurak muss', en:'Heart mousse'}},
-    {id:'pas_bird_milk', p:20000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Птичье молоко', uz:'Qush suti', en:"Bird's milk"}}, 
-    {id:'pas_cherry', p:20000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Вишенка', uz:'Gilos', en:'Cherry pastry'}},
-    {id:'pas_tart_pistachio', p:12000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Тарталетка фисташковая', uz:'Fistashkali tartaletka', en:'Pistachio tartlet'}},
-    {id:'pas_tart_choco', p:12000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Тарталетка шоколадная', uz:'Shokoladli tartaletka', en:'Chocolate tartlet'}},
-    {id:'pas_kiev', p:20000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Киевский', uz:'Kiyev', en:'Kyiv pastry'}},
-    {id:'pas_opera', p:20000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Опера', uz:'Opera', en:'Opera'}},
-    {id:'pas_mousse', p:11000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Муссовое', uz:'Mussli', en:'Mousse pastry'}},
-    {id:'pas_curd_biscuit', p:12000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Творожный Бисквит', uz:'Tvorogli biskvit', en:'Curd biscuit'}},
-    {id:'pas_pistachio', p:14000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Фисташка', uz:'Fistashka', en:'Pistachio'}},
-    {id:'pas_rafaello_mini', p:14000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Рафаэлло Mини', uz:'Rafaello mini', en:'Raffaello mini'}},
-    {id:'pas_ferrero_rocher', p:20000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Ферреро Роше', uz:'Ferrero Rocher', en:'Ferrero Rocher'}},
-    {id:'pas_dubai_kataifi', p:30000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Дубайский Катаифи', uz:'Dubay kataifi', en:'Dubai kataifi'}},
-    {id:'pas_spartak_nutella', p:12000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Спартак с нутеллой', uz:'Spartak (Nutella)', en:'Spartak with Nutella'}},
-    {id:'pas_male_ideal', p:20000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Мужской идеал', uz:'Erkak ideal', en:'Male ideal'}},
-    {id:'pas_smetannik', p:20000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Сметанник', uz:'Smetannik', en:'Smetannik'}},
-    {id:'pas_asalin', p:20000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Асалин', uz:'Asalin', en:'Asalin'}},
-    {id:'pas_afghan', p:25000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Авганский', uz:'Afg‘oncha', en:'Afghan'}},
-    {id:'pas_nutella', p:30000, img:'images/images.jpg', sub:'', n:{ru:'Пирожное Нутелла', uz:'Nutella', en:'Nutella'}}
+    {id:'pas_snickers', p:22000, img:'images/pas_snickers.jpg', sub:'', n:{ru:'Пирожное Сникерс', uz:'Snickers pirojnoye', en:'Snickers pastry'}},
+    {id:'pas_rafaello', p:45000, img:'images/pas_rafaello.jpg', sub:'', n:{ru:'Пирожное Рафаэлло', uz:'Rafaello pirojnoye', en:'Raffaello pastry'}},
+    {id:'pas_napoleon_icecream', p:40000, img:'images/pas_napoleon_icecream.jpg', sub:'', n:{ru:'Пирожное Наполеон Мороженое', uz:'Napoleon (muzqaymoq)', en:'Napoleon ice cream'}},
+    {id:'pas_napoleon_banana', p:22000, img:'images/pas_napoleon_banana.jpg', sub:'', n:{ru:'Пирожное Наполеон Банановый', uz:'Bananli napoleon', en:'Banana napoleon'}},
+    {id:'pas_napoleon_banana_quarter', p:60000, img:'images/pas_napoleon_banana_quarter.jpg', sub:'', n:{ru:'Пирожное Наполеон Банановый четверть', uz:'Bananli napoleon (chorak)', en:'Banana napoleon (quarter)'}},
+    {id:'pas_napoleon_banana_half', p:120000, img:'images/pas_napoleon_banana_half.jpg', sub:'', n:{ru:'Пирожное Наполеон Банановый половина', uz:'Bananli napoleon (yarim)', en:'Banana napoleon (half)'}},
+    {id:'pas_pear_mousse', p:25000, img:'images/pas_pear_mousse.jpg', sub:'', n:{ru:'Пирожное Груша муссовая', uz:'Nok muss', en:'Pear mousse'}},
+    {id:'pas_coconut_mousse', p:25000, img:'images/pas_coconut_mousse.jpg', sub:'', n:{ru:'Пирожное Кокос муссовый', uz:'Kokos muss', en:'Coconut mousse'}},
+    {id:'pas_cappuccino_cup', p:14000, img:'images/pas_cappuccino_cup.jpg', sub:'', n:{ru:'Пирожное Чашка Капучино', uz:'Kapuchino chashka', en:'Cappuccino cup'}},
+    {id:'pas_cappuccino_cup_mini', p:12000, img:'images/pas_cappuccino_cup_mini.jpg', sub:'', n:{ru:'Пирожное Чашка Капучино мини', uz:'Kapuchino mini', en:'Cappuccino cup mini'}},
+    {id:'pas_heart_mousse', p:25000, img:'images/pas_heart_mousse.jpg', sub:'', n:{ru:'Пирожное Сердце муссовое', uz:'Yurak muss', en:'Heart mousse'}},
+    {id:'pas_bird_milk', p:20000, img:'images/pas_bird_milk.jpg', sub:'', n:{ru:'Пирожное Птичье молоко', uz:'Qush suti', en:"Bird's milk"}},
+    {id:'pas_cherry', p:20000, img:'images/pas_cherry.jpg', sub:'', n:{ru:'Пирожное Вишенка', uz:'Gilos', en:'Cherry pastry'}},
+    {id:'pas_tart_pistachio', p:12000, img:'images/pas_tart_pistachio.jpg', sub:'', n:{ru:'Пирожное Тарталетка фисташковая', uz:'Fistashkali tartaletka', en:'Pistachio tartlet'}},
+    {id:'pas_tart_choco', p:12000, img:'images/pas_tart_choco.jpg', sub:'', n:{ru:'Пирожное Тарталетка шоколадная', uz:'Shokoladli tartaletka', en:'Chocolate tartlet'}},
+    {id:'pas_kiev', p:20000, img:'images/pas_kiev.jpg', sub:'', n:{ru:'Пирожное Киевский', uz:'Kiyev', en:'Kyiv pastry'}},
+    {id:'pas_opera', p:20000, img:'images/pas_opera.jpg', sub:'', n:{ru:'Пирожное Опера', uz:'Opera', en:'Opera'}},
+    {id:'pas_mousse', p:11000, img:'images/pas_mousse.jpg', sub:'', n:{ru:'Пирожное Муссовое', uz:'Mussli', en:'Mousse pastry'}},
+    {id:'pas_curd_biscuit', p:12000, img:'images/pas_curd_biscuit.jpg', sub:'', n:{ru:'Пирожное Творожный Бисквит', uz:'Tvorogli biskvit', en:'Curd biscuit'}},
+    {id:'pas_pistachio', p:14000, img:'images/pas_pistachio.jpg', sub:'', n:{ru:'Пирожное Фисташка', uz:'Fistashka', en:'Pistachio'}},
+    {id:'pas_rafaello_mini', p:14000, img:'images/pas_rafaello_mini.jpg', sub:'', n:{ru:'Пирожное Рафаэлло Mини', uz:'Rafaello mini', en:'Raffaello mini'}},
+    {id:'pas_ferrero_rocher', p:20000, img:'images/pas_ferrero_rocher.jpg', sub:'', n:{ru:'Пирожное Ферреро Роше', uz:'Ferrero Rocher', en:'Ferrero Rocher'}},
+    {id:'pas_dubai_kataifi', p:30000, img:'images/pas_dubai_kataifi.jpg', sub:'', n:{ru:'Пирожное Дубайский Катаифи', uz:'Dubay kataifi', en:'Dubai kataifi'}},
+    {id:'pas_spartak_nutella', p:12000, img:'images/pas_spartak_nutella.jpg', sub:'', n:{ru:'Пирожное Спартак с нутеллой', uz:'Spartak (Nutella)', en:'Spartak with Nutella'}},
+    {id:'pas_male_ideal', p:20000, img:'images/pas_male_ideal.jpg', sub:'', n:{ru:'Пирожное Мужской идеал', uz:'Erkak ideal', en:'Male ideal'}},
+    {id:'pas_smetannik', p:20000, img:'images/pas_smetannik.jpg', sub:'', n:{ru:'Пирожное Сметанник', uz:'Smetannik', en:'Smetannik'}},
+    {id:'pas_asalin', p:20000, img:'images/pas_asalin.jpg', sub:'', n:{ru:'Пирожное Асалин', uz:'Asalin', en:'Asalin'}},
+    {id:'pas_afghan', p:25000, img:'images/pas_afghan.jpg', sub:'', n:{ru:'Пирожное Авганский', uz:'Afg‘oncha', en:'Afghan'}},
+    {id:'pas_nutella', p:30000, img:'images/pas_nutella.jpg', sub:'', n:{ru:'Пирожное Нутелла', uz:'Nutella', en:'Nutella'}}
   ],
 
   shortbread_pastries:[
@@ -925,37 +852,10 @@ const MENU = {
   ],
 
   drinks:[
-    {id:'dr_fansy_cool_cola_15', p:15000, img:'images/dr_fansy_cool_cola_15.png', sub:'', n:{ru:'Fansy Cool Cola 1.5L', uz:'Fansy Cool Cola 1.5L', en:'Fansy Cool Cola 1.5L'}},
-    {id:'dr_fansy_lemon_15', p:15000, img:'images/dr_fansy_lemon_15.png', sub:'', n:{ru:'Fansy Lemon 1.5L', uz:'Fansy Lemon 1.5L', en:'Fansy Lemon 1.5L'}},
-    {id:'dr_fansy_dyushes_15', p:15000, img:'images/dr_fansy_dyushes_15.png', sub:'', n:{ru:'Fansy Dyushes 1.5L', uz:'Fansy Dyushes 1.5L', en:'Fansy Dyushes 1.5L'}},
-
-    {id:'dr_bonaqua_gas_15', p:0, img:'images/dr_bonaqua_gas_15.png', sub:'', n:{ru:'Bonaqua Газ 1.5L', uz:'Bonaqua gaz 1.5L', en:'Bonaqua sparkling 1.5L'}},
-    {id:'dr_bonaqua_still_15', p:0, img:'images/dr_bonaqua_still_15.png', sub:'', n:{ru:'Bonaqua Без газа 1.5L', uz:'Bonaqua gazsiz 1.5L', en:'Bonaqua still 1.5L'}},
-
     {id:'dr_cola_05', p:8000, img:'images/dr_cola_05.png', sub:'', n:{ru:'Coca Cola 0.5L', uz:'Coca Cola 0.5L', en:'Coca Cola 0.5L'}},
     {id:'dr_fanta_05', p:8000, img:'images/dr_fanta_05.png', sub:'', n:{ru:'Fanta 0.5L', uz:'Fanta 0.5L', en:'Fanta 0.5L'}},
     {id:'dr_sprite_05', p:8000, img:'images/dr_sprite_05.png', sub:'', n:{ru:'Sprite 0.5L', uz:'Sprite 0.5L', en:'Sprite 0.5L'}},
-    {id:'dr_fuse_tea_05', p:8000, img:'images/dr_fuse_tea_05.png', sub:'', n:{ru:'Fuse Tea 0.5L', uz:'Fuse Tea 0.5L', en:'Fuse Tea 0.5L'}},
-
-    {id:'dr_fuse_tea_1', p:0, img:'images/dr_fuse_tea_1.png', sub:'', n:{ru:'Fuse Tea 1L', uz:'Fuse Tea 1L', en:'Fuse Tea 1L'}},
-    {id:'dr_cappy_pulpy_orange', p:0, img:'images/dr_cappy_pulpy_orange.png', sub:'', n:{ru:'Cappy Pulpy Apelsin', uz:'Cappy Pulpy apelsin', en:'Cappy Pulpy Orange'}},
-
-    {id:'dr_bonaqua_gas_1', p:10000, img:'images/dr_bonaqua_gas_1.png', sub:'', n:{ru:'Bonaqua Газ 1L', uz:'Bonaqua gaz 1L', en:'Bonaqua sparkling 1L'}},
-    {id:'dr_bonaqua_still_1', p:10000, img:'images/dr_bonaqua_still_1.png', sub:'', n:{ru:'Bonaqua Без газа 1L', uz:'Bonaqua gazsiz 1L', en:'Bonaqua still 1L'}},
-
-    {id:'dr_bonaqua_gas_05', p:0, img:'images/dr_bonaqua_gas_05.png', sub:'', n:{ru:'Bonaqua Газ 0.5L', uz:'Bonaqua gaz 0.5L', en:'Bonaqua sparkling 0.5L'}},
-    {id:'dr_bonaqua_still_05', p:0, img:'images/dr_bonaqua_still_05.png', sub:'', n:{ru:'Bonaqua Без газа 0.5L', uz:'Bonaqua gazsiz 0.5L', en:'Bonaqua still 0.5L'}},
-
-    {id:'dr_cola_zero_1', p:12000, img:'images/dr_cola_zero_1.png', sub:'', n:{ru:'Coca Cola Zero 1L', uz:'Coca Cola Zero 1L', en:'Coca Cola Zero 1L'}},
-
-    {id:'dr_bogi_033', p:4000, img:'images/dr_bogi_033.png', sub:'', n:{ru:'Bogi Baland 0.33L', uz:'Bogi Baland 0.33L', en:'Bogi Baland 0.33L'}},
-    {id:'dr_bogi_05', p:5000, img:'images/dr_bogi_05.png', sub:'', n:{ru:'Bogi Baland 0.5L', uz:'Bogi Baland 0.5L', en:'Bogi Baland 0.5L'}},
-
-    {id:'dr_cola_025', p:7000, img:'images/dr_cola_025.png', sub:'', n:{ru:'Coca Cola 0.25L', uz:'Coca Cola 0.25L', en:'Coca Cola 0.25L'}},
-    {id:'dr_fanta_025', p:7000, img:'images/dr_fanta_025.png', sub:'', n:{ru:'Fanta 0.25L', uz:'Fanta 0.25L', en:'Fanta 0.25L'}},
-    {id:'dr_sprite_025', p:7000, img:'images/dr_sprite_025.png', sub:'', n:{ru:'Sprite 0.25L', uz:'Sprite 0.25L', en:'Sprite 0.25L'}},
-
-    {id:'dr_tesco_dyushes_05', p:0, img:'images/dr_tesco_dyushes_05.png', sub:'', n:{ru:'Tesco Duyshes 0.5L', uz:'Tesco Dyushes 0.5L', en:'Tesco Dyushes 0.5L'}}
+    {id:'dr_fuse_tea_05', p:8000, img:'images/dr_fuse_tea_05.png', sub:'', n:{ru:'Fuse Tea 0.5L', uz:'Fuse Tea 0.5L', en:'Fuse Tea 0.5L'}}
   ]
 };
 
@@ -992,18 +892,8 @@ const CATS = {
   }
 };
 
-const SUBCATS = {
-  cakes: [
-    {key:'wedding', ico:'💍', n:{ru:'Свадебные', uz:"To‘y", en:'Wedding'}},
-    {key:'bento',   ico:'🧁', n:{ru:'Бенто',    uz:'Bento', en:'Bento'}},
-    {key:'roll',    ico:'🍥', n:{ru:'Торты-рулеты', uz:'Rulet', en:'Roll cakes'}},
-    {key:'event',   ico:'🎉', n:{ru:'На мероприятия', uz:'Tadbir', en:'Events'}}
-  ]
-};
-
-/* карусели (оставил как было) */
 const POPULAR = ['cheesecake_pistachio','dr_cola_05','cake_choco','pas_napoleon_icecream','bak_fatir_big'];
-const NEW_ITEMS = ['cheesecake_raspberry','trifle_fruit','dr_cola_zero_1','pas_dubai_kataifi'];
+const NEW_ITEMS = ['cheesecake_raspberry','trifle_fruit','pas_dubai_kataifi'];
 const GIFT_ITEMS = ['cake_redvelvet','sc_heart_500','trifle_choco','pas_rafaello_mini'];
 
 const ITEM_INDEX = {};
@@ -1021,7 +911,6 @@ function formatSum(x){
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,' ');
 }
 
-/* ✅ тексты для 3 языков */
 function applyUI(){
   menuTitle.innerText = UI[lang].menu;
   mReviewTitle.innerText = UI[lang].reviewTitle;
@@ -1087,7 +976,6 @@ function callPhone2(e){
   try{ Telegram.WebApp.openLink(tel); }catch(_){ window.location.href = tel; }
 }
 
-/* legal */
 function toggleLegal(){
   const w = document.getElementById('legalWrap');
   w.style.display = (w.style.display==='none' || !w.style.display) ? 'block' : 'none';
@@ -1098,7 +986,6 @@ function openManagerChat(e){
   try{ Telegram.WebApp.openLink(url); }catch(_){ window.open(url,'_blank'); }
 }
 
-/* reviews */
 function toggleReviewWidget(){
   const w = document.getElementById('reviewWidgetWrap');
   w.style.display = (w.style.display==='none' || !w.style.display) ? 'block' : 'none';
@@ -1113,7 +1000,7 @@ function openInstagram(e){ try{e.preventDefault();e.stopPropagation();}catch(_){
   try{Telegram.WebApp.openLink(url);}catch(_){window.open(url,'_blank');}
 }
 
-/* ✅ фото-модалка */
+/* image modal */
 function openImage(e, id){
   try{ e.preventDefault(); e.stopPropagation(); }catch(_){}
   const it = ITEM_INDEX[id];
@@ -1170,54 +1057,6 @@ function searchProducts(){
       }
     });
   }
-}
-
-/* subcats */
-function openSubcats(catKey){
-  const list = SUBCATS[catKey] || [];
-  const title = CATS[lang][catKey] || catKey;
-
-  subTitle.innerText = (lang==='ru') ? `Подкатегории: ${title}`
-    : (lang==='uz') ? `Bo‘limlar: ${title}`
-    : `Subcategories: ${title}`;
-
-  subGrid.innerHTML = '';
-  subAllWrap.innerHTML = '';
-
-  list.forEach(sc=>{
-    const nm = (sc.n && (sc.n[lang] || sc.n.ru)) ? (sc.n[lang] || sc.n.ru) : sc.key;
-    subGrid.innerHTML += `
-      <div class="sub-tile" onclick="pickSubcat('${catKey}','${sc.key}')">
-        <div class="sub-ico">${sc.ico}</div>
-        <div class="sub-name">${escapeHtml(nm)}</div>
-      </div>
-    `;
-  });
-
-  const allLabel = (catKey==='cakes')
-    ? (lang==='ru' ? 'Все торты' : lang==='uz' ? 'Barcha tortlar' : 'All cakes')
-    : (lang==='ru' ? 'Показать всё' : lang==='uz' ? "Hammasi" : 'Show all');
-
-  subAllWrap.innerHTML = `
-    <div class="sub-tile" onclick="pickSubcat('${catKey}','')">
-      <div class="sub-ico">📦</div>
-      <div class="sub-name">${escapeHtml(allLabel)}</div>
-    </div>
-  `;
-
-  subBackdrop.classList.add('show');
-  subSheet.classList.add('show');
-}
-function closeSubcats(){
-  subBackdrop.classList.remove('show');
-  subSheet.classList.remove('show');
-}
-function pickSubcat(catKey, subKey){
-  category = catKey;
-  currentSubcat = subKey || '';
-  renderCats();
-  renderProducts();
-  closeSubcats();
 }
 
 /* carousels */
@@ -1285,7 +1124,6 @@ function chgFrom(e,id,delta){
   if(e){ e.preventDefault(); e.stopPropagation(); }
   chg(id,delta);
 }
-
 function syncCounters(id){
   const a = document.getElementById('pc_'+id);
   if(a) a.innerText = cart[id]||0;
@@ -1294,18 +1132,14 @@ function syncCounters(id){
   const c = document.getElementById('c_'+id);
   if(c) c.innerText = cart[id]||0;
 }
-
 function calcItemsSum(){
   let s=0;
   for(const id in cart) s += (cart[id]||0) * (ITEM_INDEX[id]?.p||0);
   return s;
 }
-
-/* ✅ доставка считается сразу */
 function calcDeliveryFee(){
   return (type === 'delivery') ? DELIVERY_FEE_SAMARKAND : 0;
 }
-
 function updateTotal(){
   const itemsSum = calcItemsSum();
   const dfee = calcDeliveryFee();
@@ -1315,8 +1149,6 @@ function updateTotal(){
   grandTotal.innerText = formatSum(grand);
   stickyTotal.innerText = formatSum(grand);
 }
-
-/* chg */
 function chg(id,delta){
   cart[id]=Math.max(0,(cart[id]||0)+delta);
   syncCounters(id);
@@ -1328,12 +1160,7 @@ function onCategoryClick(k){
   category = k;
   currentSubcat = '';
   renderCats();
-
-  if(SUBCATS[k] && SUBCATS[k].length){
-    openSubcats(k);
-  }else{
-    renderProducts();
-  }
+  renderProducts();
 }
 function renderCats(){
   cats.innerHTML='';
@@ -1359,8 +1186,7 @@ function cardHTML(it){
 function renderProducts(){
   products.innerHTML='';
   const list = (MENU[category]||[]);
-  const filtered = currentSubcat ? list.filter(it => (it.sub||'') === currentSubcat) : list;
-  (filtered.length ? filtered : list).forEach(it=>{
+  list.forEach(it=>{
     cart[it.id]=cart[it.id]||0;
     products.innerHTML += cardHTML(it);
   });
@@ -1371,19 +1197,14 @@ function setType(t,btn){
   type=t;
   document.querySelectorAll('.types .btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-
   address.style.display = (type==='pickup') ? 'none' : 'block';
-
   updateTotal();
 }
-
 function setPayment(p){
   payment=p;
   payCash.classList.toggle('active', p==='cash');
   payClick.classList.toggle('active', p==='click');
 }
-
-/* ✅ openCart */
 function openCart(){
   const el = document.getElementById('cartBox');
   if(!el) return;
@@ -1439,9 +1260,7 @@ function sendOrder(){
     phone:phone.value,
     comment:comment.value,
     order_id: genOrderId(),
-    lang,
-    category,
-    subcategory: currentSubcat || ''
+    lang
   };
 
   setTimeout(()=>{
@@ -1492,7 +1311,6 @@ function setLang(l,btn){
   applyUI();
 }
 
-/* default */
 applyUI();
 setPayment('cash');
 btnDelivery.classList.add('active');
@@ -1500,7 +1318,6 @@ btnPickup.classList.remove('active');
 type='delivery';
 updateTotal();
 
-/* ✅ после загрузки — измеряем высоту sticky */
 setTimeout(syncStickyHeight, 50);
 </script>
 </body>
