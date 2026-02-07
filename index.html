@@ -450,7 +450,7 @@ body[data-theme="dark"] .promo-img-wrap{background:#111;}
 .promo-img{
   width:100%;
   max-height:60vh;
-  object-fit:contain; /* главное */
+  object-fit:contain;
   display:block;
   border-radius:16px;
   background:transparent;
@@ -886,8 +886,6 @@ const UI = {
 
 let lang='ru',category='cheesecakes',subcat='all',type='delivery',payment='cash',cart={};
 
-/* ✅ MENU: добавил в Торты блюда (afghanskiy/asalin/muzhskoy_ideal/napoleon_banan/napoleon_morozhenoe/nutella/smetannik)
-   ✅ картинки: images/afghanskiy.jpg ... */
 const MENU = {
   cheesecakes:[
     {id:'cheesecake_pistachio', p:25000, img:'images/cheesecake_pistachio.jpg', n:{ru:'Чизкейк Фисташковый', uz:'Fistashkali chizkeyk', en:'Pistachio cheesecake'}},
@@ -963,11 +961,39 @@ const MENU = {
     {id:'bak_fatir_mid', p:12000, img:'images/bak_fatir_mid.jpg', n:{ru:'Фатир (средний)', uz:"Fatir (o‘rtacha)", en:'Fatir (medium)'}}
   ],
 
+  /* ✅ ОБНОВИЛ: все напитки из твоего списка */
   drinks:[
+    {id:'dr_fansy_cool_cola_15', p:15000, img:'images/dr_fansy_cool_cola_15.jpg', n:{ru:'Fansy Cool Cola 1.5L', uz:'Fansy Cool Cola 1.5L', en:'Fansy Cool Cola 1.5L'}},
+    {id:'dr_fansy_lemon_15', p:15000, img:'images/dr_fansy_lemon_15.jpg', n:{ru:'Fansy Lemon 1.5L', uz:'Fansy Lemon 1.5L', en:'Fansy Lemon 1.5L'}},
+    {id:'dr_fansy_dyushes_15', p:15000, img:'images/dr_fansy_dyushes_15.jpg', n:{ru:'Fansy Dyushes 1.5L', uz:'Fansy Dyushes 1.5L', en:'Fansy Dyushes 1.5L'}},
+
+    {id:'dr_bonaqua_gas_15', p:12000, img:'images/dr_bonaqua_gas_15.jpg', n:{ru:'Bonaqua Газ 1.5L', uz:'Bonaqua Gaz 1.5L', en:'Bonaqua Sparkling 1.5L'}},
+    {id:'dr_bonaqua_still_15', p:12000, img:'images/dr_bonaqua_still_15.jpg', n:{ru:'Bonaqua Без газа 1.5L', uz:'Bonaqua Gazsiz 1.5L', en:'Bonaqua Still 1.5L'}},
+
     {id:'dr_cola_05', p:8000, img:'images/dr_cola_05.jpg', n:{ru:'Coca Cola 0.5L', uz:'Coca Cola 0.5L', en:'Coca Cola 0.5L'}},
     {id:'dr_fanta_05', p:8000, img:'images/dr_fanta_05.jpg', n:{ru:'Fanta 0.5L', uz:'Fanta 0.5L', en:'Fanta 0.5L'}},
     {id:'dr_sprite_05', p:8000, img:'images/dr_sprite_05.jpg', n:{ru:'Sprite 0.5L', uz:'Sprite 0.5L', en:'Sprite 0.5L'}},
-    {id:'dr_fuse_tea_05', p:8000, img:'images/dr_fuse_tea_05.jpg', n:{ru:'Fuse Tea 0.5L', uz:'Fuse Tea 0.5L', en:'Fuse Tea 0.5L'}}
+    {id:'dr_fuse_tea_05', p:8000, img:'images/dr_fuse_tea_05.jpg', n:{ru:'Fuse Tea 0.5L', uz:'Fuse Tea 0.5L', en:'Fuse Tea 0.5L'}},
+
+    {id:'dr_fuse_tea_1', p:12000, img:'images/dr_fuse_tea_1.jpg', n:{ru:'Fuse Tea 1L', uz:'Fuse Tea 1L', en:'Fuse Tea 1L'}},
+    {id:'dr_cappy_pulpy_orange', p:12000, img:'images/dr_cappy_pulpy_orange.jpg', n:{ru:'Cappy Pulpy Apelsin', uz:'Cappy Pulpy Apelsin', en:'Cappy Pulpy Orange'}},
+
+    {id:'dr_bonaqua_gas_1', p:10000, img:'images/dr_bonaqua_gas_1.jpg', n:{ru:'Bonaqua Газ 1L', uz:'Bonaqua Gaz 1L', en:'Bonaqua Sparkling 1L'}},
+    {id:'dr_bonaqua_still_1', p:10000, img:'images/dr_bonaqua_still_1.jpg', n:{ru:'Bonaqua Без газа 1L', uz:'Bonaqua Gazsiz 1L', en:'Bonaqua Still 1L'}},
+
+    {id:'dr_bonaqua_gas_05', p:5000, img:'images/dr_bonaqua_gas_05.jpg', n:{ru:'Bonaqua Газ 0.5L', uz:'Bonaqua Gaz 0.5L', en:'Bonaqua Sparkling 0.5L'}},
+    {id:'dr_bonaqua_still_05', p:5000, img:'images/dr_bonaqua_still_05.jpg', n:{ru:'Bonaqua Без газа 0.5L', uz:'Bonaqua Gazsiz 0.5L', en:'Bonaqua Still 0.5L'}},
+
+    {id:'dr_cola_zero_1', p:12000, img:'images/dr_cola_zero_1.jpg', n:{ru:'Coca Cola Zero 1L', uz:'Coca Cola Zero 1L', en:'Coca Cola Zero 1L'}},
+
+    {id:'dr_bogi_baland_033', p:4000, img:'images/dr_bogi_baland_033.jpg', n:{ru:'Bogi Baland 0.33L', uz:'Bogi Baland 0.33L', en:'Bogi Baland 0.33L'}},
+    {id:'dr_bogi_baland_05', p:5000, img:'images/dr_bogi_baland_05.jpg', n:{ru:'Bogi Baland 0.5L', uz:'Bogi Baland 0.5L', en:'Bogi Baland 0.5L'}},
+
+    {id:'dr_cola_025', p:7000, img:'images/dr_cola_025.jpg', n:{ru:'Coca Cola 0.25L', uz:'Coca Cola 0.25L', en:'Coca Cola 0.25L'}},
+    {id:'dr_fanta_025', p:7000, img:'images/dr_fanta_025.jpg', n:{ru:'Fanta 0.25L', uz:'Fanta 0.25L', en:'Fanta 0.25L'}},
+    {id:'dr_sprite_025', p:7000, img:'images/dr_sprite_025.jpg', n:{ru:'Sprite 0.25L', uz:'Sprite 0.25L', en:'Sprite 0.25L'}},
+
+    {id:'dr_tesco_dyushes_05', p:8000, img:'images/dr_tesco_dyushes_05.jpg', n:{ru:'Tesco Duyshes 0.5L', uz:'Tesco Duyshes 0.5L', en:'Tesco Dyushes 0.5L'}}
   ]
 };
 
@@ -1131,7 +1157,7 @@ function showPromo(){
   p.classList.add('show');
   p.setAttribute('aria-hidden','false');
   clearTimeout(promoTimer);
-  promoTimer = setTimeout(()=>{ hidePromo(); }, 6000); /* ✅ 6 секунд */
+  promoTimer = setTimeout(()=>{ hidePromo(); }, 6000);
 }
 function hidePromo(){
   const p = document.getElementById('promo');
@@ -1281,7 +1307,6 @@ function onCategoryClick(k){
   renderCats();
   renderProducts();
 
-  /* ✅ при нажатии на "Торты" — снизу всплывает окно подкатегорий */
   if(category === 'cakes'){
     openCakeSubcats();
   }
