@@ -133,7 +133,7 @@ body[data-theme="dark"]{
 .act-ico{font-size:16px;line-height:1;color:#222;}
 
 /* buttons */
-.langs,.types,.payments{display:flex;gap:12px;padding:12px;justify-content:center;}
+.langs,.types,.payments{display:flex;gap:12px;padding:12px;justify-content:center;flex-wrap:wrap;}
 .btn{
   padding:12px 20px;border-radius:28px;font-weight:900;min-width:120px;text-align:center;
   cursor:pointer;transition:.15s;border:1px solid var(--stroke);background:#fffdf9;
@@ -463,6 +463,63 @@ body[data-theme="dark"] .promo-x{background:rgba(28,28,28,.92); color:#fff; bord
   .btn{min-width:110px;padding:12px 16px;}
   .cat-btn{min-width:126px;padding:12px 16px;font-size:13px;}
 }
+
+/* ✅ ONLINE PAY modal */
+.pay-modal{
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.62);
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; pointer-events:none;
+  transition:.18s;
+  z-index:2100;
+  padding:18px;
+}
+.pay-modal.show{opacity:1;pointer-events:auto;}
+.pay-box{
+  width:min(520px, 100%);
+  border-radius:22px;
+  overflow:hidden;
+  background:#fff;
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:0 18px 44px rgba(0,0,0,.22);
+}
+body[data-theme="dark"] .pay-box{background:#1c1c1c;color:#f1f1f1;}
+.pay-top{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:10px;
+  padding:12px 12px;
+  background:rgba(0,0,0,.04);
+}
+body[data-theme="dark"] .pay-top{background:rgba(255,255,255,.06);}
+.pay-title{
+  font-weight:900;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+.pay-close{
+  width:38px;height:38px;border:none;border-radius:14px;
+  background:transparent; cursor:pointer;
+  font-size:22px; line-height:1;
+  color:#666;
+}
+body[data-theme="dark"] .pay-close{color:#bbb;}
+.pay-body{padding:14px 14px 16px;}
+.pay-row{
+  border:1px solid var(--stroke);
+  border-radius:16px;
+  padding:12px;
+  background:rgba(0,0,0,.03);
+}
+body[data-theme="dark"] .pay-row{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);}
+.pay-label{font-weight:900;opacity:.85;margin-bottom:6px;}
+.pay-value{
+  font-weight:900;
+  font-size:16px;
+  color:var(--accent-red);
+  word-break:break-word;
+}
+.pay-actions{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;}
+.pay-actions .btn{min-width:auto;flex:1;padding:12px 14px;}
+.small-hint{margin-top:10px;font-size:12px;opacity:.75;text-align:center;font-weight:800;}
 </style>
 </head>
 
@@ -660,6 +717,7 @@ body[data-theme="dark"] .promo-x{background:rgba(28,28,28,.92); color:#fff; bord
   <div class="payments">
     <button class="btn active" id="payCash" onclick="setPayment('cash')"></button>
     <button class="btn" id="payClick" onclick="setPayment('click')"></button>
+    <button class="btn" id="payOnline" onclick="setPayment('online')"></button>
   </div>
 
   <button class="order-btn" id="orderBtn" onclick="sendOrder()"></button>
@@ -675,6 +733,35 @@ body[data-theme="dark"] .promo-x{background:rgba(28,28,28,.92); color:#fff; bord
       <button class="img-modal-close" onclick="closeImgModal(event)">×</button>
     </div>
     <img class="img-modal-img" id="imgModalImg" src="" alt="">
+  </div>
+</div>
+
+<!-- ✅ ONLINE PAY modal -->
+<div class="pay-modal" id="payModal" onclick="closePayModal(event)">
+  <div class="pay-box" onclick="event.stopPropagation()">
+    <div class="pay-top">
+      <div class="pay-title" id="payModalTitle">Оплата онлайн</div>
+      <button class="pay-close" onclick="closePayModal(event)">×</button>
+    </div>
+
+    <div class="pay-body">
+      <div class="pay-row">
+        <div class="pay-label" id="payReceiverLabel">Получатель</div>
+        <div class="pay-value" id="payReceiverVal">—</div>
+
+        <div style="height:12px;"></div>
+
+        <div class="pay-label" id="payCardLabel">Карта</div>
+        <div class="pay-value" id="payCardVal">—</div>
+
+        <div class="pay-actions">
+          <button class="btn" onclick="copyPay(event,'receiver')" id="payCopyReceiverBtn">Копировать получателя</button>
+          <button class="btn" onclick="copyPay(event,'card')" id="payCopyCardBtn">Копировать карту</button>
+        </div>
+
+        <div class="small-hint" id="payHint">Скопируйте данные и оплатите в банковском приложении</div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -731,6 +818,10 @@ const DELIVERY_FEE_SAMARKAND = 10000;
 /* ✅ QR для CLICK */
 const CLICK_QR_IMG = "images/click_qr.jpg";  // <-- положи сюда файл: images/click_qr.jpg
 
+/* ✅ ONLINE PAY (карта) */
+const ONLINE_PAY_RECEIVER = "Abubakir Vohidovich";
+const ONLINE_PAY_CARD = "5614 6821 0369 3760";
+
 const tgUser = Telegram.WebApp.initDataUnsafe?.user || {};
 const tg_username = tgUser.username || "";
 const tg_first_name = tgUser.first_name || "";
@@ -769,11 +860,20 @@ const UI = {
 
     cash:'💵 Наличные',
     click:'💳 CLICK',
+    online:'🌐 Онлайн',
 
     sum:'сум',
 
     /* ✅ подпись QR */
-    clickQrTitle:'💳 CLICK • QR-код'
+    clickQrTitle:'💳 CLICK • QR-код',
+
+    /* ✅ ONLINE texts */
+    onlinePayTitle:'🌐 Онлайн оплата',
+    receiver:'Получатель',
+    card:'Карта',
+    copyReceiver:'Копировать получателя',
+    copyCard:'Копировать карту',
+    payHint:'Скопируйте данные и оплатите в банковском приложении'
   },
   uz:{
     menu:'Menyu',
@@ -807,11 +907,20 @@ const UI = {
 
     cash:'💵 Naqd',
     click:'💳 CLICK',
+    online:'🌐 Onlayn',
 
     sum:"so‘m",
 
     /* ✅ подпись QR */
-    clickQrTitle:'💳 CLICK • QR'
+    clickQrTitle:'💳 CLICK • QR',
+
+    /* ✅ ONLINE texts */
+    onlinePayTitle:'🌐 Onlayn to‘lov',
+    receiver:'Qabul qiluvchi',
+    card:'Karta',
+    copyReceiver:'Qabul qiluvchini nusxa olish',
+    copyCard:'Kartani nusxa olish',
+    payHint:'Ma’lumotlarni nusxa oling va bank ilovasida to‘lang'
   },
   en:{
     menu:'Menu',
@@ -845,11 +954,20 @@ const UI = {
 
     cash:'💵 Cash',
     click:'💳 CLICK',
+    online:'🌐 Online',
 
     sum:'sum',
 
     /* ✅ подпись QR */
-    clickQrTitle:'💳 CLICK • QR code'
+    clickQrTitle:'💳 CLICK • QR code',
+
+    /* ✅ ONLINE texts */
+    onlinePayTitle:'🌐 Online payment',
+    receiver:'Recipient',
+    card:'Card',
+    copyReceiver:'Copy recipient',
+    copyCard:'Copy card',
+    payHint:'Copy the details and pay in your banking app'
   }
 };
 
@@ -1127,6 +1245,17 @@ function applyUI(){
 
   payCash.innerText = UI[lang].cash;
   payClick.innerText = UI[lang].click;
+  payOnline.innerText = UI[lang].online;
+
+  // ✅ ONLINE PAY texts
+  if(window.payModalTitle){
+    payModalTitle.innerText = UI[lang].onlinePayTitle || 'Online payment';
+    payReceiverLabel.innerText = UI[lang].receiver || 'Recipient';
+    payCardLabel.innerText = UI[lang].card || 'Card';
+    payCopyReceiverBtn.innerText = UI[lang].copyReceiver || 'Copy recipient';
+    payCopyCardBtn.innerText = UI[lang].copyCard || 'Copy card';
+    payHint.innerText = UI[lang].payHint || '';
+  }
 
   stickyCartBtn.innerText = UI[lang].cart;
   sumCurrency.innerText = UI[lang].sum;
@@ -1213,6 +1342,52 @@ function openClickQR(){
   imgModalImg.src = CLICK_QR_IMG;
   imgModalImg.onerror = function(){ this.onerror=null; this.src='images/logo.png'; };
   imgModal.classList.add('show');
+}
+
+/* ✅ ONLINE PAY modal */
+function openOnlinePay(){
+  payReceiverVal.innerText = ONLINE_PAY_RECEIVER;
+  payCardVal.innerText = ONLINE_PAY_CARD;
+
+  payModalTitle.innerText = UI[lang].onlinePayTitle || 'Online payment';
+  payReceiverLabel.innerText = UI[lang].receiver || 'Recipient';
+  payCardLabel.innerText = UI[lang].card || 'Card';
+  payCopyReceiverBtn.innerText = UI[lang].copyReceiver || 'Copy recipient';
+  payCopyCardBtn.innerText = UI[lang].copyCard || 'Copy card';
+  payHint.innerText = UI[lang].payHint || '';
+
+  payModal.classList.add('show');
+}
+function closePayModal(e){
+  try{ e.preventDefault(); e.stopPropagation(); }catch(_){}
+  payModal.classList.remove('show');
+}
+async function copyText(text){
+  try{
+    await navigator.clipboard.writeText(text);
+    return true;
+  }catch(_){
+    try{
+      const ta=document.createElement('textarea');
+      ta.value=text;
+      ta.style.position='fixed';
+      ta.style.left='-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      return true;
+    }catch(__){ return false; }
+  }
+}
+function copyPay(e, what){
+  try{ e.preventDefault(); e.stopPropagation(); }catch(_){}
+  const text = (what==='card') ? ONLINE_PAY_CARD : ONLINE_PAY_RECEIVER;
+  copyText(text).then(ok=>{
+    if(ok){
+      try{ Telegram.WebApp.HapticFeedback?.notificationOccurred?.('success'); }catch(_){}
+    }
+  });
 }
 
 /* promo */
@@ -1418,14 +1593,18 @@ function setType(t,btn){
   updateTotal();
 }
 
-/* ✅ Изменено: при выборе CLICK показываем QR */
+/* ✅ Изменено: при выборе CLICK показываем QR, при выборе ONLINE показываем реквизиты */
 function setPayment(p){
   payment=p;
+
   payCash.classList.toggle('active', p==='cash');
   payClick.classList.toggle('active', p==='click');
+  payOnline.classList.toggle('active', p==='online');
 
   if(p === 'click'){
     openClickQR();
+  }else if(p === 'online'){
+    openOnlinePay();
   }
 }
 
