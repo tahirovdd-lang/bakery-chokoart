@@ -728,6 +728,9 @@ window.addEventListener('orientationchange', ()=>setTimeout(syncStickyHeight, 25
 const ADMIN_ID = 6013591658;
 const DELIVERY_FEE_SAMARKAND = 10000;
 
+/* ✅ QR для CLICK */
+const CLICK_QR_IMG = "images/click_qr.jpg";  // <-- положи сюда файл: images/click_qr.jpg
+
 const tgUser = Telegram.WebApp.initDataUnsafe?.user || {};
 const tg_username = tgUser.username || "";
 const tg_first_name = tgUser.first_name || "";
@@ -767,7 +770,10 @@ const UI = {
     cash:'💵 Наличные',
     click:'💳 CLICK',
 
-    sum:'сум'
+    sum:'сум',
+
+    /* ✅ подпись QR */
+    clickQrTitle:'💳 CLICK • QR-код'
   },
   uz:{
     menu:'Menyu',
@@ -802,7 +808,10 @@ const UI = {
     cash:'💵 Naqd',
     click:'💳 CLICK',
 
-    sum:"so‘m"
+    sum:"so‘m",
+
+    /* ✅ подпись QR */
+    clickQrTitle:'💳 CLICK • QR'
   },
   en:{
     menu:'Menu',
@@ -837,7 +846,10 @@ const UI = {
     cash:'💵 Cash',
     click:'💳 CLICK',
 
-    sum:'sum'
+    sum:'sum',
+
+    /* ✅ подпись QR */
+    clickQrTitle:'💳 CLICK • QR code'
   }
 };
 
@@ -892,15 +904,14 @@ function weightLabelById(id){
     return '';
   }
 
-  // Всё остальное (десерты/выпечка/печенье/чизкейки/трайфл) -> граммы
+  // Всё остальное -> граммы
   if(typeof it.w === 'number' && it.w > 0){
     return `${formatSum(it.w)} г`;
   }
   return '';
 }
 
-/* ✅ ДАННЫЕ ИЗ ВАШЕЙ ТАБЛИЦЫ (категории как вы написали) */
-/* ВАЖНО: картинки берутся как images/<id>.jpg — просто назовите файлы так же, как id ниже */
+/* ✅ ДАННЫЕ ИЗ ВАШЕЙ ТАБЛИЦЫ */
 const MENU = {
   cheesecakes:[
     {id:'cheesecake_pistachio', p:25000, w:parseWeightToGrams('190гр'), img:'images/cheesecake_pistachio.jpg', n:{ru:'Чизкейк Фисташковый', uz:'Fistashkali chizkeyk', en:'Pistachio cheesecake'}},
@@ -908,35 +919,28 @@ const MENU = {
     {id:'cheesecake_raspberry', p:25000, w:parseWeightToGrams('145гр'), img:'images/cheesecake_raspberry.jpg', n:{ru:'Чизкейк Малиновый', uz:'Malinali chizkeyk', en:'Raspberry cheesecake'}},
     {id:'cheesecake_caramel', p:25000, w:parseWeightToGrams('154гр'), img:'images/cheesecake_caramel.jpg', n:{ru:'Чизкейк Карамельный', uz:'Karamelli chizkeyk', en:'Caramel cheesecake'}}
   ],
-
   pastries:[
     {id:'pas_napoleon_icecream', p:40000, w:parseWeightToGrams('436гр'), img:'images/pas_napoleon_icecream.jpg', n:{ru:'Наполеон Мороженое', uz:'Napoleon (muzqaymoq)', en:'Napoleon ice cream'}},
     {id:'pas_napoleon_icecream_whole', p:360000, w:parseWeightToGrams('3кг 200гр'), img:'images/pas_napoleon_icecream_whole.jpg', n:{ru:'Наполеон Мороженое Целый', uz:"Napoleon (muzqaymoq) butun", en:'Napoleon ice cream (whole)'}},
-
     {id:'pas_snickers_big', p:50000, w:parseWeightToGrams('360гр'), img:'images/pas_snickers_big.jpg', n:{ru:'Пирожное Сникерс', uz:'Snickers pirojnoye', en:'Snickers pastry'}},
     {id:'pas_afghan_napoleon', p:25000, w:parseWeightToGrams('422гр'), img:'images/pas_afghan_napoleon.jpg', n:{ru:'Афганский Наполеон', uz:"Afg'on Napoleon", en:'Afghan Napoleon'}},
-
     {id:'pas_nutella_256', p:30000, w:parseWeightToGrams('256гр'), img:'images/pas_nutella_256.jpg', n:{ru:'Пирожное Нутелла (256г)', uz:'Nutella (256g)', en:'Nutella (256g)'}},
     {id:'pas_banana_napoleon', p:21000, w:parseWeightToGrams('257гр'), img:'images/pas_banana_napoleon.jpg', n:{ru:'Банановый Наполеон', uz:'Bananli napoleon', en:'Banana napoleon'}},
     {id:'pas_banana_napoleon_quarter', p:60000, w:parseWeightToGrams('721гр'), img:'images/pas_banana_napoleon_quarter.jpg', n:{ru:'Банановый Наполеон Четверть', uz:'Bananli napoleon (chorak)', en:'Banana napoleon (quarter)'}},
     {id:'pas_banana_napoleon_half', p:120000, w:parseWeightToGrams('1кг 500гр'), img:'images/pas_banana_napoleon_half.jpg', n:{ru:'Банановый Наполеон Половина', uz:'Bananli napoleon (yarim)', en:'Banana napoleon (half)'}},
     {id:'pas_banana_napoleon_whole', p:240000, w:parseWeightToGrams('3кг 050гр'), img:'images/pas_banana_napoleon_whole.jpg', n:{ru:'Банановый Наполеон Целый', uz:'Bananli napoleon (butun)', en:'Banana napoleon (whole)'}},
-
     {id:'pas_napoleon_classic', p:20000, w:parseWeightToGrams('238гр'), img:'images/pas_napoleon_classic.jpg', n:{ru:'Наполеон Классический', uz:'Napoleon klassik', en:'Classic Napoleon'}},
     {id:'pas_napoleon_classic_quarter', p:45000, w:parseWeightToGrams('625гр'), img:'images/pas_napoleon_classic_quarter.jpg', n:{ru:'Наполеон Классический Четверть', uz:'Napoleon klassik (chorak)', en:'Classic Napoleon (quarter)'}},
     {id:'pas_napoleon_classic_half', p:90000, w:parseWeightToGrams('1кг 340гр'), img:'images/pas_napoleon_classic_half.jpg', n:{ru:'Наполеон Классический Половина', uz:'Napoleon klassik (yarim)', en:'Classic Napoleon (half)'}},
     {id:'pas_napoleon_classic_whole', p:180000, w:parseWeightToGrams('2кг 540гр'), img:'images/pas_napoleon_classic_whole.jpg', n:{ru:'Наполеон Классический Целый', uz:'Napoleon klassik (butun)', en:'Classic Napoleon (whole)'}},
-
     {id:'pas_medovik', p:14000, w:parseWeightToGrams('196гр'), img:'images/pas_medovik.jpg', n:{ru:'Медовик', uz:'Medovik', en:'Honey cake (slice)'}},
     {id:'pas_medovik_quarter', p:50000, w:parseWeightToGrams('750гр'), img:'images/pas_medovik_quarter.jpg', n:{ru:'Медовик Четверть', uz:'Medovik (chorak)', en:'Honey cake (quarter)'}},
     {id:'pas_medovik_half', p:100000, w:parseWeightToGrams('1кг 700гр'), img:'images/pas_medovik_half.jpg', n:{ru:'Медовик Половина', uz:'Medovik (yarim)', en:'Honey cake (half)'}},
     {id:'pas_medovik_whole', p:200000, w:parseWeightToGrams('3кг 426гр'), img:'images/pas_medovik_whole.jpg', n:{ru:'Медовик Целый', uz:'Medovik (butun)', en:'Honey cake (whole)'}},
-
     {id:'pas_spartak', p:12000, w:parseWeightToGrams('158гр'), img:'images/pas_spartak.jpg', n:{ru:'Спартак', uz:'Spartak', en:'Spartak'}},
     {id:'pas_spartak_quarter', p:60000, w:parseWeightToGrams('877гр'), img:'images/pas_spartak_quarter.jpg', n:{ru:'Спартак четверть', uz:'Spartak (chorak)', en:'Spartak (quarter)'}},
     {id:'pas_spartak_half', p:120000, w:parseWeightToGrams('1кг 658гр'), img:'images/pas_spartak_half.jpg', n:{ru:'Спартак Половина', uz:'Spartak (yarim)', en:'Spartak (half)'}},
     {id:'pas_spartak_whole', p:240000, w:parseWeightToGrams('3кг 328гр'), img:'images/pas_spartak_whole.jpg', n:{ru:'Спартак Целый', uz:'Spartak (butun)', en:'Spartak (whole)'}},
-
     {id:'pas_medovy_asalin', p:20000, w:parseWeightToGrams('206гр'), img:'images/pas_medovy_asalin.jpg', n:{ru:'Медовый Асалин', uz:'Asalin (medoviy)', en:'Asalin honey'}},
     {id:'pas_smetanny_medovik', p:20000, w:parseWeightToGrams('184гр'), img:'images/pas_smetanny_medovik.jpg', n:{ru:'Сметанный Медовик', uz:'Smetanali medovik', en:'Sour cream honey cake'}},
     {id:'pas_dubai', p:30000, w:parseWeightToGrams('138гр'), img:'images/pas_dubai.jpg', n:{ru:'Дубайский', uz:'Dubay', en:'Dubai'}},
@@ -953,23 +957,17 @@ const MENU = {
     {id:'pas_pear_mousse', p:30000, w:parseWeightToGrams('105гр'), img:'images/pas_pear_mousse.jpg', n:{ru:'Груша муссовая', uz:'Nok muss', en:'Pear mousse'}},
     {id:'pas_heart', p:30000, w:parseWeightToGrams('106гр'), img:'images/pas_heart.jpg', n:{ru:'Сердечко', uz:'Yurak', en:'Heart'}},
     {id:'pas_choco_coconut', p:20000, w:parseWeightToGrams('80гр'), img:'images/pas_choco_coconut.jpg', n:{ru:'Шоколадный кокос', uz:'Shokolad-kokos', en:'Chocolate coconut'}},
-
     {id:'pas_cappuccino_14', p:10000, w:parseWeightToGrams('14гр'), img:'images/pas_cappuccino_14.jpg', n:{ru:'Чашка капучино (14г)', uz:'Kapuchino (14g)', en:'Cappuccino cup (14g)'}},
     {id:'pas_cappuccino_27', p:14000, w:parseWeightToGrams('27гр'), img:'images/pas_cappuccino_27.jpg', n:{ru:'Чашка капучино (27г)', uz:'Kapuchino (27g)', en:'Cappuccino cup (27g)'}},
-
     {id:'pas_bird_milk', p:20000, w:parseWeightToGrams('140гр'), img:'images/pas_bird_milk.jpg', n:{ru:'Птичье молоко', uz:'Qush suti', en:"Bird's milk"}},
     {id:'pas_kiev', p:20000, w:parseWeightToGrams('190гр'), img:'images/pas_kiev.jpg', n:{ru:'Киевский', uz:'Kiyev', en:'Kyiv'}},
-
     {id:'pas_nutella_330', p:50000, w:parseWeightToGrams('330гр'), img:'images/pas_nutella_330.jpg', n:{ru:'Пирожное Нутелла (330г)', uz:'Nutella (330g)', en:'Nutella (330g)'}},
-
     {id:'pas_roll_kaym', p:14000, w:parseWeightToGrams('110гр'), img:'images/pas_roll_kaym.jpg', n:{ru:'Рулет каймачный', uz:'Qaymoqli rulet', en:'Cream roll'}},
     {id:'pas_roll_snickers', p:16000, w:parseWeightToGrams('115гр'), img:'images/pas_roll_snickers.jpg', n:{ru:'Рулет Сникерс', uz:'Snickers rulet', en:'Snickers roll'}},
-
     {id:'pas_tart_pistachio', p:12000, w:parseWeightToGrams('58гр'), img:'images/pas_tart_pistachio.jpg', n:{ru:'Тарталетка фисташковая', uz:'Fistashkali tartaletka', en:'Pistachio tartlet'}},
     {id:'pas_tart_fruit', p:12000, w:parseWeightToGrams('58гр'), img:'images/pas_tart_fruit.jpg', n:{ru:'Тарталетка фруктовая', uz:'Mevali tartaletka', en:'Fruit tartlet'}},
     {id:'pas_tart_choco', p:12000, w:parseWeightToGrams('58гр'), img:'images/pas_tart_choco.jpg', n:{ru:'Тарталетка шоколадная', uz:'Shokoladli tartaletka', en:'Chocolate tartlet'}}
   ],
-
   sand_pastry:[
     {id:'sand_ragalik_nuts', p:5000, w:parseWeightToGrams('48гр'), img:'images/sand_ragalik_nuts.jpg', n:{ru:'Рагалик с орехами', uz:"Yong‘oqli rogalik", en:'Nut rogalik'}},
     {id:'sand_lemon_pie', p:16000, w:parseWeightToGrams('165гр'), img:'images/sand_lemon_pie.jpg', n:{ru:'Лимонный пирог', uz:'Limon pirog', en:'Lemon pie'}},
@@ -990,18 +988,15 @@ const MENU = {
     {id:'sand_vatrushka', p:8000, w:parseWeightToGrams('104гр'), img:'images/sand_vatrushka.jpg', n:{ru:'Ватрушка', uz:'Vatrushka', en:'Vatrushka'}},
     {id:'sand_choco_cookie', p:5000, w:parseWeightToGrams('47гр'), img:'images/sand_choco_cookie.jpg', n:{ru:'Шоколадне печенье', uz:'Shokolad pechenye', en:'Chocolate cookie'}}
   ],
-
   trifle:[
     {id:'trifle_raspberry', p:25000, w:parseWeightToGrams('241гр'), img:'images/trifle_raspberry.jpg', n:{ru:'Трайфл Малиновый', uz:'Malinali trifle', en:'Raspberry trifle'}},
     {id:'trifle_fruit', p:25000, w:parseWeightToGrams('241гр'), img:'images/trifle_fruit.jpg', n:{ru:'Трайфл Фруктовый', uz:'Mevali trifle', en:'Fruit trifle'}},
     {id:'trifle_choco', p:25000, w:parseWeightToGrams('197гр'), img:'images/trifle_choco.jpg', n:{ru:'Трайфл Чоко', uz:'Shokolad trifle', en:'Chocolate trifle'}}
   ],
-
   sand_cookie:[
     {id:'cookie_heart', p:2500, w:parseWeightToGrams('48гр'), img:'images/cookie_heart.jpg', n:{ru:'Сердечко', uz:'Yurak', en:'Heart cookie'}},
     {id:'cookie_square', p:2500, w:parseWeightToGrams('48гр'), img:'images/cookie_square.jpg', n:{ru:'Квадратное', uz:'Kvadrat', en:'Square cookie'}}
   ],
-
   bakery:[
     {id:'bak_durda_fatir_medium', p:14000, w:null, img:'images/bak_durda_fatir_medium.jpg', n:{ru:'Дурда Фатир средний', uz:'Durda fatir o‘rtacha', en:'Durda fatir medium'}},
     {id:'bak_durda_fatir_big', p:22000, w:null, img:'images/bak_durda_fatir_big.jpg', n:{ru:'Дурда Фатир большая', uz:'Durda fatir katta', en:'Durda fatir big'}},
@@ -1011,7 +1006,6 @@ const MENU = {
     {id:'bak_fatir_nut_medium', p:25000, w:null, img:'images/bak_fatir_nut_medium.jpg', n:{ru:'Фатир с орехом средний', uz:"Fatir yong‘oq o‘rtacha", en:'Fatir with nuts medium'}},
     {id:'bak_fatir_nut_big', p:35000, w:null, img:'images/bak_fatir_nut_big.jpg', n:{ru:'Фатир с орехом большой', uz:"Fatir yong‘oq katta", en:'Fatir with nuts big'}}
   ],
-
   drinks:[
     {id:'dr_fansy_cool_cola_15', p:15000, img:'images/dr_fansy_cool_cola_15.jpg', n:{ru:'Fansy Cool Cola 1.5L', uz:'Fansy Cool Cola 1.5L', en:'Fansy Cool Cola 1.5L'}},
     {id:'dr_fansy_lemon_15', p:15000, img:'images/dr_fansy_lemon_15.jpg', n:{ru:'Fansy Lemon 1.5L', uz:'Fansy Lemon 1.5L', en:'Fansy Lemon 1.5L'}},
@@ -1036,7 +1030,6 @@ const MENU = {
     {id:'dr_sprite_025', p:7000, img:'images/dr_sprite_025.jpg', n:{ru:'Sprite 0.25L', uz:'Sprite 0.25L', en:'Sprite 0.25L'}},
     {id:'dr_tesco_dyushes_05', p:8000, img:'images/dr_tesco_dyushes_05.jpg', n:{ru:'Tesco Duyshes 0.5L', uz:'Tesco Duyshes 0.5L', en:'Tesco Dyushes 0.5L'}}
   ],
-
   cakes:[
     {id:'cake_medovik_smetanny', p:240000, w:parseWeightToGrams('2кг 390гр'), img:'images/cake_medovik_smetanny.jpg', n:{ru:'Медовик Сметанный', uz:'Smetanali medovik', en:'Honey cake (sour cream)'}},
     {id:'cake_medovik_asalin', p:240000, w:parseWeightToGrams('2кг 800гр'), img:'images/cake_medovik_asalin.jpg', n:{ru:'Медовик Асалин', uz:'Medovik Asalin', en:'Honey cake Asalin'}},
@@ -1045,7 +1038,7 @@ const MENU = {
   ]
 };
 
-/* ✅ названия категорий (ваши категории -> мои ключи) */
+/* ✅ названия категорий */
 const CATS = {
   ru:{
     cheesecakes:'🍰 Чизкейки',
@@ -1079,7 +1072,7 @@ const CATS = {
   }
 };
 
-/* ✅ карусели (выбрал из вашего списка) */
+/* ✅ карусели */
 const POPULAR = ['cheesecake_pistachio','pas_napoleon_icecream','pas_medovik','bak_fatir_big','dr_cola_05','cake_spartak'];
 const NEW_ITEMS = ['pas_dubai','trifle_raspberry','cookie_heart','dr_fuse_tea_1'];
 const GIFT_ITEMS = ['cake_medovik_smetanny','pas_rafaello_big','pas_ferrero','trifle_choco'];
@@ -1212,6 +1205,14 @@ function closeImgModal(e){
   try{ e.preventDefault(); e.stopPropagation(); }catch(_){}
   imgModal.classList.remove('show');
   imgModalImg.src = '';
+}
+
+/* ✅ CLICK QR: показываем QR при выборе оплаты CLICK */
+function openClickQR(){
+  imgModalTitle.innerText = UI[lang].clickQrTitle || 'CLICK QR';
+  imgModalImg.src = CLICK_QR_IMG;
+  imgModalImg.onerror = function(){ this.onerror=null; this.src='images/logo.png'; };
+  imgModal.classList.add('show');
 }
 
 /* promo */
@@ -1416,11 +1417,18 @@ function setType(t,btn){
   address.style.display = (type==='pickup') ? 'none' : 'block';
   updateTotal();
 }
+
+/* ✅ Изменено: при выборе CLICK показываем QR */
 function setPayment(p){
   payment=p;
   payCash.classList.toggle('active', p==='cash');
   payClick.classList.toggle('active', p==='click');
+
+  if(p === 'click'){
+    openClickQR();
+  }
 }
+
 function openCart(){
   const el = document.getElementById('cartBox');
   if(!el) return;
