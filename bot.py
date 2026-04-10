@@ -20,7 +20,13 @@ if not BOT_TOKEN:
     raise RuntimeError("❌ BOT_TOKEN не найден. Добавь переменную окружения BOT_TOKEN.")
 
 BOT_USERNAME = "kadima_cafe_bot"  # без @ (можно поменять позже)
-ADMIN_ID = 6013591658
+
+# ✅ ДВА АДМИНА
+ADMIN_IDS = {6013591658, 331273289}
+
+# ✅ Ник второго админа
+SECOND_ADMIN_USERNAME = "@Azi_za_M"
+
 CHANNEL_ID = "@Kadimasignaturetaste"
 
 # ✅ GitHub Pages Bakery CHOKOART
@@ -82,7 +88,7 @@ async def startapp(message: types.Message):
 # ====== ПОСТ В КАНАЛ ======
 @dp.message(Command("post_menu"))
 async def post_menu(message: types.Message):
-    if message.from_user.id != ADMIN_ID:
+    if message.from_user.id not in ADMIN_IDS:
         return await message.answer("⛔️ Нет доступа.")
 
     text = (
@@ -212,11 +218,28 @@ async def webapp_data(message: types.Message):
     if comment:
         admin_text += f"\n💬 <b>Комментарий:</b> {comment}"
 
-    await bot.send_message(ADMIN_ID, admin_text)
+    # ✅ Отправка заказа обоим администраторам
+    for admin_id in ADMIN_IDS:
+        try:
+            await bot.send_message(admin_id, admin_text)
+        except Exception as e:
+            logging.exception(f"ORDER SEND ERROR to admin {admin_id}: {e}")
 
     await message.answer(
         "✅ <b>Ваш заказ принят!</b>\n"
         "🙏 Спасибо, мы скоро свяжемся с вами."
+    )
+
+# ====== КОМАНДА ДЛЯ ПРОВЕРКИ АДМИНОВ ======
+@dp.message(Command("admins"))
+async def admins_info(message: types.Message):
+    if message.from_user.id not in ADMIN_IDS:
+        return await message.answer("⛔️ Нет доступа.")
+
+    await message.answer(
+        "👑 <b>Администраторы бота:</b>\n"
+        "• ID: <code>6013591658</code>\n"
+        "• ID: <code>331273289</code> — @Azi_za_M"
     )
 
 # ====== ЗАПУСК ======
