@@ -8,31 +8,36 @@ from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import CommandStart, Command
 from aiogram.client.default import DefaultBotProperties
 from aiogram.types import (
-    ReplyKeyboardMarkup, KeyboardButton, WebAppInfo,
-    InlineKeyboardMarkup, InlineKeyboardButton
+    ReplyKeyboardMarkup,
+    KeyboardButton,
+    WebAppInfo,
+    InlineKeyboardMarkup,
+    InlineKeyboardButton,
 )
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s"
+)
 
 # ====== НАСТРОЙКИ ======
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 if not BOT_TOKEN:
     raise RuntimeError("❌ BOT_TOKEN не найден. Добавь переменную окружения BOT_TOKEN.")
 
-BOT_USERNAME = "kadima_cafe_bot"  # без @ (можно поменять позже)
+# ВАЖНО: укажи реальный username бота БЕЗ @
+BOT_USERNAME = "kadima_cafe_bot"
 
-# ✅ ДВА АДМИНА
+# ✅ АДМИНЫ
 ADMIN_IDS = {6013591658, 331273289}
 
-# ✅ Ник второго админа
-SECOND_ADMIN_USERNAME = "@Azi_za_M"
-
-CHANNEL_ID = "@Kadimasignaturetaste"
-
-# ✅ GitHub Pages Bakery CHOKOART
+# ✅ WEB APP
 WEBAPP_URL = "https://tahirovdd-lang.github.io/bakery-chokoart/?v=1"
 
-bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode="HTML"))
+bot = Bot(
+    token=BOT_TOKEN,
+    default=DefaultBotProperties(parse_mode="HTML"),
+)
 dp = Dispatcher()
 
 # ====== АНТИ-ДУБЛЬ START ======
@@ -47,71 +52,184 @@ def allow_start(user_id: int, ttl: float = 2.0) -> bool:
     return True
 
 # ====== КНОПКИ ======
-BTN_OPEN_MULTI = "Ochish • Открыть • Open"
+BTN_OPEN_MULTI = "Наш каталог"
 
 def kb_webapp_reply() -> ReplyKeyboardMarkup:
     return ReplyKeyboardMarkup(
-        keyboard=[[KeyboardButton(text=BTN_OPEN_MULTI, web_app=WebAppInfo(url=WEBAPP_URL))]],
+        keyboard=[
+            [KeyboardButton(text=BTN_OPEN_MULTI, web_app=WebAppInfo(url=WEBAPP_URL))]
+        ],
         resize_keyboard=True
     )
 
-def kb_channel_deeplink() -> InlineKeyboardMarkup:
-    deeplink = f"https://t.me/{BOT_USERNAME}?startapp=menu"
+def kb_catalog_inline() -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(
-        inline_keyboard=[[InlineKeyboardButton(text=BTN_OPEN_MULTI, url=deeplink)]]
+        inline_keyboard=[
+            [InlineKeyboardButton(text="Наш каталог", web_app=WebAppInfo(url=WEBAPP_URL))]
+        ]
     )
 
 # ====== ТЕКСТ ======
 def welcome_text() -> str:
     return (
-        "🇷🇺 Добро пожаловать в <b>Bakery CHOKOART</b>! 👋 "
-        "Выберите любимые позиции и оформите заказ — просто нажмите «Открыть» ниже.\n\n"
-        "🇺🇿 <b>Bakery CHOKOART</b> ga xush kelibsiz! 👋 "
-        "Sevimli mahsulotlarni tanlang va buyurtma bering — buning uchun pastdagi «Ochish» tugmasini bosing.\n\n"
-        "🇬🇧 Welcome to <b>Bakery CHOKOART</b>! 👋 "
-        "Choose your favorite items and place an order — just tap “Open” below."
+        "🇷🇺 Добро пожаловать в <b>Bakery CHOKOART</b>! 👋\n"
+        "Нажмите кнопку <b>«Наш каталог»</b>, чтобы открыть меню и оформить заказ.\n\n"
+        "🇺🇿 <b>Bakery CHOKOART</b> ga xush kelibsiz! 👋\n"
+        "<b>«Наш каталог»</b> tugmasini bosib menyuni oching va buyurtma bering.\n\n"
+        "🇬🇧 Welcome to <b>Bakery CHOKOART</b>! 👋\n"
+        "Tap <b>“Наш каталог”</b> to open the menu and place your order."
     )
 
-# ====== /start ======
+def pinned_catalog_text() -> str:
+    return (
+        "📌 <b>Наш каталог</b>\n\n"
+        "Добро пожаловать в <b>Bakery CHOKOART</b>!\n"
+        "Нажмите кнопку ниже, чтобы открыть каталог и оформить заказ."
+    )
+
+# ====== СТАРТ ======
 @dp.message(CommandStart())
 async def start(message: types.Message):
+    logging.info(
+        "START | chat_id=%s | chat_type=%s | user_id=%s | text=%s",
+        message.chat.id,
+        message.chat.type,
+        message.from_user.id if message.from_user else None,
+        message.text,
+    )
+
     if not allow_start(message.from_user.id):
         return
+
     await message.answer(welcome_text(), reply_markup=kb_webapp_reply())
 
 @dp.message(Command("startapp"))
 async def startapp(message: types.Message):
+    logging.info(
+        "STARTAPP | chat_id=%s | chat_type=%s | user_id=%s | text=%s",
+        message.chat.id,
+        message.chat.type,
+        message.from_user.id if message.from_user else None,
+        message.text,
+    )
+
     if not allow_start(message.from_user.id):
         return
+
     await message.answer(welcome_text(), reply_markup=kb_webapp_reply())
 
-# ====== ПОСТ В КАНАЛ ======
-@dp.message(Command("post_menu"))
-async def post_menu(message: types.Message):
+# ====== CHAT ID ======
+@dp.message(Command("chatid"))
+async def chat_id_info(message: types.Message):
+    logging.info(
+        "CHATID COMMAND | chat_id=%s | chat_type=%s | title=%s | user_id=%s | text=%s",
+        message.chat.id,
+        message.chat.type,
+        message.chat.title,
+        message.from_user.id if message.from_user else None,
+        message.text,
+    )
+
     if message.from_user.id not in ADMIN_IDS:
         return await message.answer("⛔️ Нет доступа.")
 
-    text = (
-        "🇷🇺 <b>Bakery CHOKOART</b>\nНажмите кнопку ниже, чтобы открыть меню.\n\n"
-        "🇺🇿 <b>Bakery CHOKOART</b>\nPastdagi tugma orqali menyuni oching.\n\n"
-        "🇬🇧 <b>Bakery CHOKOART</b>\nTap the button below to open the menu."
+    try:
+        await message.answer(
+            "🆔 <b>ID текущего чата:</b> "
+            f"<code>{message.chat.id}</code>\n"
+            f"📛 <b>Тип чата:</b> <code>{message.chat.type}</code>\n"
+            f"📝 <b>Название:</b> {message.chat.title or 'Личный чат'}"
+        )
+    except Exception as e:
+        logging.exception("CHATID ANSWER ERROR")
+        try:
+            await bot.send_message(
+                message.from_user.id,
+                f"❌ Не смог ответить в группе.\nОшибка: <code>{e}</code>\n"
+                f"chat_id: <code>{message.chat.id}</code>"
+            )
+        except Exception:
+            pass
+
+# ====== ПРОВЕРКА ПИСЬМА В ГРУППУ ======
+@dp.message(Command("testgroup"))
+async def testgroup(message: types.Message):
+    logging.info(
+        "TESTGROUP COMMAND | chat_id=%s | chat_type=%s | title=%s | user_id=%s | text=%s",
+        message.chat.id,
+        message.chat.type,
+        message.chat.title,
+        message.from_user.id if message.from_user else None,
+        message.text,
     )
 
+    if message.from_user.id not in ADMIN_IDS:
+        return await message.answer("⛔️ Нет доступа.")
+
     try:
-        sent = await bot.send_message(CHANNEL_ID, text, reply_markup=kb_channel_deeplink())
+        await bot.send_message(
+            message.chat.id,
+            "✅ Тестовое сообщение от бота.\nБот видит этот чат и умеет сюда писать."
+        )
+    except Exception as e:
+        logging.exception("TESTGROUP ERROR")
         try:
-            await bot.pin_chat_message(CHANNEL_ID, sent.message_id, disable_notification=True)
-            await message.answer("✅ Пост отправлен в канал и закреплён.")
+            await bot.send_message(
+                message.from_user.id,
+                f"❌ Бот не смог написать в группу.\nОшибка: <code>{e}</code>\n"
+                f"chat_id: <code>{message.chat.id}</code>"
+            )
         except Exception:
+            pass
+
+# ====== КАТАЛОГ ======
+@dp.message(Command("post_catalog"))
+async def post_catalog(message: types.Message):
+    logging.info(
+        "POST_CATALOG | chat_id=%s | chat_type=%s | title=%s | user_id=%s | text=%s",
+        message.chat.id,
+        message.chat.type,
+        message.chat.title,
+        message.from_user.id if message.from_user else None,
+        message.text,
+    )
+
+    if message.from_user.id not in ADMIN_IDS:
+        return await message.answer("⛔️ Нет доступа.")
+
+    try:
+        sent = await bot.send_message(
+            message.chat.id,
+            pinned_catalog_text(),
+            reply_markup=kb_catalog_inline()
+        )
+        try:
+            await bot.pin_chat_message(
+                message.chat.id,
+                sent.message_id,
+                disable_notification=True
+            )
+            await message.answer("✅ Сообщение «Наш каталог» отправлено и закреплено.")
+        except Exception as e:
+            logging.exception("PIN ERROR")
             await message.answer(
-                "✅ Пост отправлен в канал.\n"
-                "⚠️ Не удалось закрепить — дай боту право «Закреплять сообщения»."
+                f"✅ Сообщение отправлено.\n"
+                f"⚠️ Закрепить не удалось: <code>{e}</code>"
             )
     except Exception as e:
-        logging.exception("CHANNEL POST ERROR")
-        await message.answer(f"❌ Ошибка отправки в канал: <code>{e}</code>")
+        logging.exception("POST_CATALOG ERROR")
+        try:
+            await message.answer(f"❌ Ошибка отправки: <code>{e}</code>")
+        except Exception:
+            try:
+                await bot.send_message(
+                    message.from_user.id,
+                    f"❌ Бот увидел команду, но не смог ответить в группе.\nОшибка: <code>{e}</code>"
+                )
+            except Exception:
+                pass
 
-# ====== ВСПОМОГАТЕЛЬНЫЕ ======
+# ====== ЗАКАЗЫ ======
 def fmt_sum(n: int) -> str:
     try:
         n = int(n)
@@ -138,7 +256,6 @@ def safe_int(v, default=0) -> int:
     except Exception:
         return default
 
-# ====== ЧТЕНИЕ ЗАКАЗА ======
 def build_order_lines(data: dict) -> tuple[list[str], dict]:
     order_dict: dict = {}
 
@@ -182,9 +299,14 @@ def build_order_lines(data: dict) -> tuple[list[str], dict]:
 
     return lines, order_dict
 
-# ====== ЗАКАЗ ИЗ WEBAPP ======
 @dp.message(F.web_app_data)
 async def webapp_data(message: types.Message):
+    logging.info(
+        "WEB_APP_DATA | chat_id=%s | user_id=%s",
+        message.chat.id,
+        message.from_user.id if message.from_user else None,
+    )
+
     raw = message.web_app_data.data
     await message.answer("✅ <b>Получил заказ.</b> Обрабатываю…")
 
@@ -218,34 +340,69 @@ async def webapp_data(message: types.Message):
     if comment:
         admin_text += f"\n💬 <b>Комментарий:</b> {comment}"
 
-    # ✅ Отправка заказа обоим администраторам
     for admin_id in ADMIN_IDS:
         try:
             await bot.send_message(admin_id, admin_text)
         except Exception as e:
-            logging.exception(f"ORDER SEND ERROR to admin {admin_id}: {e}")
+            logging.exception("ORDER SEND ERROR to admin %s: %s", admin_id, e)
 
     await message.answer(
         "✅ <b>Ваш заказ принят!</b>\n"
         "🙏 Спасибо, мы скоро свяжемся с вами."
     )
 
-# ====== КОМАНДА ДЛЯ ПРОВЕРКИ АДМИНОВ ======
-@dp.message(Command("admins"))
-async def admins_info(message: types.Message):
-    if message.from_user.id not in ADMIN_IDS:
-        return await message.answer("⛔️ Нет доступа.")
+# ====== СТАТУС БОТА В ЧАТЕ ======
+@dp.my_chat_member()
+async def on_my_chat_member(event: types.ChatMemberUpdated):
+    logging.info(
+        "MY_CHAT_MEMBER | chat_id=%s | chat_type=%s | title=%s | old=%s | new=%s",
+        event.chat.id,
+        event.chat.type,
+        event.chat.title,
+        event.old_chat_member.status,
+        event.new_chat_member.status,
+    )
 
-    await message.answer(
-        "👑 <b>Администраторы бота:</b>\n"
-        "• ID: <code>6013591658</code>\n"
-        "• ID: <code>331273289</code> — @Azi_za_M"
+    try:
+        if event.new_chat_member.status in ("administrator", "member"):
+            await bot.send_message(
+                event.chat.id,
+                "✅ Бот подключён к чату.\n"
+                "Для проверки напишите: /chatid\n"
+                "Для каталога: /post_catalog"
+            )
+    except Exception as e:
+        logging.exception("MY_CHAT_MEMBER SEND ERROR: %s", e)
+
+# ====== ЛОГ ВСЕХ СООБЩЕНИЙ ======
+@dp.message()
+async def debug_any_message(message: types.Message):
+    logging.info(
+        "ANY MESSAGE | chat_id=%s | chat_type=%s | title=%s | user_id=%s | text=%s",
+        message.chat.id,
+        message.chat.type,
+        message.chat.title,
+        message.from_user.id if message.from_user else None,
+        message.text,
     )
 
 # ====== ЗАПУСК ======
 async def main():
+    me = await bot.get_me()
+    logging.info("BOT STARTED | id=%s | username=@%s | full_name=%s", me.id, me.username, me.full_name)
+
     await bot.delete_webhook(drop_pending_updates=True)
-    await dp.start_polling(bot)
+
+    await dp.start_polling(
+        bot,
+        allowed_updates=[
+            "message",
+            "edited_message",
+            "callback_query",
+            "my_chat_member",
+            "chat_member",
+        ],
+    )
 
 if __name__ == "__main__":
     asyncio.run(main())
